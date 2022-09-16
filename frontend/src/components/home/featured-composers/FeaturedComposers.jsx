@@ -4,13 +4,13 @@ import FeaturedComposer from "./FeaturedComposer";
 
 // This is assigns a div to a reusuable component called "FeaturedComposersContainer" which has the styles defined
 // below.
-const FeaturedComposersFlexContainer = styled.div`
+const FlexContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
 `;
 
-const FeaturedComposersContainer = styled.div`
+const Container = styled.div`
     border: 1px solid black;
     padding: 1em;
     margin-top: 2%;
@@ -40,17 +40,17 @@ const FeaturedComposers = () => {
     ]);
 
     return (
-        <FeaturedComposersContainer>
+        <Container>
             <h3>Featured Composers</h3>
-            <FeaturedComposersFlexContainer>
+            <FlexContainer>
                 {featuredComposers.map((featuredComposer) => (
                     <FeaturedComposer
                         key={featuredComposer.id}
                         featuredComposer={featuredComposer}
                     />
                 ))}
-            </FeaturedComposersFlexContainer>
-        </FeaturedComposersContainer>
+            </FlexContainer>
+        </Container>
     );
 };
 

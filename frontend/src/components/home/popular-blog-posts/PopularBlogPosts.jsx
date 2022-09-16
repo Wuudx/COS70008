@@ -2,13 +2,13 @@ import { useState } from "react";
 import styled from "styled-components";
 import PopularBlogPost from "./PopularBlogPost";
 
-const PopularBlogPostsContainer = styled.div`
+const Container = styled.div`
     border: 1px solid black;
     padding: 1em;
     margin-top: 2%;
 `;
 
-const PopularBlogPostsFlexContainer = styled.div`
+const FlexContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
@@ -37,17 +37,17 @@ const PopularBlogPosts = () => {
     ]);
 
     return (
-        <PopularBlogPostsContainer>
+        <Container>
             <h3>Popular Blog Posts</h3>
-            <PopularBlogPostsFlexContainer>
+            <FlexContainer>
                 {popularBlogPosts.map((popularBlogPost) => (
                     <PopularBlogPost
                         key={popularBlogPost.id}
                         popularBlogPost={popularBlogPost}
                     />
                 ))}
-            </PopularBlogPostsFlexContainer>
-        </PopularBlogPostsContainer>
+            </FlexContainer>
+        </Container>
     );
 };
 

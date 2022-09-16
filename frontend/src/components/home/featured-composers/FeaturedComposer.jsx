@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import RoundedImage from "../../../shared-styled-components/RoundedImage";
 
-const FeaturedComposerContainer = styled.div`
+const Container = styled.div`
     display: flex;
     gap: 1em;
 `;
@@ -10,7 +10,7 @@ const FeaturedComposerContainer = styled.div`
 // Props passed through using object destructuring.
 const FeaturedComposer = ({ featuredComposer }) => {
     return (
-        <FeaturedComposerContainer>
+        <Container>
             <RoundedImage src={featuredComposer.image} alt="Composer Picture" />
             <p>
                 <Link to={`/composers/${featuredComposer.name}`}>
@@ -18,7 +18,7 @@ const FeaturedComposer = ({ featuredComposer }) => {
                 </Link>
                 <br /> {featuredComposer.description}
             </p>
-        </FeaturedComposerContainer>
+        </Container>
     );
 };
 
