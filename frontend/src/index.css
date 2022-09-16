@@ -2,3 +2,23 @@
 * {
   box-sizing: border-box;
 }
+
+body {
+  margin: 0px;
+  font-size: 100%;
+}
+
+/* Ensures that font sizes for anchor tags and buttons are the same (along with font size above in body selector).  */
+a, button {
+  font-size: 100%;
+}
+
+@font-face {
+  font-family: lato-bold;
+  src: url("./assets/fonts/Lato-Bold.ttf");
+}
+
+@font-face {
+  font-family: lato-regular;
+  src: url("./assets/fonts/Lato-Regular.ttf");
+}
