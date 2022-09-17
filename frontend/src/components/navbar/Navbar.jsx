@@ -11,12 +11,11 @@ const Img = styled.img`
     cursor: pointer;
 `;
 
+// Only needed to center the navbar vertically.
 const Nav = styled.nav`
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 70%;
+    margin-left: 12%;
 `;
 
 const Container = styled.div`
@@ -47,6 +46,7 @@ const Button = styled.button`
     }
 `;
 
+// Maybe put this in shared styled components with color prop since we will be using this in footer as well.
 const StyledLink = styled(Link)`
     font-family: lato-bold;
     text-decoration: none;
