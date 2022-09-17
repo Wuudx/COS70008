@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import FooterBottom from "./FooterBottom";
-import FooterNav from "./FooterNav";
+import FooterTop from "./FooterTop";
 
 const StyledFooter = styled.footer`
     width: 100%;
@@ -10,7 +10,7 @@ const StyledFooter = styled.footer`
 const Footer = () => {
     return (
         <StyledFooter>
-            <FooterNav />
+            <FooterTop />
             <FooterBottom />
         </StyledFooter>
     );

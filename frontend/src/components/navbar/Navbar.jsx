@@ -3,6 +3,7 @@ import { IoIosArrowUp } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NavLogo from "../../assets/nav-logo.png";
+import NavButton from "../../shared-styled-components/NavButton";
 import stylingConstants from "../../utils/styling";
 import Dropdown from "./Dropdown";
 
@@ -30,16 +31,12 @@ const Container = styled.div`
 
 const Ul = styled.ul`
     display: flex;
-    gap: 50px;
+    gap: 3em;
     list-style: none;
 `;
 
-const Button = styled.button`
+const Button = styled(NavButton)`
     font-family: lato-bold;
-    background-color: white;
-    border: none;
-    padding: 0px;
-    cursor: pointer;
     border-bottom: 3px solid white; // So that the navbar does not jump up on hover.
     &:hover {
         border-bottom: 3px solid ${stylingConstants.colours.blue2Percent30};
