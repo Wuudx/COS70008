@@ -41,12 +41,19 @@ const Button = styled.button`
     border: none;
     padding: 0px;
     cursor: pointer;
+    border-bottom: 3px solid white; // So that the navbar does not jump up on hover.
+    &:hover {
+        border-bottom: 3px solid ${stylingConstants.colours.blue2Percent30};
+    }
 `;
 
 const StyledLink = styled(Link)`
     font-family: lato-bold;
     text-decoration: none;
     color: black;
+    &:hover {
+        border-bottom: 3px solid ${stylingConstants.colours.blue2Percent30};
+    }
 `;
 
 // TODO: Increasing the size of the up arrows (IoIosArrowUp) using size={x} ruins alignment of navbar. Figure out why!!!!
