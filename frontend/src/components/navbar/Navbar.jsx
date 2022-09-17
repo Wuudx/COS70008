@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { IoIosArrowUp } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NavLogo from "../../assets/nav-logo.png";
@@ -22,6 +23,10 @@ const Container = styled.div`
     display: flex;
     border-bottom: 5px solid ${stylingConstants.colours.blue2Percent30};
     padding: 5px 0px;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    background-color: white;
 `;
 
 const Ul = styled.ul`
@@ -44,6 +49,7 @@ const StyledLink = styled(Link)`
     color: black;
 `;
 
+// TODO: Increasing the size of the up arrows (IoIosArrowUp) using size={x} ruins alignment of navbar. Figure out why!!!!
 const Navbar = () => {
     const navigate = useNavigate();
 
@@ -115,6 +121,11 @@ const Navbar = () => {
                             onClick={toggleExploreRepDropdown}
                         >
                             Explore Reportoire
+                            <IoIosArrowUp
+                                color={stylingConstants.colours.blue2Percent30}
+                                // This ensures that arrow is inline with text.
+                                style={{ verticalAlign: "bottom" }}
+                            />
                         </Button>
                         <Dropdown
                             isVisible={isExploreRepDropdownVisible}
@@ -130,6 +141,10 @@ const Navbar = () => {
                             onClick={toggleGetInvolvedDropdown}
                         >
                             Get Involved
+                            <IoIosArrowUp
+                                color={stylingConstants.colours.blue2Percent30}
+                                style={{ verticalAlign: "bottom" }}
+                            />
                         </Button>
                         <Dropdown
                             isVisible={isGetInvolvedDropdownVisible}
