@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import stylingConstants from "../../utils/styling";
+import stylingConstants from "../../../utils/styling";
 import Navbar from "./Navbar";
 
 const Container = styled.div`

@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import NavButton from "../../shared-styled-components/NavButton";
-import stylingConstants from "../../utils/styling";
-
-const Ul = styled.ul`
-    display: flex;
-    list-style: none;
-    gap: 5em;
-`;
+import NavButton from "../../../shared-styled-components/NavButton";
+import Ul from "../../../shared-styled-components/NavUl";
+import stylingConstants from "../../../utils/styling";
 
 const Button = styled(NavButton)`
     font-family: lato-regular;
@@ -32,7 +27,7 @@ const StyledLink = styled(Link)`
 const Navbar = () => {
     return (
         <nav>
-            <Ul>
+            <Ul gap="5em">
                 <li>
                     <StyledLink to="/about/">About</StyledLink>
                 </li>

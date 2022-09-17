@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { IoIosArrowUp } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import NavLogo from "../../assets/nav-logo.png";
+import NavLogo from "../../assets/images/nav-logo.png";
 import NavButton from "../../shared-styled-components/NavButton";
+import Ul from "../../shared-styled-components/NavUl";
 import stylingConstants from "../../utils/styling";
 import Dropdown from "./Dropdown";
 
@@ -27,12 +28,6 @@ const Container = styled.div`
     position: fixed;
     z-index: 100;
     background-color: white;
-`;
-
-const Ul = styled.ul`
-    display: flex;
-    gap: 3em;
-    list-style: none;
 `;
 
 const Button = styled(NavButton)`
@@ -110,7 +105,7 @@ const Navbar = () => {
         <Container>
             <Img src={NavLogo} alt="logo" onClick={() => navigate("/")} />
             <Nav>
-                <Ul>
+                <Ul gap="3em">
                     <li>
                         <StyledLink to="/about/">About</StyledLink>
                     </li>
