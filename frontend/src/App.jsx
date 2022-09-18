@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
+import DiscoverComposers from "./components/discover-composers/DiscoverComposers";
 import Footer from "./components/footer/Footer";
 import Home from "./components/home/Home";
 import Navbar from "./components/navbar/Navbar";
@@ -18,6 +19,12 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    {/* Note that there is no route for search parameter (e.g: "/discover-composers/?q=:query/") 
+                    because react router does not support this. It the aforementioned link as "/discover-composers/" */}
+                    <Route
+                        path="/discover-composers/"
+                        element={<DiscoverComposers />}
+                    />
                 </Routes>
                 <Footer />
             </AppDiv>

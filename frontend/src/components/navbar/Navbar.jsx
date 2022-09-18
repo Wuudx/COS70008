@@ -23,10 +23,13 @@ const Nav = styled.nav`
 
 const Container = styled.div`
     display: flex;
+    height: ${stylingConstants.sizes.navbarHeight};
     border-bottom: 5px solid ${stylingConstants.colours.blue2Percent30};
     padding: 5px 0px;
     width: 100%;
     position: fixed;
+    left 0;
+    top: 0;
     z-index: 100;
     background-color: white;
 `;

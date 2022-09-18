@@ -11,9 +11,16 @@ const fonts = {
     subHeadingsAndBody: "Lato",
 };
 
+const sizes = {
+    // Please make sure that padding of body in index.css is same as this variable to ensure that all content stays
+    // under navbar!!
+    navbarHeight: "100px",
+};
+
 const stylingConstants = {
     colours: colours,
     fonts: fonts,
+    sizes: sizes,
 };
 
 export default stylingConstants;

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
+// TODO: Close all dropdowns on page load.
 function useToggleDropdown(exploreRepDropdownRef, getInvolvedDropdownRef) {
-    const params = useParams();
     const [isExploreRepDropdownVisible, setIsExploreRepDropdownVisible] =
         useState(false);
     const [isGetInvolvedDropdownVisible, setIsGetInvolvedDropDownVisible] =

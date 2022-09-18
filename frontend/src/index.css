@@ -6,6 +6,9 @@
 body {
   margin: 0px;
   font-size: 100%;
+
+  /* Ensures that all content is below navbar. Please make sure this is same as navbarHeight in stylingConstants! */
+  padding-top: 100px;
 }
 
 /* Ensures that font sizes for anchor tags and buttons are the same (along with font size above in body selector).  */

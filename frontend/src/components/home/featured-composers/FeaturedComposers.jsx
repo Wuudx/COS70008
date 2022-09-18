@@ -13,7 +13,7 @@ const FlexContainer = styled.div`
 const Container = styled.div`
     border: 1px solid black;
     padding: 1em;
-    margin-top: 150px;
+    margin-top: 2em;
 `;
 
 const FeaturedComposers = () => {
