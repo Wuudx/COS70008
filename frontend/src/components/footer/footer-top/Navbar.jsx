@@ -1,8 +1,11 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import useToggleDropdown from "../../../hooks/useToggleDropdown";
 import NavButton from "../../../shared-styled-components/NavButton";
 import Ul from "../../../shared-styled-components/NavUl";
 import stylingConstants from "../../../utils/styling";
+import Dropdown from "../../navbar/Dropdown";
 
 const Button = styled(NavButton)`
     font-family: lato-regular;
@@ -22,9 +25,17 @@ const StyledLink = styled(Link)`
     }
 `;
 
-// TODO: Implement dropdown for explore reportorire and get involved. The logic for this has already been implement for
-// the navbar, so think about how to extract this logic to a custom hook.
 const Navbar = () => {
+    const exploreRepDropdownRef = useRef();
+    const getInvolvedDropdownRef = useRef();
+
+    const {
+        isExploreRepDropdownVisible,
+        isGetInvolvedDropdownVisible,
+        toggleExploreRepDropdown,
+        toggleGetInvolvedDropdown,
+    } = useToggleDropdown(exploreRepDropdownRef, getInvolvedDropdownRef);
+
     return (
         <nav>
             <Ul gap="5em">
@@ -37,13 +48,25 @@ const Navbar = () => {
                     </StyledLink>
                 </li>
                 <li>
-                    <Button type="button">Explore Reportoire</Button>
+                    <Button type="button" onClick={toggleExploreRepDropdown}>
+                        Explore Reportoire
+                    </Button>
+                    <Dropdown
+                        isVisible={isExploreRepDropdownVisible}
+                        dropdownName="Explore Reportoire"
+                    />
                 </li>
                 <li>
                     <StyledLink to="/blog/">Blog</StyledLink>
                 </li>
                 <li>
-                    <Button type="button">Get Involved</Button>
+                    <Button type="button" onClick={toggleGetInvolvedDropdown}>
+                        Get Involved
+                    </Button>
+                    <Dropdown
+                        isVisible={isGetInvolvedDropdownVisible}
+                        dropdownName="Get Involved"
+                    />
                 </li>
             </Ul>
         </nav>

@@ -2,15 +2,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
 
-// TODO: The border top on dropdown is a bit shorter than the border bottom on hover. Fix this!!
-
 const Ul = styled.ul`
     position: absolute;
-    padding: 0px;
     list-style: none;
+    padding: 5px;
+    width: 100%;
     border-top: 3px solid ${stylingConstants.colours.blue2Percent30};
     background-color: white;
-    padding: 10px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     li {
