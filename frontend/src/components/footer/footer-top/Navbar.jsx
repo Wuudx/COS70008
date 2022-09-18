@@ -47,7 +47,7 @@ const Navbar = () => {
                         Discover Composers
                     </StyledLink>
                 </li>
-                <li>
+                <li ref={exploreRepDropdownRef}>
                     <Button type="button" onClick={toggleExploreRepDropdown}>
                         Explore Reportoire
                     </Button>
@@ -59,7 +59,7 @@ const Navbar = () => {
                 <li>
                     <StyledLink to="/blog/">Blog</StyledLink>
                 </li>
-                <li>
+                <li ref={getInvolvedDropdownRef}>
                     <Button type="button" onClick={toggleGetInvolvedDropdown}>
                         Get Involved
                     </Button>
