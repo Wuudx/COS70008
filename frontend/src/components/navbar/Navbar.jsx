@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { IoIosArrowUp } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NavLogo from "../../assets/images/nav-logo.png";
+import useToggleDropdown from "../../hooks/useToggleDropdown";
 import NavButton from "../../shared-styled-components/NavButton";
 import Ul from "../../shared-styled-components/NavUl";
 import stylingConstants from "../../utils/styling";
@@ -52,55 +53,16 @@ const StyledLink = styled(Link)`
 const Navbar = () => {
     const navigate = useNavigate();
 
-    const [isExploreRepDropdownVisible, setIsExploreRepDropdownVisible] =
-        useState(false);
-    const [isGetInvolvedDropdownVisible, setIsGetInvolvedDropDownVisible] =
-        useState(false);
-
     const exploreRepDropdownRef = useRef();
     const getInvolvedDropdownRef = useRef();
 
-    function toggleExploreRepDropdown() {
-        if (isGetInvolvedDropdownVisible) {
-            toggleGetInvolvedDropdown();
-        }
-        setIsExploreRepDropdownVisible(!isExploreRepDropdownVisible);
-    }
+    const {
+        isExploreRepDropdownVisible,
+        isGetInvolvedDropdownVisible,
+        toggleExploreRepDropdown,
+        toggleGetInvolvedDropdown,
+    } = useToggleDropdown(exploreRepDropdownRef, getInvolvedDropdownRef);
 
-    function toggleGetInvolvedDropdown() {
-        if (isExploreRepDropdownVisible) {
-            toggleExploreRepDropdown();
-        }
-        setIsGetInvolvedDropDownVisible(!isGetInvolvedDropdownVisible);
-    }
-
-    // If any dropdown is open and user clicks outside dropdown, this function will close the dropdown.
-    function handleDropdownClick(e) {
-        const shouldCloseExploreRepDropdown =
-            exploreRepDropdownRef.current &&
-            !exploreRepDropdownRef.current.contains(e.target) &&
-            isExploreRepDropdownVisible;
-
-        const shouldCloseGetInvolvedDropdown =
-            getInvolvedDropdownRef.current &&
-            !getInvolvedDropdownRef.current.contains(e.target) &&
-            isGetInvolvedDropdownVisible;
-
-        if (shouldCloseExploreRepDropdown) {
-            toggleExploreRepDropdown();
-        } else if (shouldCloseGetInvolvedDropdown) {
-            toggleGetInvolvedDropdown();
-        }
-    }
-
-    useEffect(() => {
-        window.addEventListener("mousedown", handleDropdownClick);
-
-        // Callback function that runs when component unmounts. This ensures that when we remount the component later,
-        // we do not have more than one event listener.
-        return () =>
-            window.removeEventListener("mousedown", handleDropdownClick);
-    }, [isExploreRepDropdownVisible, isGetInvolvedDropdownVisible]);
     return (
         <Container>
             <Img src={NavLogo} alt="logo" onClick={() => navigate("/")} />
