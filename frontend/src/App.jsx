@@ -4,6 +4,7 @@ import DiscoverComposers from "./components/discover-composers/DiscoverComposers
 import Footer from "./components/footer/Footer";
 import Home from "./components/home/Home";
 import Navbar from "./components/navbar/Navbar";
+import RepertoireLibrary from "./components/repertoire-library/RepertoireLibrary";
 
 // Important so that footer sticks to bottom of page!
 const AppDiv = styled.div`
@@ -24,6 +25,10 @@ function App() {
                     <Route
                         path="/discover-composers/"
                         element={<DiscoverComposers />}
+                    />
+                    <Route
+                        path="/repertoire-library"
+                        element={<RepertoireLibrary />}
                     />
                 </Routes>
                 <Footer />
