@@ -25,7 +25,7 @@ const HouseKeepingNav = () => {
                     </StyledLink>
                 </li>
                 <li>
-                    <StyledLink to="/site-map/">&nbsp;Sity Map</StyledLink>
+                    <StyledLink to="/site-map/">&nbsp;Site Map</StyledLink>
                 </li>
             </Ul>
         </nav>

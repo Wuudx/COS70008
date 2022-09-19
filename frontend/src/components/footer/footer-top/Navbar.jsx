@@ -43,7 +43,7 @@ const Navbar = () => {
                     <StyledLink to="/about/">About</StyledLink>
                 </li>
                 <li>
-                    <StyledLink to="/disover-composers/">
+                    <StyledLink to="/discover-composers/">
                         Discover Composers
                     </StyledLink>
                 </li>
