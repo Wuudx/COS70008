@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import useSearchQuery from "../../hooks/useSearchQuery";
-import FlexContainer from "../../shared-styled-components/VerticallyCenteredFlexContainer";
+
+const FlexContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+`;
 
 const SearchBar = () => {
     const searchQuery = useSearchQuery("q");

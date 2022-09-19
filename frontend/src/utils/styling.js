@@ -3,6 +3,8 @@ const colours = {
     blue2: "#427BBF",
     blue1percent80: "rgb(123, 162, 213, 80)",
     blue2Percent30: "rgb(66, 123, 191, 30%)",
+    blue2Percent50: "rgb(66, 123, 191, 50%)",
+    blue2Percent100: "rgb(66, 123, 191, 80%)",
 };
 
 const fonts = {

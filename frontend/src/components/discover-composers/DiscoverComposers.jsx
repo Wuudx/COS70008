@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
-import FilterBar from "./FilterBar";
+import FilterBar from "./filter-bar/FilterBar";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 
