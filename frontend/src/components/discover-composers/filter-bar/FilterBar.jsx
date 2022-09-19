@@ -17,7 +17,8 @@ const InnerFlexContainer = styled.div`
     align-items: center;
     background-color: ${stylingConstants.colours.blue2Percent50};
     width: 80%;
-    height: 2em;
+    min-height: 2em;
+    flex-wrap: wrap;
 `;
 
 const FilterBar = () => {
