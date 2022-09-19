@@ -27,14 +27,14 @@ const Dropdown = ({ isVisible, dropdownName }) => {
         return content;
     }
 
-    if (dropdownName === "Explore Reportoire") {
+    if (dropdownName === "Explore Repertoire") {
         content = (
             <Ul>
                 <li>
-                    <Link to="/watch-listen/">Watch/Listen</Link>
+                    <Link to="/watch-listen">Watch / Listen</Link>
                 </li>
                 <li>
-                    <Link to="/reportoire-library/">Reportoire Library</Link>
+                    <Link to="/repertoire-library">Repertoire Library</Link>
                 </li>
             </Ul>
         );

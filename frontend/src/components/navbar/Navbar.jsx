@@ -84,7 +84,7 @@ const Navbar = () => {
                             type="button"
                             onClick={toggleExploreRepDropdown}
                         >
-                            Explore Reportoire
+                            Explore Repertoire
                             <IoIosArrowUp
                                 color={stylingConstants.colours.blue2Percent30}
                                 // This ensures that arrow is inline with text.
@@ -93,7 +93,7 @@ const Navbar = () => {
                         </Button>
                         <Dropdown
                             isVisible={isExploreRepDropdownVisible}
-                            dropdownName="Explore Reportoire"
+                            dropdownName="Explore Repertoire"
                         />
                     </li>
                     <li>
