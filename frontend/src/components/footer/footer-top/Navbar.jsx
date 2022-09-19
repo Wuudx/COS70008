@@ -49,11 +49,11 @@ const Navbar = () => {
                 </li>
                 <li ref={exploreRepDropdownRef}>
                     <Button type="button" onClick={toggleExploreRepDropdown}>
-                        Explore Reportoire
+                        Explore Repertoire
                     </Button>
                     <Dropdown
                         isVisible={isExploreRepDropdownVisible}
-                        dropdownName="Explore Reportoire"
+                        dropdownName="Explore Repertoire"
                     />
                 </li>
                 <li>
