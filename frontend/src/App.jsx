@@ -4,6 +4,7 @@ import DiscoverComposers from "./components/discover-composers/DiscoverComposers
 import Footer from "./components/footer/Footer";
 import Home from "./components/home/Home";
 import Navbar from "./components/navbar/Navbar";
+import SearchBar from "./components/searchbar/SearchBar";
 import RepertoireLibrary from "./components/repertoire-library/RepertoireLibrary";
 
 // Important so that footer sticks to bottom of page!
@@ -18,6 +19,7 @@ function App() {
         <Router>
             <AppDiv>
                 <Navbar />
+                <SearchBar />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     {/* Note that there is no route for search parameter (e.g: "/discover-composers/?q=:query/") 
