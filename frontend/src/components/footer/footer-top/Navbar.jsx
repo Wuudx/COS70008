@@ -9,7 +9,7 @@ import Dropdown from "../../navbar/Dropdown";
 
 const Button = styled(NavButton)`
     font-family: lato-regular;
-    color: ${stylingConstants.colours.blue1percent80};
+    color: ${stylingConstants.colours.blue1Percent80};
     border-bottom: 2px solid white;
     &:hover {
         border-bottom: 2px solid ${stylingConstants.colours.blue2Percent30};
@@ -19,7 +19,7 @@ const Button = styled(NavButton)`
 const StyledLink = styled(Link)`
     font-family: lato-regular;
     text-decoration: none;
-    color: ${stylingConstants.colours.blue1percent80};
+    color: ${stylingConstants.colours.blue1Percent80};
     &:hover {
         border-bottom: 2px solid ${stylingConstants.colours.blue2Percent30};
     }

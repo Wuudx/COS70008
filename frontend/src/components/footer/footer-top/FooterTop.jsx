@@ -8,7 +8,7 @@ const Container = styled.div`
     justify-content: center;
     background: white;
     height: 10vh;
-    border-top: 3px solid ${stylingConstants.colours.blue1percent80};
+    border-top: 3px solid ${stylingConstants.colours.blue1Percent80};
 `;
 
 const FooterTop = () => {

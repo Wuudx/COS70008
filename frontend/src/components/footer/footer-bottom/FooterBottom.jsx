@@ -12,7 +12,7 @@ const Container = styled.div`
     gap: 20px;
     height: 25vh;
     width: 100%;
-    background-color: ${stylingConstants.colours.blue1percent80};
+    background-color: ${stylingConstants.colours.blue1Percent80};
 `;
 
 const FooterBottom = () => {
