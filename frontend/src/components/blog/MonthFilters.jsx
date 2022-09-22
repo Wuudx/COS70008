@@ -7,7 +7,7 @@ import MonthFilter from "./MonthFilter";
 const FlexContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width: 20%;
     margin-left: ${stylingConstants.sizes.leftRightMargin};
 `;
 
