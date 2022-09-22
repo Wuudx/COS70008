@@ -7,7 +7,6 @@ import stylingConstants from "../../utils/styling";
 const Form = styled.form`
     display: flex;
     gap: 1em;
-    margin-left: 4em;
     width: 100%;
 `;
 

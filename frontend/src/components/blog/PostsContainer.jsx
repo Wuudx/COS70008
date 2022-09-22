@@ -5,7 +5,8 @@ import Posts from "./Posts";
 const FlexContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 80%;
+    margin-left: 4em;
 `;
 
 const PostsContainer = () => {

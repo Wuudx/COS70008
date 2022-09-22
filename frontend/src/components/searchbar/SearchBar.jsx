@@ -29,7 +29,7 @@ const SearchBar = () => {
     // Note that input in react is sanitised by default (I think, TODO: follow up on this.)
     function handleSearch(e) {
         e.preventDefault(); // Prevent default form behaviour.
-        navigate(`/search?q=${searchQuery}`);
+        navigate(`search?q=${searchQuery}`);
     }
 
     function handleInput(e) {
