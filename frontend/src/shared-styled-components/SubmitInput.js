@@ -2,8 +2,8 @@ import styled from "styled-components";
 import stylingConstants from "../utils/styling";
 
 const SubmitInput = styled.input.attrs({ type: "submit" })`
-    width: 40%;
-    height: 3em;
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
     font-family: lato-bold;
     background: ${stylingConstants.colours.blue1Percent80};
     border: none;

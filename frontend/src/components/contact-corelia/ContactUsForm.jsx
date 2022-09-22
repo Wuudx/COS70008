@@ -79,7 +79,13 @@ const ContactUsForm = () => {
                     <br />
                     <TextArea id="message" />
                 </p>
-                <SubmitInput type="submit" value="Send Message" required />
+                <SubmitInput
+                    width="40%"
+                    height="3em"
+                    type="submit"
+                    value="Send Message"
+                    required
+                />
             </Form>
         </FlexContainer>
     );

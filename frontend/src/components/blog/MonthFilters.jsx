@@ -11,6 +11,7 @@ const FlexContainer = styled.div`
     margin-left: ${stylingConstants.sizes.leftRightMargin};
     background: white;
     border-radius: ${stylingConstants.sizes.containerBorderRadius};
+    height: fit-content;
 `;
 
 const MONTHS = [

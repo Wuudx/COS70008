@@ -7,6 +7,7 @@ const FlexContainer = styled.div`
     flex-direction: column;
     width: 60%;
     margin-left: 4em;
+    gap: 1em;
 `;
 
 const PostsContainer = () => {

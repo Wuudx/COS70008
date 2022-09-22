@@ -56,7 +56,12 @@ const CreatePostForm = () => {
             />
             <FormItemsFlexContainer>
                 <TextArea type="text" placeholder="Create Post" />
-                <SubmitInput type="submit" value="Submit" />
+                <SubmitInput
+                    width="40%"
+                    height="3em"
+                    type="submit"
+                    value="Submit"
+                />
             </FormItemsFlexContainer>
             <AttachImageButton>+</AttachImageButton>
         </Form>
