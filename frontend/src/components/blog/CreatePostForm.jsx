@@ -34,6 +34,7 @@ const TextArea = styled.textarea`
     font-family: lato-regular;
 `;
 
+// TODO: Add submit button (not sure where, guidelines are confusing)
 const CreatePostForm = () => {
     return (
         <FlexContainer>

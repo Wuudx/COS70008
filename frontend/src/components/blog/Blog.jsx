@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
 import MonthFilters from "./MonthFilters";
-import Posts from "./Posts";
+import PostsContainer from "./PostsContainer";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -13,7 +13,7 @@ const Blog = () => {
     return (
         <FlexContainer>
             <MonthFilters />
-            <Posts />
+            <PostsContainer />
         </FlexContainer>
     );
 };
