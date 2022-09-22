@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import BackToTopButton from "./components/back-to-top-button/BackToTopButton";
+import Blog from "./components/blog/Blog";
 import ContactUsForm from "./components/contact-corelia/ContactUsForm";
 import Footer from "./components/footer/Footer";
 import Home from "./components/home/Home";
@@ -30,6 +31,7 @@ function App() {
                         path="/repertoire-library"
                         element={<RepertoireLibrary />}
                     />
+                    <Route path="/blog" element={<Blog />} />
                     <Route path="/contact-us" element={<ContactUsForm />} />
                 </Routes>
                 <Footer />

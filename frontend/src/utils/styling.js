@@ -26,6 +26,7 @@ const sizes = {
     searchInputHeight: "40px",
     searchButtonIconWidth: "50px",
     gapFromFooterToEndOfContent: "30px",
+    leftRightMargin: "10px",
 };
 
 const stylingConstants = {
