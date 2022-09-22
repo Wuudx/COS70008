@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
+import BackToTopButton from "./components/back-to-top-button/BackToTopButton";
 import ContactUsForm from "./components/contact-corelia/ContactUsForm";
 import Footer from "./components/footer/Footer";
 import Home from "./components/home/Home";
@@ -20,6 +21,7 @@ function App() {
             <AppDiv>
                 <Navbar />
                 <SearchBar />
+                <BackToTopButton />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     {/* Note that there is no route for search parameter (e.g: "/discover-composers/?q=:query/") 
