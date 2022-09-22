@@ -6,12 +6,16 @@ import stylingConstants from "../../utils/styling";
 // Having both of these elements with vertica align of bottom centers them.
 const Form = styled.form`
     display: flex;
+    justify-content: center;
     gap: 1em;
     width: 100%;
+    background: white;
+    padding: 1em;
+    border-radius: ${stylingConstants.sizes.containerBorderRadius};
 `;
 
 const FormItemsFlexContainer = styled.div`
-    width: 70%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     gap: 1em;

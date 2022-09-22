@@ -9,7 +9,6 @@ const SubmitInput = styled.input.attrs({ type: "submit" })`
     border: none;
     color: white;
     border-radius: 0.5em;
-    margin-bottom: ${stylingConstants.sizes.gapFromFooterToEndOfContent};
     cursor: pointer;
     &:hover {
         background: ${stylingConstants.colours.blue1Percent100};

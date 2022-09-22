@@ -3,6 +3,14 @@
   box-sizing: border-box;
 }
 
+:root {
+  --background-colour: #e6e6e6;
+}
+
+html {
+  background: var(--background-colour);
+}
+
 body {
   margin: 0px;
   font-size: 100%;

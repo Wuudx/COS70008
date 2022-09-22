@@ -9,6 +9,8 @@ const FlexContainer = styled.div`
     flex-direction: column;
     width: 20%;
     margin-left: ${stylingConstants.sizes.leftRightMargin};
+    background: white;
+    border-radius: ${stylingConstants.sizes.containerBorderRadius};
 `;
 
 const MONTHS = [
