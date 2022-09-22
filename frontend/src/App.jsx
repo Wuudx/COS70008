@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
+import ContactUsForm from "./components/contact-corelia/ContactUsForm";
 import Footer from "./components/footer/Footer";
 import Home from "./components/home/Home";
 import Navbar from "./components/navbar/Navbar";
@@ -27,6 +28,7 @@ function App() {
                         path="/repertoire-library"
                         element={<RepertoireLibrary />}
                     />
+                    <Route path="/contact-us" element={<ContactUsForm />} />
                 </Routes>
                 <Footer />
             </AppDiv>

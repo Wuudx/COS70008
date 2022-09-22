@@ -45,7 +45,7 @@ const Dropdown = ({ isVisible, dropdownName }) => {
                     <Link to="/join-corelia/">Join Corelia</Link>
                 </li>
                 <li>
-                    <Link to="/contact/">Contact</Link>
+                    <Link to="/contact-us/">Contact</Link>
                 </li>
             </Ul>
         );

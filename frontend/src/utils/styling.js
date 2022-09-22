@@ -4,6 +4,7 @@ const colours = {
     blue1Percent50: "rgb(123, 162, 213, 50%)",
     blue1Percent80: "rgb(123, 162, 213, 80%)",
     blue1Percent100: "rgb(123, 162, 213, 100%)",
+    blue2Percent10: "rgb(66, 123, 191, 10%)",
     blue2Percent30: "rgb(66, 123, 191, 30%)",
     blue2Percent50: "rgb(66, 123, 191, 50%)",
     blue2Percent80: "rgb(66, 123, 191, 50%)",
@@ -24,6 +25,7 @@ const sizes = {
     searchBarHeight: "70px",
     searchInputHeight: "40px",
     searchButtonIconWidth: "50px",
+    gapFromFooterToEndOfContent: "30px",
 };
 
 const stylingConstants = {
