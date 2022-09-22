@@ -16,10 +16,14 @@ const Input = styled.input`
     }
 `;
 
-
-const SearchInput = () => {
-  return (
-    <Input type="text" placeholder="Search ..." />
-  )
-}
-export default SearchInput
+const SearchInput = ({ searchQuery, handleInput }) => {
+    return (
+        <Input
+            type="text"
+            placeholder="Search ..."
+            value={searchQuery}
+            onChange={handleInput}
+        />
+    );
+};
+export default SearchInput;

@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
-import DiscoverComposers from "./components/discover-composers/DiscoverComposers";
 import Footer from "./components/footer/Footer";
 import Home from "./components/home/Home";
 import Navbar from "./components/navbar/Navbar";
-import SearchBar from "./components/searchbar/SearchBar";
 import RepertoireLibrary from "./components/repertoire-library/RepertoireLibrary";
+import SearchBar from "./components/searchbar/SearchBar";
 
 // Important so that footer sticks to bottom of page!
 const AppDiv = styled.div`
@@ -24,10 +23,6 @@ function App() {
                     <Route path="/" element={<Home />} />
                     {/* Note that there is no route for search parameter (e.g: "/discover-composers/?q=:query/") 
                     because react router does not support this. It the aforementioned link as "/discover-composers/" */}
-                    <Route
-                        path="/discover-composers/"
-                        element={<DiscoverComposers />}
-                    />
                     <Route
                         path="/repertoire-library"
                         element={<RepertoireLibrary />}
