@@ -5,7 +5,7 @@ import stylingConstants from "../../utils/styling";
 
 const Li = styled.li`
     &: hover {
-        background-color: ${stylingConstants.colours.blue2Percent80};
+        background-color: ${stylingConstants.colours.blue2Percent100};
     }
     background-color: ${(props) =>
         props.isFocused ? stylingConstants.colours.blue2Percent100 : ""};

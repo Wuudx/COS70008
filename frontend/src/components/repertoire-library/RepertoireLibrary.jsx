@@ -16,6 +16,7 @@ const RepertoireLibrary = () => {
         <FlexContainer>
             <FilterBar />
             <h1>Content goes here</h1>
+            <p>lorem ipsum deez nut</p>
         </FlexContainer>
     );
 };

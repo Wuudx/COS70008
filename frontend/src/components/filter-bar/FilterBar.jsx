@@ -17,7 +17,7 @@ const InnerFlexContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${stylingConstants.colours.blue2Percent50};
+    background-color: ${stylingConstants.colours.blue1Percent100};
     width: 100%;
     min-height: 2em;
     flex-wrap: wrap;
