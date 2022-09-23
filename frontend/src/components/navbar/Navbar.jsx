@@ -72,10 +72,10 @@ const Navbar = () => {
             <Nav>
                 <Ul gap="3em">
                     <li>
-                        <StyledLink to="/about/">About</StyledLink>
+                        <StyledLink to="/about">About</StyledLink>
                     </li>
                     <li>
-                        <StyledLink to="/discover-composers/">
+                        <StyledLink to="/discover-composers">
                             Discover Composers
                         </StyledLink>
                     </li>
@@ -97,7 +97,7 @@ const Navbar = () => {
                         />
                     </li>
                     <li>
-                        <StyledLink to="/blog/">Blog</StyledLink>
+                        <StyledLink to="/blog">Blog</StyledLink>
                     </li>
                     <li ref={getInvolvedDropdownRef}>
                         <Button
