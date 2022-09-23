@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
 import FilterBar from "../filter-bar/FilterBar";
-import SearchBar from "./SearchBar";
-import SearchResults from "./SearchResults";
 
 // TODO: Layout this page with flex box.
 const FlexContainer = styled.div`
@@ -14,9 +12,7 @@ const FlexContainer = styled.div`
 const DiscoverComposers = () => {
     return (
         <FlexContainer>
-            <SearchBar />
             <FilterBar />
-            <SearchResults />
         </FlexContainer>
     );
 };
