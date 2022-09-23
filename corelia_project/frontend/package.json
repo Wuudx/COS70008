@@ -1,0 +1,35 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "@babel/preset-react": "^7.18.6",
+    "babel-loader": "^8.2.5",
+    "lato-font": "^3.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.6",
+    "file-loader": "^6.2.0",
+    "react-icons": "^4.4.0",
+    "react-router-dom": "^6.4.1",
+    "reactjs": "^1.0.0",
+    "styled-components": "^5.3.5"
+  }
+}
