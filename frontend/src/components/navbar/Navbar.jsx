@@ -10,7 +10,10 @@ import stylingConstants from "../../utils/styling";
 import Dropdown from "./Dropdown";
 
 const Img = styled.img`
-    margin-left: 80px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 4px 0 0 80px;
     cursor: pointer;
 `;
 
@@ -18,11 +21,14 @@ const Img = styled.img`
 const Nav = styled.nav`
     display: flex;
     align-items: center;
-    margin-left: 12%;
+    justify-content: center;
+    width: 100%;
+    margin: auto 240px;
 `;
 
 const Container = styled.div`
     display: flex;
+    justify-content: center;
     height: ${stylingConstants.sizes.navbarHeight};
     border-bottom: 5px solid ${stylingConstants.colours.blue2Percent30};
     padding: 5px 0px;

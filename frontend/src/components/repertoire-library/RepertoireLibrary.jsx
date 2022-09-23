@@ -14,7 +14,7 @@ const FlexContainer = styled.div`
 const RepertoireLibrary = () => {
     return (
         <FlexContainer>
-            <FilterBar />
+            <FilterBar initialSearchType={'Artist'} />
             <h1>Content goes here</h1>
             <p>lorem ipsum deez nut</p>
         </FlexContainer>

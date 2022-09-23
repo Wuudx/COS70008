@@ -3,6 +3,7 @@ import useSearchQuery from "../../hooks/useSearchQuery";
 import stylingConstants from "../../utils/styling";
 import FilterDropdown from "./FilterDropdown";
 import FilterLetters from "./FilterLetters";
+import { useState } from "react";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -23,16 +24,20 @@ const InnerFlexContainer = styled.div`
     flex-wrap: wrap;
 `;
 
-const FilterBar = () => {
-    // I don't think we need this anymore, but I'll leave it here for now.s
+const FilterBar = ( {initialSearchType} ) => {
+    // I don't think we need this anymore, but I'll leave it here for now.
     // const searchQuery = useSearchQuery("q");
     // if (!searchQuery) {
     //     return;
     // }
+
+    const [searchType, setSearchType] = useState(initialSearchType ?? "A-Z");
+    const changeSearchType = (newSearchType) => setSearchType(newSearchType);
+
     return (
         <FlexContainer>
             <InnerFlexContainer>
-                <FilterDropdown />
+                <FilterDropdown searchType={searchType} changeSearchType={changeSearchType} />
                 <FilterLetters />
             </InnerFlexContainer>
         </FlexContainer>
