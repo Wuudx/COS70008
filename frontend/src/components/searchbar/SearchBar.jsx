@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useSearchQuery from "../../hooks/useSearchQuery";
 import stylingConstants from "../../utils/styling";
@@ -25,11 +25,20 @@ const SearchBar = () => {
     const currentSearchQuery = useSearchQuery("q");
     const [searchQuery, setSearchQuery] = useState(currentSearchQuery || "");
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        setSearchQuery(currentSearchQuery || "");
+    }, [currentSearchQuery]);
 
     // Note that input in react is sanitised by default (I think, TODO: follow up on this.)
     function handleSearch(e) {
         e.preventDefault(); // Prevent default form behaviour.
-        navigate(`search?q=${searchQuery}`);
+        if (pathname.includes("search")) {
+            navigate(`${pathname}?q=${searchQuery}`);
+        } else {
+            navigate(`${pathname}/search?q=${searchQuery}`);
+        }
     }
 
     function handleInput(e) {
