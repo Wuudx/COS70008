@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import useSearchQuery from "../../../hooks/useSearchQuery";
-import stylingConstants from "../../../utils/styling";
+import useSearchQuery from "../../hooks/useSearchQuery";
+import stylingConstants from "../../utils/styling";
 import FilterDropdown from "./FilterDropdown";
 import FilterLetters from "./FilterLetters";
 
@@ -9,6 +9,8 @@ const FlexContainer = styled.div`
     justify-content: center;
     width: 100%;
     margin-top: 1em;
+    padding: 0;
+    margin-top: 0;
 `;
 
 const InnerFlexContainer = styled.div`
@@ -16,16 +18,17 @@ const InnerFlexContainer = styled.div`
     justify-content: center;
     align-items: center;
     background-color: ${stylingConstants.colours.blue2Percent50};
-    width: 80%;
+    width: 100%;
     min-height: 2em;
     flex-wrap: wrap;
 `;
 
 const FilterBar = () => {
-    const searchQuery = useSearchQuery("q");
-    if (!searchQuery) {
-        return;
-    }
+    // I don't think we need this anymore, but I'll leave it here for now.s
+    // const searchQuery = useSearchQuery("q");
+    // if (!searchQuery) {
+    //     return;
+    // }
     return (
         <FlexContainer>
             <InnerFlexContainer>
