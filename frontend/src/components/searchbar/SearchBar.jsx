@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useSearchQuery from "../../hooks/useSearchQuery";
@@ -25,6 +25,10 @@ const SearchBar = () => {
     const currentSearchQuery = useSearchQuery("q");
     const [searchQuery, setSearchQuery] = useState(currentSearchQuery || "");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setSearchQuery(currentSearchQuery || "");
+    }, [currentSearchQuery]);
 
     // Note that input in react is sanitised by default (I think, TODO: follow up on this.)
     function handleSearch(e) {
