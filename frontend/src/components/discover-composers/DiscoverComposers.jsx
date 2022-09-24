@@ -12,7 +12,7 @@ const FlexContainer = styled.div`
 const DiscoverComposers = () => {
     return (
         <FlexContainer>
-            <FilterBar />
+            <FilterBar initialSearchType={'A-Z'}/>
         </FlexContainer>
     );
 };
