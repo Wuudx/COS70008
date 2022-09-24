@@ -3,11 +3,11 @@ import { IoIosArrowUp } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NavLogo from "../../assets/images/nav-logo.png";
-import useToggleDropdown from "../../hooks/useToggleDropdown";
 import NavButton from "../../shared-styled-components/NavButton";
 import Ul from "../../shared-styled-components/NavUl";
 import stylingConstants from "../../utils/styling";
 import Dropdown from "./Dropdown";
+import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 
 const Img = styled.img`
     position: absolute;
@@ -65,12 +65,8 @@ const Navbar = () => {
     const exploreRepDropdownRef = useRef();
     const getInvolvedDropdownRef = useRef();
 
-    const {
-        isExploreRepDropdownVisible,
-        isGetInvolvedDropdownVisible,
-        toggleExploreRepDropdown,
-        toggleGetInvolvedDropdown,
-    } = useToggleDropdown(exploreRepDropdownRef, getInvolvedDropdownRef);
+    const [isExploreRepDropdownVisible, toggleExploreRepDropdown] = useDetectOutsideClick(exploreRepDropdownRef, false);
+    const [isGetInvolvedDropdownVisible, toggleGetInvolvedDropdown] = useDetectOutsideClick(getInvolvedDropdownRef, false);
 
     return (
         <Container>
