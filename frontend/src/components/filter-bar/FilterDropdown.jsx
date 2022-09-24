@@ -1,10 +1,8 @@
 import { useRef } from 'react';
-import FolderIcon from '../../assets/icons/folder-icon.png';
 import styled from "styled-components";
 import stylingConstants from '../../utils/styling';
 import { IoIosArrowDown } from "react-icons/io";
 import { FaFolderOpen } from "react-icons/fa";
-import { TbMinusVertical } from "react-icons/tb";
 import FilterBarDropdown from './FilterBarDropdown';
 import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 
