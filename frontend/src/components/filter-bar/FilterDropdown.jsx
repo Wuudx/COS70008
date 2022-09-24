@@ -4,6 +4,7 @@ import styled from "styled-components";
 import stylingConstants from '../../utils/styling';
 import { IoIosArrowDown } from "react-icons/io";
 import { FaFolderOpen } from "react-icons/fa";
+import { TbMinusVertical } from "react-icons/tb";
 import FilterBarDropdown from './FilterBarDropdown';
 import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 
@@ -22,7 +23,14 @@ const FilterContainer = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    max-width: 120px;
+`;
+
+const VerticalLine = styled.div`
+    height: 3em;
+    width: 0.5px;
+    background-color: white;
+    margin-left: 0.5em;
+    margin-right: 2em;
 `;
 
 
@@ -54,7 +62,8 @@ const FilterDropdown = ({ searchType, changeSearchType }) => {
                         marginRight: "0.5em", 
                     }}
                     color="white"
-                />                
+                />
+                <VerticalLine />          
             </FilterContainer>
             <FilterBarDropdown isOpen={isOpen} handleSearchFilterClick={handleSearchFilterClick} />
         </Container>
