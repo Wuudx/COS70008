@@ -47,11 +47,11 @@ const filters = [
 ];
 
 const SideFilters = () => {
-    if (filters[0].name !== "All") {
-        filters.unshift({ name: "All", count: 9001 });
+    if (filters[0].name !== "All Music") {
+        filters.unshift({ name: "All Music", count: 9001 });
     }
 
-    const [selectedFilter, setSelectedFilter] = useState("All");
+    const [selectedFilter, setSelectedFilter] = useState("All Music");
 
     return (
         <Ul>

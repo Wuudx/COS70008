@@ -27,7 +27,7 @@ const Content = styled.div`
     align-items: center;
     justify-content: center;
     padding: 0;
-    width: 80%;
+    width: 60%;
     margin-top: ${stylingConstants.sizes.navbarHeight} + 10px;
 `;
 
