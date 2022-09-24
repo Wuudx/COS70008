@@ -65,7 +65,8 @@ const songs = [
 ];
 
 const RepertoireContent = () => {
-    const [numItems, setNumItems] = useState(2);
+    // Change this to be the number of songs to be displayed after testing
+    const [numItems, setNumItems] = useState(2); // Change this too!
 
     const handleLoadMore = () => {
         setNumItems(numItems + 2);
