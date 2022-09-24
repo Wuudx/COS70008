@@ -4,6 +4,8 @@ import useSearchQuery from "../../hooks/useSearchQuery";
 import stylingConstants from "../../utils/styling";
 import MonthFilter from "./MonthFilter";
 
+// TODO: Maybe add margin left and margin right (from invisible flex item) to parent flex container. This should have the
+// same effect.
 const FlexContainer = styled.div`
     display: flex;
     flex-direction: column;

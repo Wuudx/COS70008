@@ -33,3 +33,8 @@ a, button {
   font-family: lato-regular;
   src: url("./assets/fonts/Lato-Regular.ttf");
 }
+
+@font-face {
+  font-family: lato-light;
+  src: url("./assets/fonts/Lato-Light.ttf");
+}

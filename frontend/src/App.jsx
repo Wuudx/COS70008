@@ -4,7 +4,7 @@ import BackToTopButton from "./components/back-to-top-button/BackToTopButton";
 import Blog from "./components/blog/Blog";
 import ContactUsForm from "./components/contact-corelia/ContactUsForm";
 import DiscoverComposers from "./components/discover-composers/DiscoverComposers";
-import SearchResults from "./components/discover-composers/SearchResults";
+import SearchResultsContainer from "./components/discover-composers/SearchResultsContainer";
 import Footer from "./components/footer/Footer";
 import Home from "./components/home/Home";
 import Navbar from "./components/navbar/Navbar";
@@ -38,7 +38,7 @@ function App() {
                         element={
                             <>
                                 <DiscoverComposers />
-                                <SearchResults />
+                                <SearchResultsContainer />
                             </>
                         }
                     />

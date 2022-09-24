@@ -1,0 +1,60 @@
+import styled from "styled-components";
+import stylingConstants from "../../utils/styling";
+
+const FlexContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+`;
+
+const Span = styled.span`
+    font-family: lato-light;
+`;
+
+const Img = styled.img`
+    position: relative; // So that z-index works.
+    width: 200px;
+    height: 200px;
+`;
+
+const ImageContainer = styled.div`
+    position: relative; // So that position absolute works for first name.
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+    transition: 0.8s;
+    &:hover {
+        img {
+            z-index: -1;
+        }
+        background: ${stylingConstants.colours.blue2Percent50};
+    }
+`;
+
+const FirstNameSpan = styled.span`
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: lato-bold;
+    color: white;
+    font-size: 1.5em;
+`;
+
+const Composer = ({ composer }) => {
+    return (
+        <FlexContainer>
+            <ImageContainer>
+                <FirstNameSpan>
+                    {composer.firstName.toUpperCase()}
+                </FirstNameSpan>
+                <Img src={composer.picture} alt="composer picture" />
+            </ImageContainer>
+            <Span>
+                {composer.firstName} {composer.lastName}
+            </Span>
+        </FlexContainer>
+    );
+};
+export default Composer;
