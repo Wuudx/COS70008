@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import stylingConstants from "../../utils/styling";
-import FilterBar from "../filter-bar/FilterBar";
-import SideFilters from "./SideFilters";
+import styled from 'styled-components';
+import stylingConstants from '../../utils/styling';
+import FilterBar from '../filter-bar/FilterBar';
+import SideFilters from './SideFilters';
+import RepertoireContent from './RepertoireContent';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -21,16 +22,6 @@ const ContentContainer = styled.div`
     margin-top: 10px;
 `;
 
-const Content = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    width: 60%;
-    margin-top: ${stylingConstants.sizes.navbarHeight} + 10px;
-`;
-
 const Padding = styled.div`
     height: 10px;
     width: ${stylingConstants.sizes.sideFilterWidth};
@@ -39,19 +30,10 @@ const Padding = styled.div`
 const RepertoireLibrary = () => {
     return (
         <FlexContainer>
-            <FilterBar initialSearchType={"Artist"} />
+            <FilterBar initialSearchType={'Artist'} />
             <ContentContainer>
                 <SideFilters />
-                <Content>
-                    <h1>Repertoire Library</h1>
-                    <p>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing
-                        elit. Porro excepturi dolore nulla in exercitationem
-                        voluptatibus modi, tenetur ducimus provident, dicta
-                        deleniti, distinctio officiis dolorem animi nesciunt qui
-                        debitis voluptatum quo.
-                    </p>
-                </Content>
+                <RepertoireContent />
                 <Padding />
             </ContentContainer>
         </FlexContainer>
