@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
 
@@ -43,9 +44,20 @@ const FirstNameSpan = styled.span`
 `;
 
 const Composer = ({ composer }) => {
+    const navigate = useNavigate();
+
+    function navigateToComposer() {
+        // We pass the id in state instead of url params (I think it is not safe in general to have id in url params. although
+        // it probably wouldn't matter in this case.)
+        navigate(
+            `discover-composers/${composer.firstName}-${composer.lastName}`,
+            { state: { composerId: composer.id } }
+        );
+    }
+
     return (
         <FlexContainer>
-            <ImageContainer>
+            <ImageContainer onClick={navigateToComposer}>
                 <FirstNameSpan>
                     {composer.firstName.toUpperCase()}
                 </FirstNameSpan>
