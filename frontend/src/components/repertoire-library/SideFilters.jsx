@@ -31,11 +31,24 @@ const Ul = styled.ul`
 `;
 
 // Remove this for final version - Testing data until integration with API
-const filters = ["filter one", "filter two", "filter three"];
+const filters = [
+    {
+        name: "filter one",
+        count: 340,
+    },
+    {
+        name: "filter two",
+        count: 69,
+    },
+    {
+        name: "filter three",
+        count: 420,
+    },
+];
 
 const SideFilters = () => {
-    if (filters[0] !== "All") {
-        filters.unshift("All");
+    if (filters[0].name !== "All") {
+        filters.unshift({ name: "All", count: 9001 });
     }
 
     const [selectedFilter, setSelectedFilter] = useState("All");
@@ -44,8 +57,9 @@ const SideFilters = () => {
         <Ul>
             {filters.map((filter) => (
                 <SideFilter
-                    key={filter}
-                    filter={filter}
+                    key={filter.name}
+                    filter={filter.name}
+                    count={filter.count}
                     selectedFilter={selectedFilter}
                     setSelectedFilter={setSelectedFilter}
                 />
