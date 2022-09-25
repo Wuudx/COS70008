@@ -1,18 +1,16 @@
-import SideFilter from "./SideFilter";
-import styled from "styled-components";
-import { useState } from "react";
-import stylingConstants from "../../utils/styling";
+import SideFilter from './SideFilter';
+import styled from 'styled-components';
+import { useState } from 'react';
+import stylingConstants from '../../utils/styling';
 
 const Ul = styled.ul`
-    width: ${stylingConstants.sizes.sideFilterWidth};
+    min-width: ${stylingConstants.sizes.sideFilterWidth};
     list-style: none;
     padding: 0;
-    margin: 0 10px;
+    margin: 10px 10px 0 10px;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    justify-content: space-between;
-    margin-top: 10px;
+
     border-radius: ${stylingConstants.sizes.containerBorderRadius};
     background-color: white;
 
@@ -33,25 +31,25 @@ const Ul = styled.ul`
 // Remove this for final version - Testing data until integration with API
 const filters = [
     {
-        name: "filter one",
+        name: 'filter one',
         count: 340,
     },
     {
-        name: "filter two",
+        name: 'filter two',
         count: 69,
     },
     {
-        name: "filter three",
+        name: 'filter three',
         count: 420,
     },
 ];
 
 const SideFilters = () => {
-    if (filters[0].name !== "All Music") {
-        filters.unshift({ name: "All Music", count: 9001 });
+    if (filters[0].name !== 'All Music') {
+        filters.unshift({ name: 'All Music', count: 9001 });
     }
 
-    const [selectedFilter, setSelectedFilter] = useState("All Music");
+    const [selectedFilter, setSelectedFilter] = useState('All Music');
 
     return (
         <Ul>
