@@ -17,7 +17,7 @@ const FlexContainer = styled.div`
 const ContentContainer = styled.div`
     display: flex;
     flex-direction: row;
-    align-items: stretch;
+    align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     margin-top: 10px;
@@ -25,7 +25,7 @@ const ContentContainer = styled.div`
 
 const Padding = styled.div`
     height: 10px;
-    width: ${stylingConstants.sizes.sideFilterWidth};
+    min-width: ${stylingConstants.sizes.sideFilterWidth};
 `;
 
 const RepertoireLibrary = () => {

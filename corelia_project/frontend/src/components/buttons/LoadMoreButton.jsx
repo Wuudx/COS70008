@@ -3,7 +3,7 @@ import stylingConstants from '../../utils/styling';
 import React from 'react';
 
 const LoadMore = styled.div`
-    background-color: ${stylingConstants.colours.blue2Percent100};
+    background-color: ${stylingConstants.colours.blue1Percent100};
     color: white;
     border: none;
     padding: 10px 30px;
@@ -13,7 +13,7 @@ const LoadMore = styled.div`
     cursor: pointer;
 
     &:hover {
-        background-color: ${stylingConstants.colours.blue2Percent80};
+        background-color: ${stylingConstants.colours.blue1Percent80};
     }
 `;
 
