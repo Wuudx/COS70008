@@ -1,4 +1,4 @@
-import SearchLogo from "../../assets/images/search-logo-black.png";
+import SearchLogo from "../../../../frontend/static/images/search-logo-black.png";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
 import React from "react";

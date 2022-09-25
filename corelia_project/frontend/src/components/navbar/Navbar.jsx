@@ -2,16 +2,19 @@ import { useRef } from "react";
 import { IoIosArrowUp } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import NavLogo from "../../assets/images/nav-logo.png";
-import useToggleDropdown from "../../hooks/useToggleDropdown";
+import NavLogo from "../../../../frontend/static/images/nav-logo.png";
 import NavButton from "../../shared-styled-components/NavButton";
 import Ul from "../../shared-styled-components/NavUl";
 import stylingConstants from "../../utils/styling";
 import Dropdown from "./Dropdown";
+import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 import React from "react";
 
 const Img = styled.img`
-    margin-left: 80px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 4px 0 0 80px;
     cursor: pointer;
 `;
 
@@ -19,11 +22,14 @@ const Img = styled.img`
 const Nav = styled.nav`
     display: flex;
     align-items: center;
-    margin-left: 12%;
+    justify-content: center;
+    width: 100%;
+    margin: auto 240px;
 `;
 
 const Container = styled.div`
     display: flex;
+    justify-content: center;
     height: ${stylingConstants.sizes.navbarHeight};
     border-bottom: 5px solid ${stylingConstants.colours.blue2Percent30};
     padding: 5px 0px;
@@ -60,12 +66,8 @@ const Navbar = () => {
     const exploreRepDropdownRef = useRef();
     const getInvolvedDropdownRef = useRef();
 
-    const {
-        isExploreRepDropdownVisible,
-        isGetInvolvedDropdownVisible,
-        toggleExploreRepDropdown,
-        toggleGetInvolvedDropdown,
-    } = useToggleDropdown(exploreRepDropdownRef, getInvolvedDropdownRef);
+    const [isExploreRepDropdownVisible, toggleExploreRepDropdown] = useDetectOutsideClick(exploreRepDropdownRef, false);
+    const [isGetInvolvedDropdownVisible, toggleGetInvolvedDropdown] = useDetectOutsideClick(getInvolvedDropdownRef, false);
 
     return (
         <Container>
@@ -73,10 +75,10 @@ const Navbar = () => {
             <Nav>
                 <Ul gap="3em">
                     <li>
-                        <StyledLink to="/about/">About</StyledLink>
+                        <StyledLink to="/about">About</StyledLink>
                     </li>
                     <li>
-                        <StyledLink to="/discover-composers/">
+                        <StyledLink to="/discover-composers">
                             Discover Composers
                         </StyledLink>
                     </li>
@@ -98,7 +100,7 @@ const Navbar = () => {
                         />
                     </li>
                     <li>
-                        <StyledLink to="/blog/">Blog</StyledLink>
+                        <StyledLink to="/blog">Blog</StyledLink>
                     </li>
                     <li ref={getInvolvedDropdownRef}>
                         <Button

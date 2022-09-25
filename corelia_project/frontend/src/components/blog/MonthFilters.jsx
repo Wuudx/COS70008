@@ -5,6 +5,8 @@ import stylingConstants from "../../utils/styling";
 import MonthFilter from "./MonthFilter";
 import React from "react";
 
+// TODO: Maybe add margin left and margin right (from invisible flex item) to parent flex container. This should have the
+// same effect.
 const FlexContainer = styled.div`
     display: flex;
     flex-direction: column;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import footerLogo from "../../../assets/images/footer-logo.png";
+import footerLogo from "../../../../static/images/footer-logo.png";
 import stylingConstants from "../../../utils/styling";
 import CopyrightMessage from "./CopyrightMessage";
 import HouseKeepingNav from "./HouseKeepingNav";

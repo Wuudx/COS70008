@@ -29,6 +29,7 @@ const sizes = {
     gapFromFooterToEndOfContent: "30px",
     leftRightMargin: "10px",
     containerBorderRadius: "0.5em",
+    sideFilterWidth: "200px",
 };
 
 const stylingConstants = {

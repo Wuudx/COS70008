@@ -26,10 +26,15 @@ a, button {
 
 @font-face {
   font-family: lato-bold;
-  src: url(./frontend/src/assets/fonts/Lato-Bold.ttf) format("truetype");
+  src: url("./fonts/Lato-Bold.ttf") format("truetype");
 }
 
 @font-face {
   font-family: lato-regular;
-  src: url(./frontend/src/assets/fonts/Lato-Regular.ttf) format("truetype");
+  src: url("./fonts/Lato-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: lato-light;
+  src: url("./fonts/Lato-Light.ttf");
 }

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
-import FilterBar from "./filter-bar/FilterBar";
+import FilterBar from "../filter-bar/FilterBar";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 import React from "react";
@@ -15,9 +15,7 @@ const FlexContainer = styled.div`
 const DiscoverComposers = () => {
     return (
         <FlexContainer>
-            <SearchBar />
-            <FilterBar />
-            <SearchResults />
+            <FilterBar initialSearchType={"A-Z"} />
         </FlexContainer>
     );
 };
