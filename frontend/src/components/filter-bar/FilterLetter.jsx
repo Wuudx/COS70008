@@ -1,14 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import useSearchQuery from "../../hooks/useSearchQuery";
-import stylingConstants from "../../utils/styling";
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import useSearchQuery from '../../hooks/useSearchQuery';
+import stylingConstants from '../../utils/styling';
 
 const Li = styled.li`
     &: hover {
-        background-color: ${stylingConstants.colours.blue2Percent100};
+        background-color: ${stylingConstants.colours.blue1Percent100};
     }
     background-color: ${(props) =>
-        props.isFocused ? stylingConstants.colours.blue2Percent100 : ""};
+        props.isFocused ? stylingConstants.colours.blue1Percent100 : ''};
     height: 100%;
     width: 1.5em;
     // Important so that text is centered inside div.
@@ -27,8 +27,8 @@ const StyledLink = styled(Link)`
 
 const FilterLetter = ({ letter }) => {
     const navigate = useNavigate();
-    const searchQuery = useSearchQuery("q");
-    const letterFilter = useSearchQuery("letter");
+    const searchQuery = useSearchQuery('q');
+    const letterFilter = useSearchQuery('letter');
 
     function navigateToFilter() {
         navigate(`?q=${searchQuery}&letter=${letter}`);
