@@ -1,4 +1,6 @@
+from cmath import nan
 from django.db import models
+ 
 
 # Create your models here.
 
@@ -13,7 +15,9 @@ class Composer(models.Model):
     id = models.AutoField(primary_key=True)
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
-    birthDate = models.DateField()
+    middleName = models.CharField(max_length=100, blank=True, null=True)
+    birth = models.IntegerField(blank=True, null=True)
+    death = models.IntegerField(null=True, blank=True)
     nationality = models.ForeignKey(Nationality, on_delete=models.CASCADE)
 
     def __str__(self):
