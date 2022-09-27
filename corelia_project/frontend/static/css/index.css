@@ -1,0 +1,40 @@
+/* This includes the border and padding in the width and height of an element. */
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --background-colour: #e6e6e6;
+}
+
+html {
+  background: var(--background-colour);
+}
+
+body {
+  margin: 0px;
+  font-size: 100%;
+
+  /* Ensures that all content is below navbar. Please make sure this is same as navbarHeight in stylingConstants! */
+  padding-top: 100px;
+}
+
+/* Ensures that font sizes for anchor tags and buttons are the same (along with font size above in body selector).  */
+a, button {
+  font-size: 100%;
+}
+
+@font-face {
+  font-family: lato-bold;
+  src: url("./fonts/Lato-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: lato-regular;
+  src: url("./fonts/Lato-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: lato-light;
+  src: url("./fonts/Lato-Light.ttf");
+}
