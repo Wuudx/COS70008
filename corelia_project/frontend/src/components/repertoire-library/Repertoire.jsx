@@ -71,7 +71,7 @@ const Repertoire = ({ song }) => {
     };
 
     const handleClick = () => {
-        console.log('Clicked');
+        console.log('Clicked'); // TODO: Implement this
     };
 
     return (
