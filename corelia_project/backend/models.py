@@ -20,6 +20,7 @@ class Composer(models.Model):
     death = models.IntegerField(null=True, blank=True)
     nationality = models.ForeignKey(Nationality, on_delete=models.CASCADE)
     featured = models.BooleanField(default=False)
+    image = models.CharField(max_length=300, default = "https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg")
 
     def __str__(self):
         return self.firstName
