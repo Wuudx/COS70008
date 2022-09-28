@@ -40,13 +40,13 @@ class Publisher(models.Model):
 
 class Composition(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, blank=True, null=True)
     composer = models.ForeignKey(Composer, on_delete=models.CASCADE)
-    year = models.IntegerField()
-    duration = models.IntegerField()
-    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
-    recording_link = models.CharField(max_length=150)
-    score_link = models.CharField(max_length=150)
+    year = models.IntegerField(blank = True, null = True)
+    duration = models.FloatField(blank = True, null = True)
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, blank=True, null=True)
+    recording_link = models.CharField(max_length=300, blank=True, null=True)
+    score_link = models.CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -60,8 +60,8 @@ class Instrument(models.Model):
 
 class CompositionInstrument(models.Model):
     composition = models.ForeignKey(Composition, on_delete=models.CASCADE)
-    instrument = models.CharField(max_length=100)
-    quantity = models.IntegerField()
+    instrument = models.CharField(max_length=100 , blank=True, null=True)
+    
 
     def __str__(self):
         return self.instrument
