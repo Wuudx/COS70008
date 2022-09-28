@@ -19,6 +19,7 @@ class Composer(models.Model):
     birth = models.IntegerField(blank=True, null=True)
     death = models.IntegerField(null=True, blank=True)
     nationality = models.ForeignKey(Nationality, on_delete=models.CASCADE)
+    featured = models.BooleanField(default=False)
 
     def __str__(self):
         return self.firstName

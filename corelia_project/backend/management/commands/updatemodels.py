@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
 
         df = pd.read_csv('corelia_dataset.csv', delimiter=',', encoding='latin-1')
-        """
+        
         for nationality in df.Nationality:
             if (Nationality.objects.filter(name = nationality).count() == 0):
                 models = Nationality(name = nationality)
@@ -39,7 +39,7 @@ class Command(BaseCommand):
                 if (ComposerNationality.objects.filter(composer_id = c_id).count() == 0):
                     models = ComposerNationality(composer_id = c_id, nationality_id = n_id)
                     models.save()
-        """
+        
         for index, row in df.iterrows():
             if (Composition.objects.filter(name = row['Nameofpiece']).count() == 0):
                 composer = Composer.objects.get(firstName = row['FirstName'])

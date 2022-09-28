@@ -3,6 +3,8 @@ import styled from "styled-components";
 import FeaturedComposer from "./FeaturedComposer";
 import React from "react";
 
+import axios from "axios";
+
 // This is assigns a div to a reusuable component called "FeaturedComposersContainer" which has the styles defined
 // below.
 const FlexContainer = styled.div`
