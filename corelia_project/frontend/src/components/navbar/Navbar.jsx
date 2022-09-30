@@ -1,14 +1,14 @@
-import { useRef } from "react";
-import { IoIosArrowUp } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import NavLogo from "../../../../frontend/static/images/nav-logo.png";
-import NavButton from "../../shared-styled-components/NavButton";
-import Ul from "../../shared-styled-components/NavUl";
-import stylingConstants from "../../utils/styling";
-import Dropdown from "./Dropdown";
+import { useRef } from 'react';
+import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import NavLogo from '../../../../frontend/static/images/nav-logo.png';
+import NavButton from '../../shared-styled-components/NavButton';
+import Ul from '../../shared-styled-components/NavUl';
+import stylingConstants from '../../utils/styling';
+import Dropdown from './Dropdown';
 import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
-import React from "react";
+import React from 'react';
 
 const Img = styled.img`
     position: absolute;
@@ -66,56 +66,83 @@ const Navbar = () => {
     const exploreRepDropdownRef = useRef();
     const getInvolvedDropdownRef = useRef();
 
-    const [isExploreRepDropdownVisible, toggleExploreRepDropdown] = useDetectOutsideClick(exploreRepDropdownRef, false);
-    const [isGetInvolvedDropdownVisible, toggleGetInvolvedDropdown] = useDetectOutsideClick(getInvolvedDropdownRef, false);
+    const [isExploreRepDropdownVisible, toggleExploreRepDropdown] =
+        useDetectOutsideClick(exploreRepDropdownRef, false);
+    const [isGetInvolvedDropdownVisible, toggleGetInvolvedDropdown] =
+        useDetectOutsideClick(getInvolvedDropdownRef, false);
 
     return (
         <Container>
-            <Img src={NavLogo} alt="logo" onClick={() => navigate("/")} />
+            <Img src={NavLogo} alt='logo' onClick={() => navigate('/')} />
             <Nav>
-                <Ul gap="3em">
+                <Ul gap='3em'>
                     <li>
-                        <StyledLink to="/about">About</StyledLink>
+                        <StyledLink to='/about'>About</StyledLink>
                     </li>
                     <li>
-                        <StyledLink to="/discover-composers">
+                        <StyledLink to='/discover-composers'>
                             Discover Composers
                         </StyledLink>
                     </li>
                     <li ref={exploreRepDropdownRef}>
                         <Button
-                            type="button"
+                            type='button'
                             onClick={toggleExploreRepDropdown}
                         >
                             Explore Repertoire
-                            <IoIosArrowUp
-                                color={stylingConstants.colours.blue2Percent30}
-                                // This ensures that arrow is inline with text.
-                                style={{ verticalAlign: "bottom" }}
-                            />
+                            {isExploreRepDropdownVisible ? (
+                                <IoIosArrowUp
+                                    color={
+                                        stylingConstants.colours.blue2Percent30
+                                    }
+                                    // This ensures that arrow is inline with text.
+                                    style={{ verticalAlign: 'bottom' }}
+                                />
+                            ) : (
+                                <IoIosArrowDown
+                                    color={
+                                        stylingConstants.colours.blue2Percent30
+                                    }
+                                    // This ensures that arrow is inline with text.
+                                    style={{ verticalAlign: 'bottom' }}
+                                />
+                            )}
                         </Button>
                         <Dropdown
                             isVisible={isExploreRepDropdownVisible}
-                            dropdownName="Explore Repertoire"
+                            dropdownName='Explore Repertoire'
                         />
                     </li>
                     <li>
-                        <StyledLink to="/blog">Blog</StyledLink>
+                        <StyledLink to='/blog'>Blog</StyledLink>
                     </li>
                     <li ref={getInvolvedDropdownRef}>
                         <Button
-                            type="button"
+                            type='button'
                             onClick={toggleGetInvolvedDropdown}
                         >
                             Get Involved
-                            <IoIosArrowUp
-                                color={stylingConstants.colours.blue2Percent30}
-                                style={{ verticalAlign: "bottom" }}
-                            />
+                            {isGetInvolvedDropdownVisible ? (
+                                <IoIosArrowUp
+                                    color={
+                                        stylingConstants.colours.blue2Percent30
+                                    }
+                                    // This ensures that arrow is inline with text.
+                                    style={{ verticalAlign: 'bottom' }}
+                                />
+                            ) : (
+                                <IoIosArrowDown
+                                    color={
+                                        stylingConstants.colours.blue2Percent30
+                                    }
+                                    // This ensures that arrow is inline with text.
+                                    style={{ verticalAlign: 'bottom' }}
+                                />
+                            )}
                         </Button>
                         <Dropdown
                             isVisible={isGetInvolvedDropdownVisible}
-                            dropdownName="Get Involved"
+                            dropdownName='Get Involved'
                         />
                     </li>
                 </Ul>
