@@ -14,18 +14,24 @@ const FeaturedComposer = ({ featuredComposer }) => {
         <Container>
             <RoundedImage src={featuredComposer.image} alt="Composer Picture" />
             <p>
-                <Link to={`/composers/${featuredComposer.firstName+featuredComposer.lastName}`}>
-                    {featuredComposer.firstName + " " + featuredComposer.lastName}
+                <Link
+                    to={`/composers/${
+                        featuredComposer.firstName + featuredComposer.lastName
+                    }`}
+                >
+                    {featuredComposer.firstName +
+                        " " +
+                        featuredComposer.lastName}
                 </Link>
                 <br />
-                <br />Year of Birth: {featuredComposer.birth}
                 <br />
-                {featuredComposer.death != 0 &&
-                <p>Year of Death: {featuredComposer.death}</p>
-                }
+                Year of Birth: {featuredComposer.birth}
+                <br />
+                {featuredComposer.death != 0 && (
+                    <p>Year of Death: {featuredComposer.death}</p>
+                )}
                 <br />
                 Nationality: {featuredComposer.nationality}
-
             </p>
         </Container>
     );

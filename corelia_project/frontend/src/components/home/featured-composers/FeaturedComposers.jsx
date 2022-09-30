@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import FeaturedComposer from './FeaturedComposer';
-import React from 'react';
-import stylingConstants from '../../../utils/styling';
+import { useState, useEffect } from "react";
+import styled from "styled-components";
+import FeaturedComposer from "./FeaturedComposer";
+import React from "react";
+import stylingConstants from "../../../utils/styling";
+import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
+import getFeaturedComposers from "../../../api/featured-composers";
+
 // This is assigns a div to a reusuable component called "FeaturedComposersContainer" which has the styles defined
 // below.
 const FlexContainer = styled.div`
@@ -20,33 +23,8 @@ const Container = styled.div`
 `;
 
 const FeaturedComposers = () => {
-    // This is just mock data. Real data will be loaded from api.
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        fetch(`http://localhost:8000/api/featured/`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(
-                        `This is a HTTP error: The status is ${response.status}`
-                    );
-                }
-                return response.json();
-            })
-            .then((actualData) => {
-                setData(actualData);
-                setError(null);
-            })
-            .catch((err) => {
-                setError(err.message);
-                setData(null);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []);
+    const { data, isLoading, error } = useFetchOnPageLoad(getFeaturedComposers);
+    console.log(data);
 
     /*
         {
@@ -69,20 +47,26 @@ const FeaturedComposers = () => {
         },
     ]);
     */
+
+    let featuredComposers;
+    if (isLoading) {
+        featuredComposers = <div>Loading...</div>;
+    } else if (error) {
+        console.log(error);
+        featuredComposers = <div>{error.message}</div>;
+    } else {
+        featuredComposers = data.map((featuredComposer) => (
+            <FeaturedComposer
+                key={featuredComposer.id}
+                featuredComposer={featuredComposer}
+            />
+        ));
+    }
+
     return (
         <Container>
             <h3>Featured Composers</h3>
-            <FlexContainer>
-                {loading && <div>Loading...</div>}
-                {error && <div>{error}</div>}
-                {data &&
-                    data.map((featuredComposer) => (
-                        <FeaturedComposer
-                            key={featuredComposer.id}
-                            featuredComposer={featuredComposer}
-                        />
-                    ))}
-            </FlexContainer>
+            <FlexContainer>{featuredComposers}</FlexContainer>
         </Container>
     );
 };
