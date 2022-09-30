@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components";
-import FeaturedComposer from "./FeaturedComposer";
-import React from "react";
-import stylingConstants from "../../../utils/styling";
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import FeaturedComposer from './FeaturedComposer';
+import React from 'react';
+import stylingConstants from '../../../utils/styling';
 // This is assigns a div to a reusuable component called "FeaturedComposersContainer" which has the styles defined
 // below.
 const FlexContainer = styled.div`

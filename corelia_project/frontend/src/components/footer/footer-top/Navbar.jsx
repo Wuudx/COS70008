@@ -1,12 +1,12 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import useToggleDropdown from "../../../hooks/useToggleDropdown";
-import NavButton from "../../../shared-styled-components/NavButton";
-import Ul from "../../../shared-styled-components/NavUl";
-import stylingConstants from "../../../utils/styling";
-import Dropdown from "../../navbar/Dropdown";
-import React from "react";
+import { useRef } from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import useToggleDropdown from '../../../hooks/useToggleDropdown';
+import NavButton from '../../../shared-styled-components/NavButton';
+import Ul from '../../../shared-styled-components/NavUl';
+import stylingConstants from '../../../utils/styling';
+import Dropdown from '../../navbar/Dropdown';
+import React from 'react';
 
 const Button = styled(NavButton)`
     font-family: lato-regular;
@@ -39,34 +39,34 @@ const Navbar = () => {
 
     return (
         <nav>
-            <Ul gap="5em">
+            <Ul gap='5em'>
                 <li>
-                    <StyledLink to="/about/">About</StyledLink>
+                    <StyledLink to='/about'>About</StyledLink>
                 </li>
                 <li>
-                    <StyledLink to="/discover-composers/">
+                    <StyledLink to='/discover-composers'>
                         Discover Composers
                     </StyledLink>
                 </li>
                 <li ref={exploreRepDropdownRef}>
-                    <Button type="button" onClick={toggleExploreRepDropdown}>
+                    <Button type='button' onClick={toggleExploreRepDropdown}>
                         Explore Repertoire
                     </Button>
                     <Dropdown
                         isVisible={isExploreRepDropdownVisible}
-                        dropdownName="Explore Repertoire"
+                        dropdownName='Explore Repertoire'
                     />
                 </li>
                 <li>
-                    <StyledLink to="/blog/">Blog</StyledLink>
+                    <StyledLink to='/blog'>Blog</StyledLink>
                 </li>
                 <li ref={getInvolvedDropdownRef}>
-                    <Button type="button" onClick={toggleGetInvolvedDropdown}>
+                    <Button type='button' onClick={toggleGetInvolvedDropdown}>
                         Get Involved
                     </Button>
                     <Dropdown
                         isVisible={isGetInvolvedDropdownVisible}
-                        dropdownName="Get Involved"
+                        dropdownName='Get Involved'
                     />
                 </li>
             </Ul>
