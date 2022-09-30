@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import FeaturedComposer from "./FeaturedComposer";
 import React from "react";
+import stylingConstants from "../../../utils/styling";
 // This is assigns a div to a reusuable component called "FeaturedComposersContainer" which has the styles defined
 // below.
 const FlexContainer = styled.div`
@@ -14,6 +15,8 @@ const Container = styled.div`
     border: 1px solid black;
     padding: 1em;
     margin-top: 2em;
+    margin-left: ${stylingConstants.sizes.leftRightMargin};
+    margin-right: ${stylingConstants.sizes.leftRightMargin};
 `;
 
 const FeaturedComposers = () => {
@@ -24,10 +27,11 @@ const FeaturedComposers = () => {
 
     useEffect(() => {
         fetch(`http://localhost:8000/api/featured/`)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(
-                    `This is a HTTP error: The status is ${response.status}`);
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(
+                        `This is a HTTP error: The status is ${response.status}`
+                    );
                 }
                 return response.json();
             })
@@ -37,15 +41,14 @@ const FeaturedComposers = () => {
             })
             .catch((err) => {
                 setError(err.message);
-                setData(null)
+                setData(null);
             })
             .finally(() => {
                 setLoading(false);
             });
     }, []);
 
-    
-        /*
+    /*
         {
             id: 1,
             name: "Anne Smith",
@@ -72,12 +75,13 @@ const FeaturedComposers = () => {
             <FlexContainer>
                 {loading && <div>Loading...</div>}
                 {error && <div>{error}</div>}
-                {data && data.map((featuredComposer) => (
-                    <FeaturedComposer
-                        key={featuredComposer.id}
-                        featuredComposer={featuredComposer}
-                    />
-                ))}
+                {data &&
+                    data.map((featuredComposer) => (
+                        <FeaturedComposer
+                            key={featuredComposer.id}
+                            featuredComposer={featuredComposer}
+                        />
+                    ))}
             </FlexContainer>
         </Container>
     );

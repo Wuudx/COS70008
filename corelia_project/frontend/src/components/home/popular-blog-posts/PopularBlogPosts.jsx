@@ -2,11 +2,14 @@ import { useState } from "react";
 import styled from "styled-components";
 import PopularBlogPost from "./PopularBlogPost";
 import React from "react";
+import stylingConstants from "../../../utils/styling";
 
 const Container = styled.div`
     border: 1px solid black;
     padding: 1em;
     margin-top: 2%;
+    margin-left: ${stylingConstants.sizes.leftRightMargin};
+    margin-right: ${stylingConstants.sizes.leftRightMargin};
 `;
 
 const FlexContainer = styled.div`
