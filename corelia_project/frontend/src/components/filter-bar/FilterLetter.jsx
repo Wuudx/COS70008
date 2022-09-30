@@ -35,9 +35,7 @@ const FilterLetter = ({ letter }) => {
         navigate(`?q=${searchQuery}&letter=${letter}`);
     }
 
-    console.log(letter, letterFilter);
     const isLetterFocused = letter === letterFilter;
-    console.log(isLetterFocused);
 
     return (
         <Li
@@ -54,4 +52,3 @@ const FilterLetter = ({ letter }) => {
 };
 
 export default FilterLetter;
-
