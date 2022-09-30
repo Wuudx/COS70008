@@ -2,15 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import PopularBlogPost from "./PopularBlogPost";
 import React from "react";
-import stylingConstants from "../../../utils/styling";
-
-const Container = styled.div`
-    border: 1px solid black;
-    padding: 1em;
-    margin-top: 2%;
-    margin-left: ${stylingConstants.sizes.leftRightMargin};
-    margin-right: ${stylingConstants.sizes.leftRightMargin};
-`;
+import HomeContainer from "../../../shared-styled-components/HomeContainer";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -41,7 +33,7 @@ const PopularBlogPosts = () => {
     ]);
 
     return (
-        <Container>
+        <HomeContainer>
             <h3>Popular Blog Posts</h3>
             <FlexContainer>
                 {popularBlogPosts.map((popularBlogPost) => (
@@ -51,7 +43,7 @@ const PopularBlogPosts = () => {
                     />
                 ))}
             </FlexContainer>
-        </Container>
+        </HomeContainer>
     );
 };
 

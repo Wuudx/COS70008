@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
 import styled from "styled-components";
 import FeaturedComposer from "./FeaturedComposer";
 import React from "react";
-import stylingConstants from "../../../utils/styling";
 import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
 import getFeaturedComposers from "../../../api/featured-composers";
+import HomeContainer from "../../../shared-styled-components/HomeContainer";
 
 // This is assigns a div to a reusuable component called "FeaturedComposersContainer" which has the styles defined
 // below.
@@ -12,14 +11,6 @@ const FlexContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-`;
-
-const Container = styled.div`
-    border: 1px solid black;
-    padding: 1em;
-    margin-top: 2em;
-    margin-left: ${stylingConstants.sizes.leftRightMargin};
-    margin-right: ${stylingConstants.sizes.leftRightMargin};
 `;
 
 const FeaturedComposers = () => {
@@ -41,10 +32,10 @@ const FeaturedComposers = () => {
     }
 
     return (
-        <Container>
+        <HomeContainer>
             <h3>Featured Composers</h3>
             <FlexContainer>{featuredComposers}</FlexContainer>
-        </Container>
+        </HomeContainer>
     );
 };
 
