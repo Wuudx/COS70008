@@ -11,14 +11,15 @@ const LoadMore = styled.div`
     border-radius: 5px;
     font-family: 'Lato-bold';
     cursor: pointer;
+    user-select: none;
 
     &:hover {
         background-color: ${stylingConstants.colours.blue1Percent80};
     }
 `;
 
-const LoadMoreButton = () => {
-    return <LoadMore>LOAD MORE</LoadMore>;
+const LoadMoreButton = ({ onClick }) => {
+    return <LoadMore onClick={onClick}>LOAD MORE</LoadMore>;
 };
 
 export default LoadMoreButton;
