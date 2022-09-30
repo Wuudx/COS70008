@@ -13,6 +13,7 @@ const DropDownLabel = styled.p`
     font-size: 1em;
     font-family: ${stylingConstants.fonts.searchBar};
     color: white;
+    user-select: none;
 `;
 
 const FilterContainer = styled.div`
@@ -54,6 +55,7 @@ const FilterDropdown = ({ searchType, changeSearchType }) => {
                 <DropDownLabel>{searchType}</DropDownLabel>
                 {isOpen ? (
                     <IoIosArrowUp
+                        onClick={toggleDropdown}
                         color='white'
                         size='1em'
                         style={{
@@ -63,6 +65,7 @@ const FilterDropdown = ({ searchType, changeSearchType }) => {
                     />
                 ) : (
                     <IoIosArrowDown
+                        onClick={toggleDropdown}
                         size='1em'
                         style={{
                             marginLeft: '0.5em',
