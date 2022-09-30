@@ -24,29 +24,6 @@ const Container = styled.div`
 
 const FeaturedComposers = () => {
     const { data, isLoading, error } = useFetchOnPageLoad(getFeaturedComposers);
-    console.log(data);
-
-    /*
-        {
-            id: 1,
-            name: "Anne Smith",
-            description: "Lorem Ipsur Delta",
-            image: "https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg",
-        },
-        {
-            id: 2,
-            name: "Samantha Simpson",
-            description: "Lorem Ipsur Delta",
-            image: "https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg",
-        },
-        {
-            id: 3,
-            name: "Jennifer Brown",
-            description: "Lorem Ipsur Delta",
-            image: "https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg",
-        },
-    ]);
-    */
 
     let featuredComposers;
     if (isLoading) {

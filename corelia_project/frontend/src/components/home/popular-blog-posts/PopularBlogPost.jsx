@@ -10,7 +10,20 @@ const FlexContainer = styled.div`
     flex-shrink: 0;
 `;
 
+const BLOG_PREVIEW_CHAR_LENGTH = 100;
+
 const PopularBlogPost = ({ popularBlogPost }) => {
+    const blogPreview = popularBlogPost.preview.slice(
+        0,
+        BLOG_PREVIEW_CHAR_LENGTH
+    );
+    let blogPreviewElement;
+    if (popularBlogPost.preview.length > BLOG_PREVIEW_CHAR_LENGTH) {
+        blogPreviewElement = <p>{blogPreview}...</p>;
+    } else {
+        blogPreviewElement = <p>{blogPreview}</p>;
+    }
+
     return (
         <FlexContainer>
             <RoundedImage
@@ -18,7 +31,7 @@ const PopularBlogPost = ({ popularBlogPost }) => {
                 alt="Profile Picture"
             />
             <Link to={`/blogs/${popularBlogPost.title}/`}>
-                <p>{popularBlogPost.preview}</p>
+                {blogPreviewElement}
             </Link>
         </FlexContainer>
     );
