@@ -1,14 +1,13 @@
 import { useRef } from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 import stylingConstants from '../../utils/styling';
-import { IoIosArrowDown } from "react-icons/io";
-import { FaFolderOpen } from "react-icons/fa";
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { FaFolderOpen } from 'react-icons/fa';
 import FilterBarDropdown from './FilterBarDropdown';
 import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 import React from 'react';
 
-const Container = styled.div`
-`;
+const Container = styled.div``;
 
 const DropDownLabel = styled.p`
     font-size: 1em;
@@ -32,7 +31,6 @@ const VerticalLine = styled.div`
     margin-right: 2em;
 `;
 
-
 const FilterDropdown = ({ searchType, changeSearchType }) => {
     const dropdownRef = useRef(null);
     const [isOpen, toggleIsOpen] = useDetectOutsideClick(dropdownRef, false);
@@ -47,24 +45,38 @@ const FilterDropdown = ({ searchType, changeSearchType }) => {
         <Container ref={dropdownRef}>
             <FilterContainer onClick={toggleDropdown}>
                 <FaFolderOpen
-                    color="white"
-                    size="2.25em"
+                    color='white'
+                    size='2.25em'
                     style={{
-                        marginRight: "0.5em",
+                        marginRight: '0.5em',
                     }}
                 />
                 <DropDownLabel>{searchType}</DropDownLabel>
-                <IoIosArrowDown
-                    size="1em"
-                    style={{ 
-                        marginLeft: "0.5em",
-                        marginRight: "0.5em", 
-                    }}
-                    color="white"
-                />
-                <VerticalLine />          
+                {isOpen ? (
+                    <IoIosArrowUp
+                        color='white'
+                        size='1em'
+                        style={{
+                            marginLeft: '0.5em',
+                            marginRight: '0.5em',
+                        }}
+                    />
+                ) : (
+                    <IoIosArrowDown
+                        size='1em'
+                        style={{
+                            marginLeft: '0.5em',
+                            marginRight: '0.5em',
+                        }}
+                        color='white'
+                    />
+                )}
+                <VerticalLine />
             </FilterContainer>
-            <FilterBarDropdown isOpen={isOpen} handleSearchFilterClick={handleSearchFilterClick} />
+            <FilterBarDropdown
+                isOpen={isOpen}
+                handleSearchFilterClick={handleSearchFilterClick}
+            />
         </Container>
     );
 };
