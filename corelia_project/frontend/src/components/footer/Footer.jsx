@@ -1,7 +1,7 @@
-import styled from "styled-components";
-import FooterBottom from "./footer-bottom/FooterBottom";
-import FooterTop from "./footer-top/FooterTop";
-import React from "react";
+import styled from 'styled-components';
+import FooterBottom from './footer-bottom/FooterBottom';
+import FooterTop from './footer-top/FooterTop';
+import React from 'react';
 
 const StyledFooter = styled.footer`
     width: 100%;
