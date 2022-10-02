@@ -10,23 +10,30 @@ const Container = styled.div`
 
 // Props passed through using object destructuring.
 const FeaturedComposer = ({ featuredComposer }) => {
+    console.log(featuredComposer);
     return (
         <Container>
             <RoundedImage src={featuredComposer.image} alt="Composer Picture" />
-            <p>
-                <Link to={`/composers/${featuredComposer.firstName+featuredComposer.lastName}`}>
-                    {featuredComposer.firstName + " " + featuredComposer.lastName}
+            <div>
+                <Link
+                    to={`/composers/${
+                        featuredComposer.firstName + featuredComposer.lastName
+                    }`}
+                >
+                    {featuredComposer.firstName +
+                        " " +
+                        featuredComposer.lastName}
                 </Link>
                 <br />
-                <br />Year of Birth: {featuredComposer.birth}
                 <br />
-                {featuredComposer.death != 0 &&
-                <p>Year of Death: {featuredComposer.death}</p>
-                }
+                Year of Birth: {featuredComposer.birth}
+                <br />
+                {featuredComposer.death != 0 && (
+                    <p>Year of Death: {featuredComposer.death}</p>
+                )}
                 <br />
                 Nationality: {featuredComposer.nationality}
-
-            </p>
+            </div>
         </Container>
     );
 };

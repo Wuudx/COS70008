@@ -51,7 +51,7 @@ const Composer = ({ composer }) => {
         // We pass the id in state instead of url params (I think it is not safe in general to have id in url params. although
         // it probably wouldn't matter in this case.)
         navigate(
-            `discover-composers/${composer.firstName}-${composer.lastName}`,
+            `/discover-composers/${composer.firstName}-${composer.lastName}`,
             { state: { composerId: composer.id } }
         );
     }
