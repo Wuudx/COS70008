@@ -20,6 +20,6 @@ from backend import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('backend.urls')),
-    path('api/', include('users.urls')),
+    path('users/', include('users.urls')),
     path('', include('frontend.urls')),
 ]

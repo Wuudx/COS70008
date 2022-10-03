@@ -9,6 +9,7 @@ import stylingConstants from '../../utils/styling';
 import Dropdown from './Dropdown';
 import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 import React from 'react';
+import Account from './Account';
 
 const Img = styled.img`
     position: absolute;
@@ -147,6 +148,7 @@ const Navbar = () => {
                     </li>
                 </Ul>
             </Nav>
+            <Account />
         </Container>
     );
 };
