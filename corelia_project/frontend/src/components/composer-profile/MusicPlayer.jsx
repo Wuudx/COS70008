@@ -154,6 +154,12 @@ const MusicPlayer = ({ song }) => {
     }
 
     useEffect(() => {
+        // We need this for remove event listener because we want to pass reference to remove event listener. By the time
+        // clean up function runs, useRef may have been set to null since useRef is mutable. See
+        // https://stackoverflow.com/questions/66022475/how-to-get-over-cannot-read-property-removeeventlistener-of-null-in-react.
+        const audioElement = audioRef.current;
+        const progressElement = progressRef.current;
+
         if (audioRef && audioRef.current) {
             audioRef.current.addEventListener("timeupdate", updateProgressBar);
             audioRef.current.addEventListener(
@@ -172,11 +178,8 @@ const MusicPlayer = ({ song }) => {
         }
 
         return () => {
-            audioRef.current.removeEventListener(
-                "timeupdate",
-                updateProgressBar
-            );
-            progressRef.current.removeEventListener(
+            audioElement.removeEventListener("timeupdate", updateProgressBar);
+            progressElement.removeEventListener(
                 "change",
                 handleUserDragProgressBar
             );
