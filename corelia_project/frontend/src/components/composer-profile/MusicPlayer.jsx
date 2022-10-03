@@ -52,7 +52,7 @@ const RangeInput = styled.input.attrs({ type: "range" })`
         height: 8.4px;
         cursor: pointer;
         background: ${stylingConstants.colours.blue2Percent30};
-        border-radius: 1.3px;
+        border-radius: 1.2em;
     }
 
     &::-moz-range-track {
@@ -60,7 +60,7 @@ const RangeInput = styled.input.attrs({ type: "range" })`
         height: 8.4px;
         cursor: pointer;
         background: ${stylingConstants.colours.blue2Percent30};
-        border-radius: 1.3px;
+        border-radius: 1.2em;
     }
 
     &::-ms-track {
@@ -108,6 +108,7 @@ const StyledFaPause = styled(FaPause)`
 const MusicPlayer = ({ song }) => {
     const audioRef = useRef();
     const progressRef = useRef();
+    const [isPlaying, setIsPlaying] = useState(false);
 
     function updateProgressBar() {
         const currentPlaybackTime = audioRef.current.currentTime;
@@ -145,6 +146,8 @@ const MusicPlayer = ({ song }) => {
                 "change",
                 handleUserDragProgressBar
             );
+            // On page load, set progress of playback to 0.
+            progressRef.current.value = 0;
         }
 
         return () => {
@@ -160,19 +163,27 @@ const MusicPlayer = ({ song }) => {
     }, []);
 
     function play() {
+        setIsPlaying(true);
         audioRef.current.play();
     }
 
     function pause() {
+        setIsPlaying(false);
         audioRef.current.pause();
+    }
+
+    let playOrPauseButton;
+    if (isPlaying) {
+        playOrPauseButton = <StyledFaPause onClick={pause} />;
+    } else {
+        playOrPauseButton = <StyledFaPlay onClick={play} />;
     }
 
     return (
         <>
             <audio ref={audioRef} src={song} />
+            {playOrPauseButton}
             <RangeInput ref={progressRef} type="range" />
-            <StyledFaPlay onClick={play} />
-            <StyledFaPause onClick={pause} />
         </>
     );
 };
