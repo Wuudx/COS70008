@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
 import { FaPlay, FaPause } from "react-icons/fa";
+import musicNote from "../../../static/images/music-note.png";
 
 // They only want a 30 second snippet of the track, not the whole thing.
 const TRACK_SNIPPET_TIME = 30;
@@ -29,18 +30,19 @@ const RangeInput = styled.input.attrs({ type: "range" })`
     &::-webkit-slider-thumb {
         -webkit-appearance: none;
         background: black;
-        height: 16px;
-        width: 16px;
+        height: 12px;
+        width: 19px;
         border-radius: 50%;
-        background: ${stylingConstants.colours.blue2};
+        background: #6d94dc;
         cursor: pointer;
         margin-top: -4px;
+        transform: rotate(-8deg);
     }
 
     &::-moz-range-thumb {
         -webkit-appearance: none;
         background: black;
-        height: 16px;
+        height: 10px;
         width: 16px;
         border-radius: 50%;
         background: ${stylingConstants.colours.blue2};
@@ -49,7 +51,7 @@ const RangeInput = styled.input.attrs({ type: "range" })`
 
     &::-webkit-slider-runnable-track {
         width: 100%;
-        height: 8.4px;
+        height: 5px;
         cursor: pointer;
         background: ${stylingConstants.colours.blue2Percent30};
         border-radius: 1.2em;
@@ -57,7 +59,7 @@ const RangeInput = styled.input.attrs({ type: "range" })`
 
     &::-moz-range-track {
         width: 100%;
-        height: 8.4px;
+        height: 5px;
         cursor: pointer;
         background: ${stylingConstants.colours.blue2Percent30};
         border-radius: 1.2em;
@@ -65,7 +67,7 @@ const RangeInput = styled.input.attrs({ type: "range" })`
 
     &::-ms-track {
         width: 100%;
-        height: 8.4px;
+        height: 5px;
         cursor: pointer;
         background: transparent;
         border-color: transparent;
@@ -98,11 +100,27 @@ const RangeInput = styled.input.attrs({ type: "range" })`
 const StyledFaPlay = styled(FaPlay)`
     color: ${stylingConstants.colours.blue2Percent30};
     cursor: pointer;
+    margin-left: 30px;
 `;
 
 const StyledFaPause = styled(FaPause)`
     color: ${stylingConstants.colours.blue2Percent30};
     cursor: pointer;
+    margin-left: 30px;
+`;
+
+const Container = styled.div`
+    margin-bottom: ${stylingConstants.sizes.gapFromFooterToEndOfContent};
+    position: relative;
+`;
+
+const Img = styled.img`
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: -30px;
+    bottom: -10px;
+    z-index: -1;
 `;
 
 const MusicPlayer = ({ song }) => {
@@ -180,11 +198,12 @@ const MusicPlayer = ({ song }) => {
     }
 
     return (
-        <>
+        <Container>
             <audio ref={audioRef} src={song} />
+            <Img src={musicNote} />
             {playOrPauseButton}
             <RangeInput ref={progressRef} type="range" />
-        </>
+        </Container>
     );
 };
 
