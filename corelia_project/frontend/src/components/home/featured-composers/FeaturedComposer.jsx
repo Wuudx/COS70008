@@ -32,7 +32,7 @@ const FeaturedComposer = ({ featuredComposer }) => {
                     <p>Year of Death: {featuredComposer.death}</p>
                 )}
                 <br />
-                Nationality: {featuredComposer.nationality}
+                Nationality: {featuredComposer.nationalityName}
             </div>
         </Container>
     );

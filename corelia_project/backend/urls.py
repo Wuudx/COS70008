@@ -12,5 +12,8 @@ urlpatterns = [
     path('instrument', InstrumentView.as_view()),
     re_path(r'^featured/$', views.featured_composer),
     re_path(r'^featured/([0-9])$', views.featured_composer_detail),
+    re_path(r'^nationality/$', views.nationality),
+    re_path(r'^nationality/([0-9])$', views.nationality_detail),
+
 
 ]
