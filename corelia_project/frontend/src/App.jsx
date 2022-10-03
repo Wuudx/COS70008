@@ -13,7 +13,11 @@ import SearchBar from './components/searchbar/SearchBar';
 import React from 'react';
 import JoinCorelia from './components/join-corelia/JoinCorelia';
 import ComposerProfile from './components/composer-profile/ComposerProfile';
-import Login from './components/login/Login';
+import Login from './components/account/Login';
+import { AuthProvider } from './context/context';
+import { useEffect } from 'react';
+import { authenticate } from './context/action';
+import { useAuthState, useAuthDispatch } from './context/context';
 
 // Important so that footer sticks to bottom of page!
 const AppDiv = styled.div`
@@ -23,45 +27,53 @@ const AppDiv = styled.div`
 `;
 
 function App() {
+    // const user = useAuthState();
+    // const dispatch = useAuthDispatch();
+    // useEffect(() => {
+    //     let response = authenticate(dispatch);
+    // }, []);
+
     return (
-        <Router>
-            <AppDiv>
-                <Navbar />
-                <SearchBar />
-                <BackToTopButton />
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    {/* Note that there is no route for search parameter (e.g: "/discover-composers/?q=:query/") 
+        <AuthProvider>
+            <Router>
+                <AppDiv>
+                    <Navbar />
+                    <SearchBar />
+                    <BackToTopButton />
+                    <Routes>
+                        <Route path='/' element={<Home />} />
+                        {/* Note that there is no route for search parameter (e.g: "/discover-composers/?q=:query/") 
                     because react router does not support this. It the aforementioned link as "/discover-composers/" */}
-                    <Route
-                        path='/discover-composers'
-                        element={<DiscoverComposers />}
-                    />
-                    <Route
-                        path='/discover-composers/:composerName'
-                        element={<ComposerProfile />}
-                    />
-                    <Route
-                        path='/discover-composers/search'
-                        element={
-                            <>
-                                <DiscoverComposers />
-                                <SearchResultsContainer />
-                            </>
-                        }
-                    />
-                    <Route
-                        path='/repertoire-library'
-                        element={<RepertoireLibrary />}
-                    />
-                    <Route path='/blog' element={<Blog />} />
-                    <Route path='/contact-us' element={<ContactUsForm />} />
-                    <Route path='/join-corelia' element={<JoinCorelia />} />
-                    <Route path='/login' element={<Login />} />
-                </Routes>
-                <Footer />
-            </AppDiv>
-        </Router>
+                        <Route
+                            path='/discover-composers'
+                            element={<DiscoverComposers />}
+                        />
+                        <Route
+                            path='/discover-composers/:composerName'
+                            element={<ComposerProfile />}
+                        />
+                        <Route
+                            path='/discover-composers/search'
+                            element={
+                                <>
+                                    <DiscoverComposers />
+                                    <SearchResultsContainer />
+                                </>
+                            }
+                        />
+                        <Route
+                            path='/repertoire-library'
+                            element={<RepertoireLibrary />}
+                        />
+                        <Route path='/blog' element={<Blog />} />
+                        <Route path='/contact-us' element={<ContactUsForm />} />
+                        <Route path='/join-corelia' element={<JoinCorelia />} />
+                        <Route path='/login' element={<Login />} />
+                    </Routes>
+                    <Footer />
+                </AppDiv>
+            </Router>
+        </AuthProvider>
     );
 }
 

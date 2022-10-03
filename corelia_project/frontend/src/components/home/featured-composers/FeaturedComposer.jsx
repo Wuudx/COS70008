@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import RoundedImage from "../../../shared-styled-components/RoundedImage";
-import React from "react";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import RoundedImage from '../../../shared-styled-components/RoundedImage';
+import React from 'react';
 
 const Container = styled.div`
     display: flex;
@@ -10,10 +10,9 @@ const Container = styled.div`
 
 // Props passed through using object destructuring.
 const FeaturedComposer = ({ featuredComposer }) => {
-    console.log(featuredComposer);
     return (
         <Container>
-            <RoundedImage src={featuredComposer.image} alt="Composer Picture" />
+            <RoundedImage src={featuredComposer.image} alt='Composer Picture' />
             <div>
                 <Link
                     to={`/composers/${
@@ -21,7 +20,7 @@ const FeaturedComposer = ({ featuredComposer }) => {
                     }`}
                 >
                     {featuredComposer.firstName +
-                        " " +
+                        ' ' +
                         featuredComposer.lastName}
                 </Link>
                 <br />

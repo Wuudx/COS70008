@@ -9,7 +9,7 @@ import stylingConstants from '../../utils/styling';
 import Dropdown from './Dropdown';
 import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 import React from 'react';
-import Account from './Account';
+import Account from '../account/Account';
 
 const Img = styled.img`
     position: absolute;
