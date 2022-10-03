@@ -27,12 +27,6 @@ const AppDiv = styled.div`
 `;
 
 function App() {
-    // const user = useAuthState();
-    // const dispatch = useAuthDispatch();
-    // useEffect(() => {
-    //     let response = authenticate(dispatch);
-    // }, []);
-
     return (
         <AuthProvider>
             <Router>

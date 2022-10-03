@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import React from 'react';
 import { FiLogIn } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import Logout from './Logout';
 import { useAuthState, useAuthDispatch } from '../../context/context';
 import { authenticate } from '../../context';
 import { useEffect } from 'react';
+import LoggedInDetails from './LoggedInDetails';
 
 const Div = styled.div`
     display: flex;
@@ -15,6 +15,9 @@ const Div = styled.div`
     margin: 0 20px;
     cursor: pointer;
     user-select: none;
+    font-family: lato-bold;
+    text-decoration: none;
+    color: black;
 `;
 
 const LinkDiv = styled(Link)`
@@ -37,7 +40,7 @@ const Account = () => {
         // If user is logged in.
         return (
             <Div>
-                <Logout />
+                <LoggedInDetails />
             </Div>
         );
     } else {
@@ -45,7 +48,7 @@ const Account = () => {
         return (
             <LinkDiv to='/login'>
                 Login
-                <FiLogIn size='1.5em' />
+                <FiLogIn size='1.5em' style={{ marginLeft: '0.5em' }} />
             </LinkDiv>
         );
     }

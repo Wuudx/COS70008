@@ -1,5 +1,5 @@
-let user = JSON.parse(localStorage.getItem('user')) ?? null;
 let auth_token = localStorage.getItem('auth_token') ?? null;
+let user = JSON.parse(localStorage.getItem('user')) ?? null;
 
 export const initialState = {
     user: null || user,
