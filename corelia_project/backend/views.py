@@ -3,6 +3,7 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.decorators import authentication_classes, permission_classes
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
 from .serializers import ComposerSerializer, CompositionSerializer, ComposerNationalitySerializer, CompositionInstrumentSerializer, PublisherSerializer, NationalitySerializer, InstrumentSerializer
 
@@ -73,4 +74,119 @@ def featured_composer_detail(request, pk):
     elif request.method == 'DELETE':
         composer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'POST'])
+def nationality(request):
+    if request.method == 'GET':
+        nationality = Nationality.objects.all()
+
+        serializer = NationalitySerializer(nationality, context={'request': request}, many=True)
+
+        return Response(serializer.data)
     
+    elif request.method == 'POST':
+        serializer = NationalitySerializer(nationality=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT', 'DELETE'])
+def nationality_detail(request, pk):
+    try:
+        nationality = Nationality.objects.get(pk=pk)
+    except Nationality.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = NationalitySerializer(nationality, data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        nationality.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'POST'])
+def all_composers(request):
+    if request.method == 'GET':
+        composers = Composer.objects.all()
+
+        serializer = ComposerSerializer(composers, context={'request': request}, many=True)
+
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serializer = ComposerSerializer(composers=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT', 'DELETE'])
+def all_composers_detail(request, pk):
+    try:
+        composer = Composer.objects.get(pk=pk)
+    except Composer.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = ComposerSerializer(composer, data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        composer.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'POST'])
+def composition(request):
+    if request.method == 'GET':
+        composition = Composition.objects.all()
+
+        serializer = CompositionSerializer(composition, context={'request': request}, many=True)
+
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serializer = CompositionSerializer(composition=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT', 'DELETE'])
+def composition_detail(request, pk):
+    try:
+        composition = Composition.objects.get(pk=pk)
+    except Composition.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        serializer = CompositionSerializer(composition, data=request.data, context={'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    elif request.method == 'DELETE':
+        composition.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+

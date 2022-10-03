@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.core.management.base import BaseCommand
 import pandas as pd
 from backend.models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher 
@@ -10,25 +11,40 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+        """ Data Deletion - uncomment to delete all data
+        Nationality.objects.all().delete()
+        Publisher.objects.all().delete()
+        Composer.objects.all().delete()
+        ComposerNationality.objects.all().delete()
+        Composition.objects.all().delete()
+        """
 
         df = pd.read_csv('corelia_dataset.csv', delimiter=',', encoding='latin-1')
+        df = df.fillna(value = "")
+        df = df.replace("nan", "")
         
+    
         for nationality in df.Nationality:
             if (Nationality.objects.filter(name = nationality).count() == 0):
                 models = Nationality(name = nationality)
                 models.save()
         
+        
+
         for publisher in df.Publisher:
             if (Publisher.objects.filter(name = publisher).count() == 0):
                 models = Publisher(name = publisher)
                 models.save()
         
         
+
         for index, row in df.iterrows():
             if (Composer.objects.filter(firstName = row['FirstName']).count() == 0):
-                models = Composer(firstName = row['FirstName'], middleName = row['MiddleName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = Nationality.objects.get(name = row['Nationality']))
+                models = Composer(firstName = row['FirstName'], middleName = row['MiddleName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = Nationality.objects.get(name = row['Nationality']), nationalityName = row['Nationality'])
                 models.save()
         
+        
+
         for index, row in df.iterrows():
             
             if (Composer.objects.filter(firstName = row['FirstName']).count() == 1):
@@ -39,6 +55,7 @@ class Command(BaseCommand):
                 if (ComposerNationality.objects.filter(composer_id = c_id).count() == 0):
                     models = ComposerNationality(composer_id = c_id, nationality_id = n_id)
                     models.save()
+
         
         for index, row in df.iterrows():
             if (Composition.objects.filter(name = row['Nameofpiece']).count() == 0):

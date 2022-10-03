@@ -1,14 +1,17 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
 import MusicPlayer from "./MusicPlayer";
 
+const Container = styled.div`
+    margin-left: ${stylingConstants.sizes.leftRightMargin};
+`;
+
 const FlexContainer = styled.div`
     display: flex;
     flex-direction: column;
-    margin-left: ${stylingConstants.sizes.leftRightMargin};
+    margin-left: 30px; // So that music player does not go off screen.
     width: 20%;
 `;
 
@@ -27,13 +30,13 @@ const ComposerProfile = () => {
     });
 
     return (
-        <div>
+        <Container>
             <FlexContainer>
                 <img src={composer.image} alt="Composer Picture" />
                 <h4>Featured Music Track</h4>
                 <MusicPlayer song={composer.featuredSong} />
             </FlexContainer>
-        </div>
+        </Container>
     );
 };
 
