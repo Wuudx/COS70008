@@ -14,6 +14,11 @@ urlpatterns = [
     re_path(r'^featured/([0-9])$', views.featured_composer_detail),
     re_path(r'^nationality/$', views.nationality),
     re_path(r'^nationality/([0-9])$', views.nationality_detail),
+    re_path(r'^composers/$', views.all_composers),
+    re_path(r'^composers/([0-9])$', views.all_composers_detail),
+    re_path(r'^composition/$', views.composition),
+    re_path(r'^composition/([0-9])$', views.composition_detail),
+    
 
 
 ]
