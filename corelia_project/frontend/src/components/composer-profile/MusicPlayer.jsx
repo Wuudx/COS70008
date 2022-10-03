@@ -148,7 +148,6 @@ const MusicPlayer = ({ song }) => {
     }
 
     function handleUserDragProgressBar() {
-        pause();
         const newPercentageComplete = progressRef.current.value / 100;
         const newCurrentTime = TRACK_SNIPPET_TIME * newPercentageComplete;
         audioRef.current.currentTime = newCurrentTime;
