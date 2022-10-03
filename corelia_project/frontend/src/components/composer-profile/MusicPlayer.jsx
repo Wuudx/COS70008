@@ -7,6 +7,8 @@ import musicNote from "../../../static/images/music-note.png";
 // They only want a 30 second snippet of the track, not the whole thing.
 const TRACK_SNIPPET_TIME = 30;
 
+// TODO: FIX APPERANCE FOR FIREFOX!!!!
+
 const RangeInput = styled.input.attrs({ type: "range" })`
     margin-bottom: 0.5em;
 
@@ -42,11 +44,13 @@ const RangeInput = styled.input.attrs({ type: "range" })`
     &::-moz-range-thumb {
         -webkit-appearance: none;
         background: black;
-        height: 10px;
-        width: 16px;
+        height: 12px;
+        width: 19px;
         border-radius: 50%;
-        background: ${stylingConstants.colours.blue2};
+        background: #6d94dc;
         cursor: pointer;
+        margin-top: -4px;
+        transform: rotate(-8deg);
     }
 
     &::-webkit-slider-runnable-track {
