@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
+import { FaPlay, FaPause } from "react-icons/fa";
 
 // They only want a 30 second snippet of the track, not the whole thing.
 const TRACK_SNIPPET_TIME = 30;
@@ -94,6 +95,16 @@ const RangeInput = styled.input.attrs({ type: "range" })`
     }
 `;
 
+const StyledFaPlay = styled(FaPlay)`
+    color: ${stylingConstants.colours.blue2Percent30};
+    cursor: pointer;
+`;
+
+const StyledFaPause = styled(FaPause)`
+    color: ${stylingConstants.colours.blue2Percent30};
+    cursor: pointer;
+`;
+
 const MusicPlayer = ({ song }) => {
     const audioRef = useRef();
     const progressRef = useRef();
@@ -158,10 +169,10 @@ const MusicPlayer = ({ song }) => {
 
     return (
         <>
-            <audio ref={audioRef} src={song}></audio>
+            <audio ref={audioRef} src={song} />
             <RangeInput ref={progressRef} type="range" />
-            <button onClick={play}>Play</button>
-            <button onClick={pause}>Pause</button>
+            <StyledFaPlay onClick={play} />
+            <StyledFaPause onClick={pause} />
         </>
     );
 };
