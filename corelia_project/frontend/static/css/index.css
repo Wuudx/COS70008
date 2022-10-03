@@ -38,3 +38,17 @@ a, button {
   font-family: lato-light;
   src: url("./fonts/Lato-Light.ttf");
 }
+
+@font-face {
+  font-family: besley-regular;
+  src: url("./fonts/Besley-Regular.ttf");
+}
+
+h1 {
+  font-family: "besley-regular";
+}
+
+/* Default to these fonts unless otherwise specified. */
+span, p, a, div {
+  font-family: lato-regular;
+}

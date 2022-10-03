@@ -4,6 +4,10 @@ import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
 import MusicPlayer from "./MusicPlayer";
 import LinkToScore from "./LinkToScore";
+import Navbar from "./Navbar";
+import Biography from "./Biography";
+import { useLocation } from "react-router-dom";
+import About from "./About";
 
 const Container = styled.div`
     margin-left: ${stylingConstants.sizes.leftRightMargin};
@@ -24,6 +28,11 @@ const LeftFlexContainer = styled.div`
 const RightFlexContainer = styled.div`
     display flex;
     flex-direction: column;
+    width: 50%;
+`;
+
+const H1 = styled.h1`
+    margin: 0px;
 `;
 
 // Note that the composer id is in state that was passed with useNavifate. This will be used to fetch composer id from api.
@@ -31,6 +40,8 @@ const ComposerProfile = () => {
     // The below code snippet will be used once data is in api.
     // const location = useLocation();
     // const composerId = location.state.composerId;
+
+    const { pathname } = useLocation();
 
     const [composer, setComposer] = useState({
         id: 1,
@@ -40,9 +51,19 @@ const ComposerProfile = () => {
         featuredSong: "https://www2.cs.uic.edu/~i101/SoundFiles/Fanfare60.wav",
         linkToScore: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
         nationality: "Australia",
+        website: "",
+        biography:
+            "Ann Cleare is an Irish composer working in the areas of concert music, opera, extended sonic environments, and hybrid instrumental design. Her work explores the static and sculptural nature of sound, probing the extremities of timbre, texture, colour, and form. She creates highly psychological and corporeal sonic spaces that encourage a listener to contemplate the complexity of the lives we exist within, exploring poetries of communication, transformation, and perception.  ",
     });
 
-    const composerName = composer.firstName + composer.lastName;
+    const composerName = `${composer.firstName} ${composer.lastName}`;
+
+    let composerInformation;
+    if (pathname.includes("biography")) {
+        composerInformation = <Biography biography={composer.biography} />;
+    } else if (pathname.includes("about")) {
+        composerInformation = <About />;
+    }
 
     return (
         <Container>
@@ -55,8 +76,10 @@ const ComposerProfile = () => {
                 </LeftFlexContainer>
                 <RightFlexContainer>
                     {/* This will be a flag next to composer name instead of nationality in text */}
-                    <div>{`${composerName} ${composer.nationality}`}</div>
+                    <H1>{`${composerName} ${composer.nationality}`}</H1>
                     <div>Clarinet, Piano</div>
+                    <Navbar />
+                    {composerInformation}
                 </RightFlexContainer>
             </OuterFlexContainer>
         </Container>

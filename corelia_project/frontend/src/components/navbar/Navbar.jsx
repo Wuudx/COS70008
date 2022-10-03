@@ -1,15 +1,16 @@
-import { useRef } from 'react';
-import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
-import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import NavLogo from '../../../../frontend/static/images/nav-logo.png';
-import NavButton from '../../shared-styled-components/NavButton';
-import Ul from '../../shared-styled-components/NavUl';
-import stylingConstants from '../../utils/styling';
-import Dropdown from './Dropdown';
-import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
-import React from 'react';
-import Account from '../account/Account';
+import { useRef } from "react";
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import NavLogo from "../../../../frontend/static/images/nav-logo.png";
+import NavButton from "../../shared-styled-components/NavButton";
+import Ul from "../../shared-styled-components/NavUl";
+import stylingConstants from "../../utils/styling";
+import Dropdown from "./Dropdown";
+import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
+import React from "react";
+import Account from "../account/Account";
+import StyledLink from "../../shared-styled-components/StyledLink";
 
 const Img = styled.img`
     position: absolute;
@@ -50,16 +51,6 @@ const Button = styled(NavButton)`
     }
 `;
 
-// Maybe put this in shared styled components with color prop since we will be using this in footer as well.
-const StyledLink = styled(Link)`
-    font-family: lato-bold;
-    text-decoration: none;
-    color: black;
-    &:hover {
-        border-bottom: 3px solid ${stylingConstants.colours.blue2Percent30};
-    }
-`;
-
 // TODO: Increasing the size of the up arrows (IoIosArrowUp) using size={x} ruins alignment of navbar. Figure out why!!!!
 const Navbar = () => {
     const navigate = useNavigate();
@@ -74,20 +65,20 @@ const Navbar = () => {
 
     return (
         <Container>
-            <Img src={NavLogo} alt='logo' onClick={() => navigate('/')} />
+            <Img src={NavLogo} alt="logo" onClick={() => navigate("/")} />
             <Nav>
-                <Ul gap='3em'>
+                <Ul gap="3em">
                     <li>
-                        <StyledLink to='/about'>About</StyledLink>
+                        <StyledLink to="/about">About</StyledLink>
                     </li>
                     <li>
-                        <StyledLink to='/discover-composers'>
+                        <StyledLink to="/discover-composers">
                             Discover Composers
                         </StyledLink>
                     </li>
                     <li ref={exploreRepDropdownRef}>
                         <Button
-                            type='button'
+                            type="button"
                             onClick={toggleExploreRepDropdown}
                         >
                             Explore Repertoire
@@ -97,7 +88,7 @@ const Navbar = () => {
                                         stylingConstants.colours.blue2Percent30
                                     }
                                     // This ensures that arrow is inline with text.
-                                    style={{ verticalAlign: 'bottom' }}
+                                    style={{ verticalAlign: "bottom" }}
                                 />
                             ) : (
                                 <IoIosArrowDown
@@ -105,21 +96,21 @@ const Navbar = () => {
                                         stylingConstants.colours.blue2Percent30
                                     }
                                     // This ensures that arrow is inline with text.
-                                    style={{ verticalAlign: 'bottom' }}
+                                    style={{ verticalAlign: "bottom" }}
                                 />
                             )}
                         </Button>
                         <Dropdown
                             isVisible={isExploreRepDropdownVisible}
-                            dropdownName='Explore Repertoire'
+                            dropdownName="Explore Repertoire"
                         />
                     </li>
                     <li>
-                        <StyledLink to='/blog'>Blog</StyledLink>
+                        <StyledLink to="/blog">Blog</StyledLink>
                     </li>
                     <li ref={getInvolvedDropdownRef}>
                         <Button
-                            type='button'
+                            type="button"
                             onClick={toggleGetInvolvedDropdown}
                         >
                             Get Involved
@@ -129,7 +120,7 @@ const Navbar = () => {
                                         stylingConstants.colours.blue2Percent30
                                     }
                                     // This ensures that arrow is inline with text.
-                                    style={{ verticalAlign: 'bottom' }}
+                                    style={{ verticalAlign: "bottom" }}
                                 />
                             ) : (
                                 <IoIosArrowDown
@@ -137,13 +128,13 @@ const Navbar = () => {
                                         stylingConstants.colours.blue2Percent30
                                     }
                                     // This ensures that arrow is inline with text.
-                                    style={{ verticalAlign: 'bottom' }}
+                                    style={{ verticalAlign: "bottom" }}
                                 />
                             )}
                         </Button>
                         <Dropdown
                             isVisible={isGetInvolvedDropdownVisible}
-                            dropdownName='Get Involved'
+                            dropdownName="Get Involved"
                         />
                     </li>
                 </Ul>

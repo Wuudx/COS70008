@@ -22,7 +22,7 @@ const fonts = {
 
 // TODO: Seperate this array to make it more net. For example, seperate sizes into blogs page, contact us page etc...
 const sizes = {
-    // Please make sure that padding of body in index.css is same as this variable to ensure that all content stays
+    // Please make sure that padding of body in index.css is same as this variable (navbarHeight) to ensure that all content stays
     // under navbar!!
     navbarHeight: "100px",
     searchBarHeight: "70px",
