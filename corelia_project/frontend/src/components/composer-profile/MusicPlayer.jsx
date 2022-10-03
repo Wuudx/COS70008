@@ -127,7 +127,7 @@ const Img = styled.img`
     z-index: -1;
 `;
 
-const MusicPlayer = ({ song }) => {
+const MusicPlayer = ({ linkToSong }) => {
     const audioRef = useRef();
     const progressRef = useRef();
     const [isPlaying, setIsPlaying] = useState(false);
@@ -205,7 +205,7 @@ const MusicPlayer = ({ song }) => {
 
     return (
         <Container>
-            <audio ref={audioRef} src={song} />
+            <audio ref={audioRef} src={linkToSong} />
             <Img src={musicNote} />
             {playOrPauseButton}
             <RangeInput ref={progressRef} type="range" />

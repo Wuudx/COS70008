@@ -1,6 +1,8 @@
 const colours = {
     blue1: "#7BA2D5",
     blue2: "#427BBF",
+    blue3: "#6d94cd",
+    blue4: "#407bbf",
     blue1Percent50: "rgb(123, 162, 213, 50%)",
     blue1Percent80: "rgb(123, 162, 213, 80%)",
     blue1Percent100: "rgb(123, 162, 213, 100%)",
