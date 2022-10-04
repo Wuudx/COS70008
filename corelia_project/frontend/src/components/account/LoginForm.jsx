@@ -20,6 +20,13 @@ const LoginFormContainer = styled.div`
     }
 `;
 
+const Div = styled.div`
+    display: flex;
+    padding: 20px;
+    font-size: 2rem;
+    text-align: center;
+`;
+
 const Form = styled.form`
     display: flex;
     flex-direction: column;
@@ -92,7 +99,7 @@ const LoginForm = ({ handleChangeView }) => {
 
     return (
         <LoginFormContainer>
-            <h1>Login</h1>
+            <Div>Login</Div>
             {error ? <Error>{error}</Error> : null}
             <Form onSubmit={handleLogin}>
                 {/* <label htmlFor='username'>Username</label> */}

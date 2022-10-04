@@ -56,6 +56,32 @@ export async function authenticate(dispatch) {
     }
 }
 
+export async function register(dispatch, registerPayload) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(registerPayload),
+    };
+
+    try {
+        dispatch({ type: 'REQUEST_REGISTER' });
+        let response = await fetch(ROOT_URL + '/register', requestOptions);
+        let data = await response.json();
+
+        if (data.token) {
+            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('auth_token', 'Token ' + data.token);
+            dispatch({ type: 'REGISTER_SUCCESS', payload: data });
+            return data;
+        }
+
+        dispatch({ type: 'REGISTER_FAILURE', payload: data });
+        return;
+    } catch (error) {
+        dispatch({ type: 'REGISTER_FAILURE', payload: error });
+    }
+}
+
 export async function logout(dispatch) {
     const requestOptions = {
         method: 'POST',

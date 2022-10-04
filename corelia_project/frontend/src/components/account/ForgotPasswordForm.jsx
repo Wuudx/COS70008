@@ -51,6 +51,21 @@ const Button = styled.button`
     }
 `;
 
+const P = styled.p`
+    margin: 0.5rem 0;
+    font-size: 0.8rem;
+`;
+
+const Span = styled.span`
+    color: ${stylingConstants.colours.blue1Percent100};
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+        color: ${stylingConstants.colours.blue2Percent100};
+    }
+`;
+
 const ForgotPasswordForm = ({ handleChangeView }) => {
     const [email, setEmail] = useState('');
 
@@ -62,6 +77,7 @@ const ForgotPasswordForm = ({ handleChangeView }) => {
     return (
         <ForgotPasswordFormContainer>
             <Div>Reset Password</Div>
+            <P>Please enter your email:</P>
             <Form onSubmit={handleSubmit}>
                 <Input
                     type='text'
@@ -71,6 +87,16 @@ const ForgotPasswordForm = ({ handleChangeView }) => {
                 />
                 <Button type='submit'>Send Reset Email</Button>
             </Form>
+            <P>
+                Don't have an account?{' '}
+                <Span onClick={() => handleChangeView('signup')}>Sign Up</Span>
+            </P>
+            <P>
+                Ready to log in?{' '}
+                <Span onClick={() => handleChangeView('login')}>
+                    Login Now!
+                </Span>
+            </P>
         </ForgotPasswordFormContainer>
     );
 };

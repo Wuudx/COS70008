@@ -24,7 +24,7 @@ const LoginBox = styled.div`
     background-color: #fff;
     padding: 2rem;
     min-height: 350px;
-    max-height: 350px;
+    // max-height: 350px;
     min-width: 300px;
     max-width: 300px;
     border-radius: 20px;
