@@ -19,6 +19,7 @@ export const reducer = (initialState, action) => {
             return {
                 ...initialState,
                 loading: false,
+                error: null,
                 user: action.payload.user,
                 token: action.payload.token,
             };
@@ -26,14 +27,28 @@ export const reducer = (initialState, action) => {
             return {
                 ...initialState,
                 loading: false,
-                error: action.payload.error,
+                error:
+                    action.payload.non_field_errors[0] ?? action.payload.error,
             };
-        case 'AUTHENTICATE':
+        case 'REQUEST_AUTHENTICATE':
+            return {
+                ...initialState,
+                loading: true,
+            };
+        case 'AUTHENTICATE_SUCCESS':
             return {
                 ...initialState,
                 loading: false,
+                error: null,
                 user: action.payload.user,
                 token: action.payload.token,
+            };
+        case 'AUTHENTICATE_FAILURE':
+            return {
+                ...initialState,
+                loading: false,
+                error:
+                    action.payload.non_field_errors[0] ?? action.payload.error,
             };
         case 'LOGOUT':
             return {
