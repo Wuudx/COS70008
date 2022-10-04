@@ -19,6 +19,7 @@ export const reducer = (initialState, action) => {
             return {
                 ...initialState,
                 loading: false,
+                error: null,
                 user: action.payload.user,
                 token: action.payload.token,
             };
@@ -38,6 +39,7 @@ export const reducer = (initialState, action) => {
             return {
                 ...initialState,
                 loading: false,
+                error: null,
                 user: action.payload.user,
                 token: action.payload.token,
             };
