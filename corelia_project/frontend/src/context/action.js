@@ -12,8 +12,6 @@ export async function login(dispatch, loginPayload) {
         let response = await fetch(ROOT_URL + '/login', requestOptions);
         let data = await response.json();
 
-        // console.log(data);
-
         if (data.token) {
             localStorage.setItem('user', JSON.stringify(data.user));
             localStorage.setItem('auth_token', 'Token ' + data.token);
@@ -38,22 +36,19 @@ export async function authenticate(dispatch) {
     };
 
     try {
-        let response = await fetch(ROOT_URL + '/user', requestOptions);
+        dispatch({ type: 'REQUEST_AUTHENTICATE' });
+        let response = await fetch(ROOT_URL + '/authenticate', requestOptions);
         let data = await response.json();
 
-        // console.log(data);
-
-        if (data) {
-            localStorage.setItem('user', JSON.stringify(data.user));
-            localStorage.setItem('auth_token', 'Token ' + data.token);
-            dispatch({ type: 'AUTHENTICATE', payload: data });
+        if (data.user) {
+            dispatch({ type: 'AUTHENTICATE_SUCCESS', payload: data });
             return data;
         }
 
-        dispatch({ type: 'LOGOUT' });
+        dispatch({ type: 'AUTHENTICATE_FAILURE', payload: data });
         return;
     } catch (error) {
-        dispatch({ type: 'LOGOUT' });
+        dispatch({ type: 'AUTHENTICATE_FAILURE', payload: error });
     }
 }
 

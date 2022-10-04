@@ -34,7 +34,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const dispatch = useAuthDispatch();
-    const { loading, errorMessage } = useAuthState();
+    const { loading, error } = useAuthState();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -52,7 +52,7 @@ const Login = () => {
         <LoginDiv>
             <LoginBox>
                 <h1>Login</h1>
-                {errorMessage ? <p>{errorMessage}</p> : null}
+                {error ? <p>{error}</p> : null}
                 <Form onSubmit={handleLogin}>
                     <label htmlFor='username'>Username</label>
                     <input
