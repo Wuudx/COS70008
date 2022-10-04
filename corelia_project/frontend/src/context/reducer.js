@@ -27,8 +27,7 @@ export const reducer = (initialState, action) => {
             return {
                 ...initialState,
                 loading: false,
-                error:
-                    action.payload.non_field_errors[0] ?? action.payload.error,
+                error: action.payload.error,
             };
         case 'REQUEST_AUTHENTICATE':
             return {

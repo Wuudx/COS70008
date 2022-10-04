@@ -10,6 +10,13 @@ export async function login(dispatch, loginPayload) {
     try {
         dispatch({ type: 'REQUEST_LOGIN' });
         let response = await fetch(ROOT_URL + '/login', requestOptions);
+        if (!response.ok) {
+            let data = { error: 'Invalid username or password' };
+
+            dispatch({ type: 'LOGIN_FAILURE', payload: data });
+            return;
+        }
+
         let data = await response.json();
 
         if (data.token) {
@@ -18,9 +25,6 @@ export async function login(dispatch, loginPayload) {
             dispatch({ type: 'LOGIN_SUCCESS', payload: data });
             return data;
         }
-
-        dispatch({ type: 'LOGIN_FAILURE', payload: data });
-        return;
     } catch (error) {
         dispatch({ type: 'LOGIN_FAILURE', payload: error });
     }
