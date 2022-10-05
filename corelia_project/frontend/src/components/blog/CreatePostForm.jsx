@@ -24,18 +24,17 @@ const FormItemsFlexContainer = styled.div`
 
 // TODO: Fix issue where button looks squeezed!
 const AttachImageButton = styled.div`
-    // These (height, width, line-height)are all the same to ensure that text inside is vertically and horizontally centered
-    height: 31px;
-    line-height: 31px;
-    width: 31px;
-
-    font-size: 2em;
-    font-weight: bold;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: ${stylingConstants.colours.blue2Percent80};
     border: 1px solid ${stylingConstants.colours.blue2Percent80};
-    text-align: center;
     cursor: pointer;
+    font-size: 2em;
+    font-weight: bold;
 `;
 
 const TextArea = styled.textarea`
