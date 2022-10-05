@@ -58,9 +58,9 @@ const Navbar = () => {
     const exploreRepDropdownRef = useRef();
     const getInvolvedDropdownRef = useRef();
 
-    const [isExploreRepDropdownVisible, toggleExploreRepDropdown] =
+    const [isExploreRepDropdownVisible, setIsExploreRepDropdownVisible] =
         useDetectOutsideClick(exploreRepDropdownRef, false);
-    const [isGetInvolvedDropdownVisible, toggleGetInvolvedDropdown] =
+    const [isGetInvolvedDropdownVisible, setIsGetInvolvedDropdownVisible] =
         useDetectOutsideClick(getInvolvedDropdownRef, false);
 
     return (
@@ -79,7 +79,11 @@ const Navbar = () => {
                     <li ref={exploreRepDropdownRef}>
                         <Button
                             type="button"
-                            onClick={toggleExploreRepDropdown}
+                            onClick={() =>
+                                setIsExploreRepDropdownVisible(
+                                    !isExploreRepDropdownVisible
+                                )
+                            }
                         >
                             Explore Repertoire
                             {isExploreRepDropdownVisible ? (
@@ -111,7 +115,11 @@ const Navbar = () => {
                     <li ref={getInvolvedDropdownRef}>
                         <Button
                             type="button"
-                            onClick={toggleGetInvolvedDropdown}
+                            onClick={() =>
+                                setIsGetInvolvedDropdownVisible(
+                                    !isGetInvolvedDropdownVisible
+                                )
+                            }
                         >
                             Get Involved
                             {isGetInvolvedDropdownVisible ? (
