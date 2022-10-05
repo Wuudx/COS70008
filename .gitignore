@@ -3,3 +3,6 @@ __pycache__/
 corelia_project/.vscode
 corelia_project/frontend/static/frontend/
 node_modules/
+corelia_project/backend/migrations/__pycache__/0001_initial.cpython-39.pyc
+corelia_project/backend/migrations/__pycache__/__init__.cpython-39.pyc
+corelia_project/frontend/migrations/__pycache__/__init__.cpython-39.pyc
