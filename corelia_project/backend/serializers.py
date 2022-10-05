@@ -3,6 +3,11 @@ from rest_framework import serializers
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
 
 class ComposerSerializer(serializers.ModelSerializer):
+    nationality_detail = serializers.SerializerMethodField()
+
+    def get_nationality_detail(self, obj):
+        return obj.nationality.name
+
     class Meta:
         model = Composer
         fields = '__all__'
