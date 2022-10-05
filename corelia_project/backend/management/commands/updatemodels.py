@@ -11,13 +11,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        """ Data Deletion - uncomment to delete all data
+        """
         Nationality.objects.all().delete()
         Publisher.objects.all().delete()
         Composer.objects.all().delete()
         ComposerNationality.objects.all().delete()
         Composition.objects.all().delete()
         """
+        
 
         df = pd.read_csv('corelia_dataset.csv', delimiter=',', encoding='latin-1')
         df = df.fillna(value = "")
@@ -40,7 +41,7 @@ class Command(BaseCommand):
 
         for index, row in df.iterrows():
             if (Composer.objects.filter(firstName = row['FirstName']).count() == 0):
-                models = Composer(firstName = row['FirstName'], middleName = row['MiddleName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = Nationality.objects.get(name = row['Nationality']), nationalityName = row['Nationality'])
+                models = Composer(firstName = row['FirstName'], middleName = row['MiddleName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = Nationality.objects.get(name = row['Nationality']))
                 models.save()
         
         

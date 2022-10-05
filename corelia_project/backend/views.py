@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import authentication_classes, permission_classes
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
-from .serializers import ComposerSerializer, CompositionSerializer, ComposerNationalitySerializer, CompositionInstrumentSerializer, PublisherSerializer, NationalitySerializer, InstrumentSerializer
+from .serializers import FeaturedComposerSerializer, ComposerSerializer, CompositionSerializer, ComposerNationalitySerializer, CompositionInstrumentSerializer, PublisherSerializer, NationalitySerializer, InstrumentSerializer
 
 # Create your views here.
 
@@ -42,12 +42,12 @@ def featured_composer(request):
     if request.method == 'GET':
         composers = Composer.objects.filter(featured=True)
 
-        serializer = ComposerSerializer(composers, context={'request': request}, many=True)
+        serializer = FeaturedComposerSerializer(composers, context={'request': request}, many=True)
 
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        serializer = ComposerSerializer(composers=request.data)
+        serializer = FeaturedComposerSerializer(composers=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -63,7 +63,7 @@ def featured_composer_detail(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'PUT':
-        serializer = ComposerSerializer(composer, data=request.data, context={'request': request})
+        serializer = FeaturedComposerSerializer(composer, data=request.data, context={'request': request})
 
         if serializer.is_valid():
             serializer.save()
