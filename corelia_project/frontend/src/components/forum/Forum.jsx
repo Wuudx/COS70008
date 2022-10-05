@@ -16,7 +16,7 @@ const InvisibleFlexItem = styled.div`
     margin-right: ${stylingConstants.sizes.leftRightMargin};
 `;
 
-const Blog = () => {
+const Forum = () => {
     return (
         <FlexContainer>
             <MonthFilters />
@@ -25,4 +25,4 @@ const Blog = () => {
         </FlexContainer>
     );
 };
-export default Blog;
+export default Forum;
