@@ -1,4 +1,3 @@
-from asyncio import mixins
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework import status
@@ -229,3 +228,12 @@ def composition_detail(request, pk):
     elif request.method == 'DELETE':
         composition.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def get_composer_by_letter(request, letter):
+    if request.method == 'GET':
+        composers = Composer.objects.all().filter(lastName__startswith=letter)
+
+        serializer = ComposerSerializer(composers, context={'request': request}, many=True)
+
+        return Response(serializer.data)
