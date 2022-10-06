@@ -62,7 +62,7 @@ const SongDescription = styled.p`
     padding: 5px;
 `;
 
-const Repertoire = ({ song }) => {
+const Repertoire = ({ composition }) => {
     const trimDescription = (description) => {
         const maxLength = 100;
         return description.length > maxLength
@@ -76,14 +76,20 @@ const Repertoire = ({ song }) => {
 
     return (
         <Song>
-            <SongArtwork src={song.image} />
+            <SongArtwork
+                src={
+                    'https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg'
+                }
+            />
             <SongInfo>
                 <SongNameArtist>
-                    <SongName>{song.name}</SongName>
-                    <SongArtist>{song.artist}</SongArtist>
+                    <SongName>{composition.name}</SongName>
+                    <SongArtist>{composition.composer}</SongArtist>
                 </SongNameArtist>
                 <SongDescription>
-                    {trimDescription(song.description)}
+                    {trimDescription(
+                        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat molestiae totam, voluptatem optio explicabo quidem ea ipsa doloribus quasi. Accusantium quas ipsam aut! Qui voluptatem facere odio unde explicabo maxime?'
+                    )}
                 </SongDescription>
             </SongInfo>
             <ReadButton onClick={handleClick} />

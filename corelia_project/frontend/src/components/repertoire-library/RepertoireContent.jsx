@@ -72,23 +72,53 @@ const songs = [
 ];
 
 const RepertoireContent = () => {
-    // Change this to be the number of songs to be displayed after testing
-    const [numItems, setNumItems] = useState(2); // Change this too!
+    const page_size = 20;
+    const [fetchURL, setFetchURL] = useState(
+        'http://localhost:8000/api/compositions' + `?limit=${page_size}`
+    );
+    const [compositions, setCompositions] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
+
+    async function fetchCompositions() {
+        try {
+            let response = await fetch(fetchURL);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+                return;
+            }
+
+            let data = await response.json();
+
+            if (!data) {
+                throw new Error('No data returned');
+                return;
+            }
+
+            setFetchURL(data.next);
+            setCompositions([...compositions, ...data.results]);
+            setHasMore(data.next !== null);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    console.log(compositions);
+    console.log(fetchURL);
+
+    useEffect(() => {
+        fetchCompositions();
+    }, []);
 
     const handleLoadMore = () => {
-        setNumItems(numItems + 2);
+        fetchCompositions();
     };
 
     return (
         <Container>
-            {songs.slice(0, numItems).map((song) => (
-                <Repertoire key={song.id} song={song} />
+            {compositions.map((composition) => (
+                <Repertoire key={composition.id} composition={composition} />
             ))}
-            {numItems !== songs.length ? (
-                <LoadMoreButton onClick={handleLoadMore} />
-            ) : (
-                ''
-            )}
+            {hasMore ? <LoadMoreButton onClick={handleLoadMore} /> : ''}
         </Container>
     );
 };

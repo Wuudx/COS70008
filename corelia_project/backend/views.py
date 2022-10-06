@@ -13,6 +13,7 @@ from .serializers import *
 
 
 class AllComposersView(ListAPIView):
+    pagination_class = LimitOffsetPagination
     queryset = Composer.objects.all()
     serializer_class = AllComposersSerializer
 
