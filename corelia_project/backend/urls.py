@@ -18,7 +18,7 @@ urlpatterns = [
     re_path(r'^composers/([0-9])$', views.all_composers_detail),
     re_path(r'^composition/$', views.composition),
     re_path(r'^composition/([0-9])$', views.composition_detail),
-    
-
+    re_path(r'blog/$', views.all_blog_posts),
+    re_path(r'blog/([0-9])$', views.all_blog_posts_detail),
 
 ]

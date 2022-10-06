@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
+from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost
 
 class ComposerSerializer(serializers.ModelSerializer):
     nationality_detail = serializers.SerializerMethodField()
@@ -58,3 +58,7 @@ class FeaturedComposerSerializer(serializers.ModelSerializer):
         model = Composer
         fields = '__all__'
 
+class BlogPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlogPost
+        fields = '__all__'
