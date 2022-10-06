@@ -13,6 +13,12 @@ class ComposerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CompositionSerializer(serializers.ModelSerializer):
+    composer_name = serializers.SerializerMethodField()
+
+    def get_composer_name(self, obj):
+        firstName = obj.composer.firstName
+        lastName = obj.composer.lastName
+        return firstName + ' ' + lastName
     class Meta:
         model = Composition
         fields = '__all__'

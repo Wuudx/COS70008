@@ -22,7 +22,6 @@ class Command(BaseCommand):
 
         df = pd.read_csv('Database information1.csv', delimiter=',')
         df = df.replace("nan", "")
-        df = df.dropna(how='all')
         df = df.replace("?", "")
 
         df["LastName"] = df["Name of Composer"].apply(lambda x: x[0:x.find(",")])
@@ -52,7 +51,7 @@ class Command(BaseCommand):
         
 
         for index, row in df.iterrows():
-            if (Composer.objects.filter(firstName = row['FirstName']).count() == 0):
+            if (Composer.objects.filter(lastName = row['LastName'], firstName = row['FirstName']).count() == 0):
                 models = Composer(firstName = row['FirstName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = Nationality.objects.get(name = row['Nationality']), biography = row['Biography'], bio_source = row['Bio_source'])
                 models.save()
         
@@ -72,7 +71,7 @@ class Command(BaseCommand):
         
         for index, row in df.iterrows():
             if (Composition.objects.filter(name = row['Nameofpiece']).count() == 0):
-                composer = Composer.objects.get(firstName = row['FirstName'])
+                composer = Composer.objects.get(firstName = row['FirstName'], lastName = row['LastName'])
                 c_id = composer.id
                 publisher = Publisher.objects.get(name = row['Publisher'])
                 p_id = publisher.id
