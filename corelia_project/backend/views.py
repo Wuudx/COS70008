@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import authentication_classes, permission_classes
-from rest_framework.mixins import ListModelMixin
+from rest_framework.pagination import LimitOffsetPagination
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
 from .serializers import *
 
@@ -25,6 +25,7 @@ class ComposerView(ListAPIView):
 
 
 class AllCompositionsView(ListAPIView):
+    pagination_class = LimitOffsetPagination
     queryset = Composition.objects.all()
     serializer_class = AllCompositionsSerializer
 

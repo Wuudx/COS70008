@@ -4,9 +4,14 @@ from .models import Composer, Composition, Instrument, Nationality, ComposerNati
 
 
 class AllComposersSerializer(serializers.ModelSerializer):
+    composition_count = serializers.SerializerMethodField()
+
+    def get_composition_count(self, obj):
+        return Composition.objects.filter(composer=obj).count()
+
     class Meta:
         model = Composer
-        fields = ['id', 'firstName', 'lastName']
+        fields = ['id', 'firstName', 'lastName', 'composition_count']
 
 
 class ComposerSerializer(serializers.ModelSerializer):
