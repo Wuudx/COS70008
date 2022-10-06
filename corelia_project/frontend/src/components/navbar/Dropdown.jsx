@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import stylingConstants from '../../utils/styling';
-import React from 'react';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import stylingConstants from "../../utils/styling";
+import React from "react";
 
 const Ul = styled.ul`
     position: absolute;
@@ -23,30 +23,33 @@ const Ul = styled.ul`
 `;
 
 const Dropdown = ({ isVisible, dropdownName }) => {
-    let content = '';
+    let content = "";
     if (!isVisible) {
         return content;
     }
 
-    if (dropdownName === 'Explore Repertoire') {
+    if (dropdownName === "Explore Repertoire") {
         content = (
             <Ul>
                 <li>
-                    <Link to='/watch-listen'>Watch / Listen</Link>
+                    <Link to="/watch-listen">Watch / Listen</Link>
                 </li>
                 <li>
-                    <Link to='/repertoire-library'>Repertoire Library</Link>
+                    <Link to="/repertoire-library">Repertoire Library</Link>
                 </li>
             </Ul>
         );
-    } else if (dropdownName === 'Get Involved') {
+    } else if (dropdownName === "Get Involved") {
         content = (
             <Ul>
                 <li>
-                    <Link to='/join-corelia'>Join Corelia</Link>
+                    <Link to="/join-corelia">Join Corelia</Link>
                 </li>
                 <li>
-                    <Link to='/contact-us'>Contact</Link>
+                    <Link to="/contact-us">Contact</Link>
+                </li>
+                <li>
+                    <Link to="/forum">Forum</Link>
                 </li>
             </Ul>
         );

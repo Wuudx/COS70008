@@ -10,9 +10,14 @@ export async function login(dispatch, loginPayload) {
     try {
         dispatch({ type: 'REQUEST_LOGIN' });
         let response = await fetch(ROOT_URL + '/login', requestOptions);
-        let data = await response.json();
+        if (!response.ok) {
+            let data = { error: 'Invalid username or password' };
 
-        // console.log(data);
+            dispatch({ type: 'LOGIN_FAILURE', payload: data });
+            return;
+        }
+
+        let data = await response.json();
 
         if (data.token) {
             localStorage.setItem('user', JSON.stringify(data.user));
@@ -20,9 +25,6 @@ export async function login(dispatch, loginPayload) {
             dispatch({ type: 'LOGIN_SUCCESS', payload: data });
             return data;
         }
-
-        dispatch({ type: 'LOGIN_FAILURE', payload: data });
-        return;
     } catch (error) {
         dispatch({ type: 'LOGIN_FAILURE', payload: error });
     }
@@ -38,22 +40,45 @@ export async function authenticate(dispatch) {
     };
 
     try {
-        let response = await fetch(ROOT_URL + '/user', requestOptions);
+        dispatch({ type: 'REQUEST_AUTHENTICATE' });
+        let response = await fetch(ROOT_URL + '/authenticate', requestOptions);
         let data = await response.json();
 
-        // console.log(data);
-
-        if (data) {
-            localStorage.setItem('user', JSON.stringify(data.user));
-            localStorage.setItem('auth_token', 'Token ' + data.token);
-            dispatch({ type: 'AUTHENTICATE', payload: data });
+        if (data.user) {
+            dispatch({ type: 'AUTHENTICATE_SUCCESS', payload: data });
             return data;
         }
 
-        dispatch({ type: 'LOGOUT' });
+        dispatch({ type: 'AUTHENTICATE_FAILURE', payload: data });
         return;
     } catch (error) {
-        dispatch({ type: 'LOGOUT' });
+        dispatch({ type: 'AUTHENTICATE_FAILURE', payload: error });
+    }
+}
+
+export async function register(dispatch, registerPayload) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(registerPayload),
+    };
+
+    try {
+        dispatch({ type: 'REQUEST_REGISTER' });
+        let response = await fetch(ROOT_URL + '/register', requestOptions);
+        let data = await response.json();
+
+        if (data.token) {
+            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('auth_token', 'Token ' + data.token);
+            dispatch({ type: 'REGISTER_SUCCESS', payload: data });
+            return data;
+        }
+
+        dispatch({ type: 'REGISTER_FAILURE', payload: data });
+        return;
+    } catch (error) {
+        dispatch({ type: 'REGISTER_FAILURE', payload: error });
     }
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
@@ -42,6 +42,8 @@ const ComposerProfile = () => {
     // const composerId = location.state.composerId;
 
     const { pathname } = useLocation();
+    const [composerInformationElement, setComposerInformationElement] =
+        useState();
 
     const [composer, setComposer] = useState({
         id: 1,
@@ -54,16 +56,32 @@ const ComposerProfile = () => {
         website: "",
         biography:
             "Ann Cleare is an Irish composer working in the areas of concert music, opera, extended sonic environments, and hybrid instrumental design. Her work explores the static and sculptural nature of sound, probing the extremities of timbre, texture, colour, and form. She creates highly psychological and corporeal sonic spaces that encourage a listener to contemplate the complexity of the lives we exist within, exploring poetries of communication, transformation, and perception.  ",
+        yearOfBirth: 1832,
+        yearOfDeath: 1921,
+        recordingLink: "https://www.youtube.com/watch?v=AxQ3acoWXY0",
     });
 
     const composerName = `${composer.firstName} ${composer.lastName}`;
 
-    let composerInformation;
-    if (pathname.includes("biography")) {
-        composerInformation = <Biography biography={composer.biography} />;
-    } else if (pathname.includes("about")) {
-        composerInformation = <About />;
-    }
+    const aboutInformation = {
+        name: composerName,
+        nationality: composer.nationality,
+        yearOfBirth: composer.yearOfBirth,
+        yearOfDeath: composer.yearOfDeath,
+        recordingLink: composer.recordingLink,
+    };
+
+    useEffect(() => {
+        if (pathname.includes("biography")) {
+            setComposerInformationElement(
+                <Biography biography={composer.biography} />
+            );
+        } else if (pathname.includes("about")) {
+            setComposerInformationElement(
+                <About aboutInformation={aboutInformation} />
+            );
+        }
+    }, [pathname]);
 
     return (
         <Container>
@@ -79,7 +97,7 @@ const ComposerProfile = () => {
                     <H1>{`${composerName} ${composer.nationality}`}</H1>
                     <div>Clarinet, Piano</div>
                     <Navbar />
-                    {composerInformation}
+                    {composerInformationElement}
                 </RightFlexContainer>
             </OuterFlexContainer>
         </Container>

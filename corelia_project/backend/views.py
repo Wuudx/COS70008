@@ -4,8 +4,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import authentication_classes, permission_classes
-from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost
-from .serializers import ComposerSerializer, CompositionSerializer, ComposerNationalitySerializer, CompositionInstrumentSerializer, PublisherSerializer, NationalitySerializer, InstrumentSerializer, BlogPostSerializer
+from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
+from .serializers import FeaturedComposerSerializer, ComposerSerializer, CompositionSerializer, ComposerNationalitySerializer, CompositionInstrumentSerializer, PublisherSerializer, NationalitySerializer, InstrumentSerializer
 
 # Create your views here.
 
@@ -37,21 +37,17 @@ class InstrumentView(generics.CreateAPIView):
     queryset = Instrument.objects.all()
     serializer_class = InstrumentSerializer
 
-class BlogPostView(generics.CreateAPIView):
-    queryset = BlogPost.objects.add()
-    serializer_class = BlogPostSerializer
-
 @api_view(['GET', 'POST'])
 def featured_composer(request):
     if request.method == 'GET':
         composers = Composer.objects.filter(featured=True)
 
-        serializer = ComposerSerializer(composers, context={'request': request}, many=True)
+        serializer = FeaturedComposerSerializer(composers, context={'request': request}, many=True)
 
         return Response(serializer.data)
     
     elif request.method == 'POST':
-        serializer = ComposerSerializer(composers=request.data)
+        serializer = FeaturedComposerSerializer(composers=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -67,7 +63,7 @@ def featured_composer_detail(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'PUT':
-        serializer = ComposerSerializer(composer, data=request.data, context={'request': request})
+        serializer = FeaturedComposerSerializer(composer, data=request.data, context={'request': request})
 
         if serializer.is_valid():
             serializer.save()
@@ -194,40 +190,3 @@ def composition_detail(request, pk):
         composition.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET', 'POST'])
-def all_blog_posts(request):
-    if request.method == 'GET':
-        blog_posts = BlogPost.objects.all()
-
-        serializer = BlogPostSerializer(blog_posts, context={'request': request}, many=True)
-
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
-        serializer = BlogPostSerializer(blog_posts=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['PUT', 'DELETE'])
-def all_blog_posts_detail(request, pk):
-    try:
-        blog_post = BlogPost.objects.get(pk=pk)
-    except BlogPost.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'PUT':
-        serializer = BlogPostSerializer(blog_post, data=request.data, context={'request': request})
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    elif request.method == 'DELETE':
-        blog_post.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)

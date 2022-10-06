@@ -15,11 +15,11 @@ class Composer(models.Model):
     id = models.AutoField(primary_key=True)
     firstName = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
-    middleName = models.CharField(max_length=100, blank=True, null=True)
     birth = models.IntegerField(blank=True, null=True)
     death = models.IntegerField(null=True, blank=True)
     nationality = models.ForeignKey(Nationality, on_delete=models.CASCADE)
-    nationalityName = models.CharField(max_length = 100, blank=True, null=True)
+    biography = models.TextField(blank=True, null=True)
+    bio_source = models.CharField(max_length=200, blank=True, null=True)
     featured = models.BooleanField(default=False)
     image = models.CharField(max_length=300, default = "https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg")
 

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import BackToTopButton from "./components/back-to-top-button/BackToTopButton";
-import Blog from "./components/blog/Blog";
+import Forum from "./components/forum/Forum";
 import ContactUsForm from "./components/contact-corelia/ContactUsForm";
 import DiscoverComposers from "./components/discover-composers/DiscoverComposers";
 import SearchResultsContainer from "./components/discover-composers/SearchResultsContainer";
@@ -70,7 +70,7 @@ function App() {
                             path="/repertoire-library"
                             element={<RepertoireLibrary />}
                         />
-                        <Route path="/blog" element={<Blog />} />
+                        <Route path="/forum" element={<Forum />} />
                         <Route path="/contact-us" element={<ContactUsForm />} />
                         <Route path="/join-corelia" element={<JoinCorelia />} />
                         <Route path="/login" element={<Login />} />
