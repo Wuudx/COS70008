@@ -12,14 +12,15 @@ urlpatterns = [
     path('publishers', PublisherView.as_view()),
     path('nationality', NationalityView.as_view()),
     path('instruments', InstrumentView.as_view()),
-    re_path(r'^featured/$', views.featured_composer),
-    re_path(r'^featured/([0-9])$', views.featured_composer_detail),
-    re_path(r'^nationality/$', views.nationality),
-    re_path(r'^nationality/([0-9])$', views.nationality_detail),
-    re_path(r'^composers/$', views.all_composers),
-    re_path(r'^composers/([0-9])$', views.all_composers_detail),
-    re_path(r'^composition/$', views.composition),
-    re_path(r'^composition/([0-9])$', views.composition_detail),
+    path('featured/', views.featured_composer),
+    path('featured/<int:pk>', views.featured_composer_detail),
+    path('nationality/', views.nationality),
+    path('nationality/<int:pk>', views.nationality_detail),
+    path('composers/', views.all_composers),
+    path('composers/<int:pk>', views.all_composers_detail),
+    path('composition/', views.composition),
+    path('composition/<int:pk>', views.composition_detail),
+    path('discover_composers/<letter>', views.get_composer_by_letter),
 
 
 
