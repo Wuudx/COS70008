@@ -64,3 +64,25 @@ class ComposersByLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Composer
         fields = ['firstName', 'lastName', 'image']
+
+class SearchBarComposerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Composer
+        fields = ['id', 'firstName', 'lastName']
+
+class SearchBarCompositionSerializer(serializers.ModelSerializer):
+    composer_name = serializers.SerializerMethodField()
+
+    def get_composer_name(self, obj):
+        firstName = obj.composer.firstName
+        lastName = obj.composer.lastName
+        return firstName + ' ' + lastName
+
+    class Meta:
+        model = Composition
+        fields = ['id', 'name', 'composer_name']
+
+class SearchBarPublisherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Publisher
+        fields = ['id', 'name']

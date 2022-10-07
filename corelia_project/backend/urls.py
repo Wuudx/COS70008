@@ -9,6 +9,9 @@ urlpatterns = [
     path('compositions', AllCompositionsView.as_view()),
     path('compositions/<int:pk>', CompositionView.as_view()),
     path('discover-composers/<letter>', GetComposersByLetter.as_view()),
+    path('search-composers/<query>', SearchBarGetComposer.as_view()),
+    path('search-compositions/<query>', SearchBarGetComposition.as_view()),
+    path('search-publishers/<query>', SearchBarGetPublisher.as_view()),
 
 
 
