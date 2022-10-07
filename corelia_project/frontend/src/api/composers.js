@@ -1,3 +1,5 @@
+import constants from '../utils/constants';
+
 export async function getComposers() {
     const response = await fetch('http://localhost:8000/api/composers');
     if (!response.ok) {
@@ -8,7 +10,7 @@ export async function getComposers() {
 
 export async function filterComposersByLetter(letter) {
     const response = await fetch(
-        `http://localhost:8000/api/discover-composers/${letter}`
+        `http://localhost:8000/api/discover-composers/${letter}?limit=${constants.DISCOVER_COMPOSERS_LIMIT}`
     );
     if (!response.ok) {
         throw new Error(response.status);
