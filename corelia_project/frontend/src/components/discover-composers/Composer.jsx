@@ -57,7 +57,7 @@ const Composer = ({ composer }) => {
                 <FirstNameSpan>
                     {composer.firstName.toUpperCase()}
                 </FirstNameSpan>
-                <Img src={composer.picture} alt="composer picture" />
+                <Img src={composer.image} alt="composer picture" />
             </ImageContainer>
             <Span>
                 {composer.firstName} {composer.lastName}
