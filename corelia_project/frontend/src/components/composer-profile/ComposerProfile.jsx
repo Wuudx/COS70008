@@ -1,13 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
-import MusicPlayer from "./MusicPlayer";
-import LinkToScore from "./LinkToScore";
-import Navbar from "./Navbar";
-import Biography from "./Biography";
-import { useLocation } from "react-router-dom";
-import About from "./About";
+import FeaturedMusicTrack from "./FeaturedMusicTrack";
+import ComposerInformation from "./ComposerInformation";
 
 const Container = styled.div`
     margin-left: ${stylingConstants.sizes.leftRightMargin};
@@ -18,32 +14,11 @@ const OuterFlexContainer = styled.div`
     display: flex;
 `;
 
-const LeftFlexContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 20%;
-    align-items: center;
-`;
-
-const RightFlexContainer = styled.div`
-    display flex;
-    flex-direction: column;
-    width: 50%;
-`;
-
-const H1 = styled.h1`
-    margin: 0px;
-`;
-
 // Note that the composer id is in state that was passed with useNavifate. This will be used to fetch composer id from api.
 const ComposerProfile = () => {
     // The below code snippet will be used once data is in api.
     // const location = useLocation();
     // const composerId = location.state.composerId;
-
-    const { pathname } = useLocation();
-    const [composerInformationElement, setComposerInformationElement] =
-        useState();
 
     const [composer, setComposer] = useState({
         id: 1,
@@ -71,34 +46,20 @@ const ComposerProfile = () => {
         recordingLink: composer.recordingLink,
     };
 
-    useEffect(() => {
-        if (pathname.includes("biography")) {
-            setComposerInformationElement(
-                <Biography biography={composer.biography} />
-            );
-        } else if (pathname.includes("about")) {
-            setComposerInformationElement(
-                <About aboutInformation={aboutInformation} />
-            );
-        }
-    }, [pathname]);
-
     return (
         <Container>
             <OuterFlexContainer>
-                <LeftFlexContainer>
-                    <img src={composer.image} alt="Composer Picture" />
-                    <h4>Featured Music Track</h4>
-                    <MusicPlayer linkToSong={composer.featuredSong} />
-                    <LinkToScore linkToScore={composer.linkToScore} />
-                </LeftFlexContainer>
-                <RightFlexContainer>
-                    {/* This will be a flag next to composer name instead of nationality in text */}
-                    <H1>{`${composerName} ${composer.nationality}`}</H1>
-                    <div>Clarinet, Piano</div>
-                    <Navbar />
-                    {composerInformationElement}
-                </RightFlexContainer>
+                <FeaturedMusicTrack
+                    composerImage={composer.image}
+                    featuredSong={composer.featuredSong}
+                    linkToScore={composer.linkToScore}
+                />
+                <ComposerInformation
+                    name={composerName}
+                    nationality={composer.nationality}
+                    biography={composer.biography}
+                    aboutInformation={aboutInformation}
+                />
             </OuterFlexContainer>
         </Container>
     );
