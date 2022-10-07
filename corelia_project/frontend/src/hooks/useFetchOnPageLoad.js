@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 function useFetchOnPageLoad(apiFunction) {
     const [data, setData] = useState([]);

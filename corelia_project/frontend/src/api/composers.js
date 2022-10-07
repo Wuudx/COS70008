@@ -35,3 +35,13 @@ export async function getComposerById(id) {
     }
     return response.json();
 }
+
+export async function getComposerCompositions(id) {
+    const response = await fetch(
+        `http://localhost:8000/api/composers/${id}/compositions`
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+    return response.json();
+}
