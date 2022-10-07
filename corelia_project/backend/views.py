@@ -26,8 +26,10 @@ class ComposerView(ListAPIView):
 
 class AllCompositionsView(ListAPIView):
     pagination_class = LimitOffsetPagination
-    queryset = Composition.objects.all()
     serializer_class = AllCompositionsSerializer
+
+    def get_queryset(self):
+        return Composition.objects.select_related('composer').all()
 
 
 class CompositionView(ListAPIView):
@@ -36,10 +38,11 @@ class CompositionView(ListAPIView):
     def get_queryset(self):
         return Composition.objects.filter(id=self.kwargs['pk'])
 
+
 class GetFeaturedComposers(ListAPIView):
     serializer_class = FeaturedComposerSerializer
     queryset = Composer.objects.all().filter(featured=True)
-    
+
 
 class GetComposersByLetter(ListAPIView):
     pagination_class = LimitOffsetPagination
@@ -48,6 +51,7 @@ class GetComposersByLetter(ListAPIView):
     def get_queryset(self):
         letter = self.kwargs['letter']
         return Composer.objects.all().filter(firstName__startswith=letter)
+
 
 class SearchBarGetComposer(ListAPIView):
     pagination_class = LimitOffsetPagination
@@ -58,6 +62,7 @@ class SearchBarGetComposer(ListAPIView):
         query = self.kwargs['query']
         return Composer.objects.all().filter(firstName__contains=query)
 
+
 class SearchBarGetComposition(ListAPIView):
     pagination_class = LimitOffsetPagination
     pagination_class.default_limit = 5
@@ -67,6 +72,7 @@ class SearchBarGetComposition(ListAPIView):
         query = self.kwargs['query']
         return Composition.objects.all().filter(name__contains=query)
 
+
 class SearchBarGetPublisher(ListAPIView):
     pagination_class = LimitOffsetPagination
     pagination_class.default_limit = 5
@@ -75,5 +81,3 @@ class SearchBarGetPublisher(ListAPIView):
     def get_queryset(self):
         query = self.kwargs['query']
         return Publisher.objects.all().filter(name__contains=query)
-
-    
