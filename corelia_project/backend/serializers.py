@@ -59,6 +59,11 @@ class FeaturedComposerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class BlogPostSerializer(serializers.ModelSerializer):
+    user_detail = serializers.SerializerMethodField()
+
+    def get_user_detail(self, obj):
+        return obj.user.email
+    
     class Meta:
         model = BlogPost
         fields = '__all__'
