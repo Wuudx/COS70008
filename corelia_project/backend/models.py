@@ -1,7 +1,7 @@
 from cmath import nan
 from email.policy import default
 from django.db import models
-from frontend.models import User
+from users.models import User
 
 # Create your models here.
 
@@ -67,7 +67,6 @@ class CompositionInstrument(models.Model):
     composition = models.ForeignKey(Composition, on_delete=models.CASCADE)
     instrument = models.CharField(max_length=100 , blank=True, null=True)
     
-
     def __str__(self):
         return self.instrument
 
@@ -78,10 +77,10 @@ class BlogPost(models.Model):
     date_updated = models.DateTimeField(blank=True, null=True)
     title = models.CharField(max_length=300, blank=True, null=True)
     content = models.TextField(blank=True, null=True)
-    votes = models.IntegerField(blank=true, default=0)
+    votes = models.IntegerField(blank=True, default=0)
 
     def __str__(self):
-        return self.name
+        return self.title
 
 class BlogComment(models.Model):
     id = models.AutoField(primary_key=True)
@@ -92,5 +91,5 @@ class BlogComment(models.Model):
     content = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return self.content
     

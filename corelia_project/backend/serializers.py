@@ -93,28 +93,56 @@ class CompositionsByComposerSerializer(serializers.ModelSerializer):
         model = Composition
         fields = ['id', 'name', 'composer']
 
-class BlogPostSerializer(serializers.ModelSerializer):
-    user_detail = serializers.SerializerMethodField()
+#class BlogPostSerializer(serializers.ModelSerializer):
+#    user_detail = serializers.SerializerMethodField()
+#
+#    def get_user_detail(self, obj):
+#        return obj.user.username
+#    
+#    class Meta:
+#        model = BlogPost
+#        fields = '__all__'
 
-    def get_user_detail(self, obj):
-        return obj.user.email
+#class BlogCommentSerializer(serializers.ModelSerializer):
+#    user_detail = serializers.SerializerMethodField()
+#
+#    #def get_post_detail(self, obj):
+#    #    return obj.blogpost.id
+#
+#    #def get_author_detail(self, obj):
+#    #    return obj.user.username
+#
+#    def get_user_detail(self, obj):
+#        return obj.user.username
+#
+#    class Meta:
+#        model = BlogComment
+#        fields = '__all__'
+
+class AllBlogPostsSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
+    #author_id = serializers.SerializerMethodField()
+
+    def get_author(self, obj):
+        return obj.user.username
+
+    #def get_author_id(self, obj):
+    #    return obj.user.id
     
     class Meta:
         model = BlogPost
-        fields = '__all__'
+        fields = ['id', 'author', 'date_posted', 'date_updated', 'title', 'content', 'votes']
 
-class BlogCommentSerializer(serializers.ModelSerializer):
-    post_detail = serializers.SerializerMethodField()
+class BlogPostSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
+    #author_id = serializers.SerializerMethodField()
 
-    #def get_post_detail(self, obj):
-    #    return obj.blogpost.id
-
-    #def get_author_detail(self, obj):
-    #    return obj.user.username
-
-    def get_comment_detail(self, obj):
+    def get_author_name(self, obj):
         return obj.user.username
 
+    #def get_author_id(self, obj):
+    #    return obj.user.id
+
     class Meta:
-        model = BlogComment
+        model = Composition
         fields = '__all__'
