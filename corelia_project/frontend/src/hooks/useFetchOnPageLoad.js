@@ -12,7 +12,7 @@ function useFetchOnPageLoad(apiFunction) {
             try {
                 setIsLoading(true);
                 const json = await apiFunction();
-                console.log(json);
+                // console.log(json);
                 setData(json);
             } catch (error) {
                 setError(error);

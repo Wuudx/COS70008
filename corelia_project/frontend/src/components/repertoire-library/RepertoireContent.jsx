@@ -81,11 +81,8 @@ const RepertoireContent = ({ compositions, handleLoadMore, hasMore }) => {
     return (
         <Container>
             <Repertoires>
-                {compositions.map((composition) => (
-                    <Repertoire
-                        key={composition.id}
-                        composition={composition}
-                    />
+                {compositions.map((composition, index) => (
+                    <Repertoire key={index} composition={composition} />
                 ))}
             </Repertoires>
             {hasMore ? <LoadMoreButton onClick={handleLoadMore} /> : ''}

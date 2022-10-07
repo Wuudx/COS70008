@@ -5,6 +5,8 @@ import SideFilters from './SideFilters';
 import RepertoireContent from './RepertoireContent';
 import React from 'react';
 import { useState, useEffect } from 'react';
+import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
+import { getCompositionsWithUrl } from '../../api/compositions';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -31,12 +33,17 @@ const Padding = styled.div`
 
 const RepertoireLibrary = () => {
     const page_size = 24;
+    const [selectedFilter, setSelectedFilter] = useState('All');
     const [fetchURL, setFetchURL] = useState(
         'http://localhost:8000/api/compositions?limit=' + page_size
     );
+
     const [compositions, setCompositions] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [filters, setFilters] = useState([]);
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const getUniqueComposers = (compositions) => {
         const composers = new Set();
@@ -44,7 +51,8 @@ const RepertoireLibrary = () => {
             composers.add(
                 JSON.stringify({
                     id: composition.composer_id,
-                    composer: composition.composer,
+                    first_name: composition.first_name,
+                    last_name: composition.last_name,
                 })
             );
         });
@@ -57,24 +65,21 @@ const RepertoireLibrary = () => {
 
     async function fetchCompositions() {
         try {
+            setIsLoading(true);
             let response = await fetch(fetchURL);
             if (!response.ok) {
-                throw new Error('Network response was not ok');
-                return;
+                throw new Error(response.statusText);
             }
 
             let data = await response.json();
 
-            if (!data) {
-                throw new Error('No data returned');
-                return;
-            }
-
             setFetchURL(data.next);
-            setCompositions([...compositions, ...data.results]);
             setHasMore(data.next !== null);
+            setCompositions([...compositions, ...data.results]);
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -86,11 +91,19 @@ const RepertoireLibrary = () => {
         fetchCompositions();
     };
 
+    const handleFilterChange = (filter) => {
+        setSelectedFilter(filter);
+    };
+
     return (
         <FlexContainer>
             <FilterBar initialSearchType={'Artist'} />
             <ContentContainer>
-                <SideFilters filters={filters} />
+                <SideFilters
+                    filters={filters}
+                    selectedFilter={selectedFilter}
+                    handleFilterChange={handleFilterChange}
+                />
                 <RepertoireContent
                     compositions={compositions}
                     handleLoadMore={handleLoadMore}

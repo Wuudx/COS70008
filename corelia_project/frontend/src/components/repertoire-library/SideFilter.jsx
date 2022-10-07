@@ -49,22 +49,24 @@ const Count = styled.div`
 
 // TODO: Make the count bubble show up on the right side of the filter
 
-const SideFilter = ({ filter, selectedFilter, setSelectedFilter }) => {
+const SideFilter = ({ filter, selectedFilter, handleFilterChange }) => {
     filter = JSON.parse(filter);
+
+    const filterName = filter.first_name + ' ' + filter.last_name;
 
     const { data, isLoading, error } = useFetchOnPageLoad(() =>
         getComposerCompositions(filter.id)
     );
 
     const handleClick = () => {
-        setSelectedFilter(filter.composer);
+        handleFilterChange(filter.id);
     };
 
-    const isSelected = filter.composer === selectedFilter;
+    const isSelected = filter.id === selectedFilter;
 
     return (
         <Li isSelected={isSelected} onClick={handleClick}>
-            <Filter>{filter.composer}</Filter>
+            <Filter>{filterName}</Filter>
             <Count isSelected={isSelected}>
                 {!isLoading && !error ? data.count : '-'}
             </Count>

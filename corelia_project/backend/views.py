@@ -30,7 +30,11 @@ class AllCompositionsView(ListAPIView):
     serializer_class = AllCompositionsSerializer
 
     def get_queryset(self):
-        return Composition.objects.select_related('composer').all()
+        queryset = Composition.objects.select_related('composer').all()
+        composer_id = self.request.query_params.get('composer_id', None)
+        if composer_id is not None:
+            queryset = queryset.filter(composer_id=composer_id)
+        return queryset
 
 
 class CompositionView(ListAPIView):
@@ -81,6 +85,7 @@ class SearchBarGetPublisher(ListAPIView):
         query = self.kwargs['query']
         return Publisher.objects.all().filter(name__contains=query)
 
+
 class GetCompositionsByComposer(ListAPIView):
     pagination_class = CustomPagination
     serializer_class = CompositionsByComposerSerializer
@@ -88,13 +93,3 @@ class GetCompositionsByComposer(ListAPIView):
     def get_queryset(self):
         composer_id = self.kwargs['composer_id']
         return Composition.objects.all().filter(composer_id=composer_id)
-        
-        
-        
-        
-
-
-    
-
-    
-    

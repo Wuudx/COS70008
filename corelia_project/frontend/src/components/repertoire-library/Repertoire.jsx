@@ -57,7 +57,9 @@ const Repertoire = ({ composition }) => {
             <SongInfo>
                 <SongNameArtist>
                     <SongName>{composition.name}</SongName>
-                    <SongArtist>{composition.composer}</SongArtist>
+                    <SongArtist>
+                        {composition.first_name + ' ' + composition.last_name}
+                    </SongArtist>
                 </SongNameArtist>
             </SongInfo>
             <ReadButton onClick={handleClick} />

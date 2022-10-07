@@ -16,18 +16,22 @@ class ComposerSerializer(serializers.ModelSerializer):
 
 
 class AllCompositionsSerializer(serializers.ModelSerializer):
-    composer = serializers.SerializerMethodField()
+    first_name = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
     composer_id = serializers.SerializerMethodField()
 
-    def get_composer(self, obj):
-        return obj.composer.firstName + ' ' + obj.composer.lastName
+    def get_first_name(self, obj):
+        return obj.composer.firstName
+
+    def get_last_name(self, obj):
+        return obj.composer.lastName
 
     def get_composer_id(self, obj):
         return obj.composer.id
 
     class Meta:
         model = Composition
-        fields = ['id', 'name', 'composer', 'composer_id']
+        fields = ['id', 'name', 'first_name', 'last_name', 'composer_id']
 
 
 class CompositionSerializer(serializers.ModelSerializer):
