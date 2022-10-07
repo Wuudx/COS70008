@@ -8,7 +8,7 @@ export async function getComposers() {
 
 export async function filterComposersByLetter(letter) {
     const response = await fetch(
-        `http://localhost:8000/api/discover_composers/${letter}`
+        `http://localhost:8000/api/discover-composers/${letter}`
     );
     if (!response.ok) {
         throw new Error(response.status);
