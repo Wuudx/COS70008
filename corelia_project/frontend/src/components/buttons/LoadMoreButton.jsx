@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import stylingConstants from '../../utils/styling';
-import React from 'react';
+import styled from "styled-components";
+import stylingConstants from "../../utils/styling";
+import React from "react";
 
 const LoadMore = styled.div`
     background-color: ${stylingConstants.colours.blue1Percent100};
@@ -9,7 +9,7 @@ const LoadMore = styled.div`
     padding: 10px 30px;
     margin: 10px;
     border-radius: 5px;
-    font-family: 'Lato-bold';
+    font-family: "Lato-bold";
     cursor: pointer;
     user-select: none;
 

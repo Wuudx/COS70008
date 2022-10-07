@@ -7,16 +7,9 @@ const Song = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    max-width: 800px;
+    min-width: 300px;
+    max-width: 300px;
     margin: 10px 0;
-`;
-
-const SongArtwork = styled.img`
-    width: 100px;
-    height: 100px;
-    margin-right: 10px;
-    border-radius: 4px;
 `;
 
 const SongInfo = styled.div`
@@ -31,11 +24,6 @@ const SongNameArtist = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-
-    margin: 10px;
-    padding: 5px;
-
-    white-space: nowrap;
 `;
 
 const SongName = styled.p`
@@ -52,17 +40,7 @@ const SongArtist = styled.p`
     padding: 0;
 `;
 
-const SongDescription = styled.p`
-    font-family: 'Lato-regular';
-    font-size: 1em;
-    margin: 0;
-    padding: 0;
-
-    margin: 10px;
-    padding: 5px;
-`;
-
-const Repertoire = ({ song }) => {
+const Repertoire = ({ composition }) => {
     const trimDescription = (description) => {
         const maxLength = 100;
         return description.length > maxLength
@@ -76,15 +54,11 @@ const Repertoire = ({ song }) => {
 
     return (
         <Song>
-            <SongArtwork src={song.image} />
             <SongInfo>
                 <SongNameArtist>
-                    <SongName>{song.name}</SongName>
-                    <SongArtist>{song.artist}</SongArtist>
+                    <SongName>{composition.name}</SongName>
+                    <SongArtist>{composition.composer}</SongArtist>
                 </SongNameArtist>
-                <SongDescription>
-                    {trimDescription(song.description)}
-                </SongDescription>
             </SongInfo>
             <ReadButton onClick={handleClick} />
         </Song>

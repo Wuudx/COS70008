@@ -20,21 +20,28 @@ class Command(BaseCommand):
         
         
 
-        df = pd.read_csv('Database information1.csv', delimiter=',')
-        df = df.replace("nan", "")
+        df = pd.read_csv('Database information1.csv', delimiter=',', na_values= None)
         df = df.replace("?", "")
-
+        
         df["LastName"] = df["Name of Composer"].apply(lambda x: x[0:x.find(",")])
         df["FirstName"] = df["Name of Composer"].apply(lambda x: x[x.find(",")+2:])
         df['Dates'] = df['Dates'].astype(str)
         df['Duration (mins)'].astype(float)
         df['Year'] = df['Year'].astype(str)
+        df['Publisher'] = df['Publisher'].astype(str)
         df['Year'].replace("nan", 0, inplace = True)
         df['Year'].replace("", 0, inplace = True)
         df["DOB"] = df["Dates"].apply(lambda x: x[2:] if x[0] == "b" else x[:4])
         df["DOD"] = df["Dates"].apply(lambda x: 0 if x[0] == "b" else x[-4:])
         df["Duration (mins)"] = df["Duration (mins)"].apply(lambda x : x if x > 0 else 0)
         df.rename(columns={'Name of piece': 'Nameofpiece', 'Instrumentation - Ensemble type (instruments)': 'Instrumentation', 'Recording links' : 'Recording', 'Score link' : 'Score'}, inplace=True)
+        df['Nameofpiece'] = df['Nameofpiece'].astype(str)
+        df['Recording'] = df['Recording'].astype(str)
+        df['Score'] = df['Score'].astype(str)
+        df['Composer_website'] = df['Composer_website'].astype(str)
+        df['Biography'] = df['Biography'].astype(str)
+        df['Bio_source'] = df['Bio_source'].astype(str)
+
 
         for nationality in df.Nationality:
             if (Nationality.objects.filter(name = nationality).count() == 0):
@@ -52,7 +59,7 @@ class Command(BaseCommand):
 
         for index, row in df.iterrows():
             if (Composer.objects.filter(lastName = row['LastName'], firstName = row['FirstName']).count() == 0):
-                models = Composer(firstName = row['FirstName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = Nationality.objects.get(name = row['Nationality']), biography = row['Biography'], bio_source = row['Bio_source'])
+                models = Composer(firstName = row['FirstName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = Nationality.objects.get(name = row['Nationality']), biography = row['Biography'], bio_source = row['Bio_source'], composer_website = row['Composer_website'])
                 models.save()
         
         

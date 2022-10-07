@@ -14,13 +14,13 @@ const InnerFlexContainer = styled.div`
     h3 {
         margin: 0px;
     }
-    span {
+    span,
+    a {
         width: 10em;
     }
 `;
 
 const About = ({ aboutInformation }) => {
-    console.log(aboutInformation);
     return (
         <FlexContainer>
             <InnerFlexContainer>
@@ -41,7 +41,9 @@ const About = ({ aboutInformation }) => {
             </InnerFlexContainer>{" "}
             <InnerFlexContainer>
                 <h3>Recording Link</h3>
-                <span>{aboutInformation.recordingLink}</span>
+                <a href={aboutInformation.recordingLink} target="_blank">
+                    {aboutInformation.recordingLink}
+                </a>
             </InnerFlexContainer>
         </FlexContainer>
     );

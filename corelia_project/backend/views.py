@@ -1,194 +1,93 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import authentication_classes, permission_classes
-from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost
-from .serializers import FeaturedComposerSerializer, ComposerSerializer, CompositionSerializer, ComposerNationalitySerializer, CompositionInstrumentSerializer, PublisherSerializer, NationalitySerializer, InstrumentSerializer, BlogPostSerializer
+from rest_framework.pagination import LimitOffsetPagination
+from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
+from .serializers import *
+from .paginations import CustomPagination
 
 # Create your views here.
 
-class ComposerView(generics.CreateAPIView):
+
+class AllComposersView(ListAPIView):
+    pagination_class = LimitOffsetPagination
     queryset = Composer.objects.all()
+    serializer_class = AllComposersSerializer
+
+
+class ComposerView(ListAPIView):
     serializer_class = ComposerSerializer
 
-class CompositionView(generics.CreateAPIView):
-    queryset = Composition.objects.all()
+    def get_queryset(self):
+        return Composer.objects.filter(id=self.kwargs['pk'])
+
+
+class AllCompositionsView(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    serializer_class = AllCompositionsSerializer
+
+    def get_queryset(self):
+        return Composition.objects.select_related('composer').all()
+
+
+class CompositionView(ListAPIView):
     serializer_class = CompositionSerializer
 
-class ComposerNationalityView(generics.CreateAPIView):
-    queryset = ComposerNationality.objects.all()
-    serializer_class = ComposerNationalitySerializer
-
-class CompositionInstrumentView(generics.CreateAPIView):
-    queryset = CompositionInstrument.objects.all()
-    serializer_class = CompositionInstrumentSerializer
-
-class PublisherView(generics.CreateAPIView):
-    queryset = Publisher.objects.all()
-    serializer_class = PublisherSerializer
-
-class NationalityView(generics.CreateAPIView):
-    queryset = Nationality.objects.all()
-    serializer_class = NationalitySerializer
-
-class InstrumentView(generics.CreateAPIView):
-    queryset = Instrument.objects.all()
-    serializer_class = InstrumentSerializer
-
-@api_view(['GET', 'POST'])
-def featured_composer(request):
-    if request.method == 'GET':
-        composers = Composer.objects.filter(featured=True)
-
-        serializer = FeaturedComposerSerializer(composers, context={'request': request}, many=True)
-
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
-        serializer = FeaturedComposerSerializer(composers=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['PUT', 'DELETE'])
-def featured_composer_detail(request, pk):
-    try:
-        composer = Composer.objects.get(pk=pk)
-    except Composer.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'PUT':
-        serializer = FeaturedComposerSerializer(composer, data=request.data, context={'request': request})
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    elif request.method == 'DELETE':
-        composer.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-@api_view(['GET', 'POST'])
-def nationality(request):
-    if request.method == 'GET':
-        nationality = Nationality.objects.all()
-
-        serializer = NationalitySerializer(nationality, context={'request': request}, many=True)
-
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
-        serializer = NationalitySerializer(nationality=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['PUT', 'DELETE'])
-def nationality_detail(request, pk):
-    try:
-        nationality = Nationality.objects.get(pk=pk)
-    except Nationality.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'PUT':
-        serializer = NationalitySerializer(nationality, data=request.data, context={'request': request})
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    elif request.method == 'DELETE':
-        nationality.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-@api_view(['GET', 'POST'])
-def all_composers(request):
-    if request.method == 'GET':
-        composers = Composer.objects.all()
-
-        serializer = ComposerSerializer(composers, context={'request': request}, many=True)
-
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
-        serializer = ComposerSerializer(composers=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['PUT', 'DELETE'])
-def all_composers_detail(request, pk):
-    try:
-        composer = Composer.objects.get(pk=pk)
-    except Composer.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'PUT':
-        serializer = ComposerSerializer(composer, data=request.data, context={'request': request})
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    elif request.method == 'DELETE':
-        composer.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def get_queryset(self):
+        return Composition.objects.filter(id=self.kwargs['pk'])
 
 
-@api_view(['GET', 'POST'])
-def composition(request):
-    if request.method == 'GET':
-        composition = Composition.objects.all()
+class GetFeaturedComposers(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = Composer.objects.all().filter(featured=True)
+    serializer_class = FeaturedComposerSerializer
 
-        serializer = CompositionSerializer(composition, context={'request': request}, many=True)
 
-        return Response(serializer.data)
-    
-    elif request.method == 'POST':
-        serializer = CompositionSerializer(composition=request.data)
+class GetComposersByLetter(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    serializer_class = ComposersByLetterSerializer
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
+    def get_queryset(self):
+        letter = self.kwargs['letter']
+        return Composer.objects.all().filter(firstName__startswith=letter)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PUT', 'DELETE'])
-def composition_detail(request, pk):
-    try:
-        composition = Composition.objects.get(pk=pk)
-    except Composition.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+class SearchBarGetComposer(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = SearchBarComposerSerializer
 
-    if request.method == 'PUT':
-        serializer = CompositionSerializer(composition, data=request.data, context={'request': request})
+    def get_queryset(self):
+        query = self.kwargs['query']
+        return Composer.objects.all().filter(firstName__contains=query)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    elif request.method == 'DELETE':
-        composition.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class SearchBarGetComposition(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = SearchBarCompositionSerializer
+
+    def get_queryset(self):
+        query = self.kwargs['query']
+        return Composition.objects.all().filter(name__contains=query)
+
+
+class SearchBarGetPublisher(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = SearchBarPublisherSerializer
+
+    def get_queryset(self):
+        query = self.kwargs['query']
+        return Publisher.objects.all().filter(name__contains=query)
+
+class GetCompositionsByComposer(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = CompositionsByComposerSerializer
+
+    def get_queryset(self):
+        composer_id = self.kwargs['composer_id']
+        return Composition.objects.all().filter(composer_id=composer_id)
 
 @api_view(['GET', 'POST'])
 def all_blog_posts(request):

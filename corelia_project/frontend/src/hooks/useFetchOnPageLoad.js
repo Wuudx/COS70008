@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 function useFetchOnPageLoad(apiFunction) {
     const [data, setData] = useState([]);
@@ -12,6 +12,7 @@ function useFetchOnPageLoad(apiFunction) {
             try {
                 setIsLoading(true);
                 const json = await apiFunction();
+                console.log(json);
                 setData(json);
             } catch (error) {
                 setError(error);
@@ -23,7 +24,7 @@ function useFetchOnPageLoad(apiFunction) {
         getData();
     }, []);
 
-    return { data, isLoading, error };
+    return { data, isLoading, error, setData, setIsLoading, setError };
 }
 
 export default useFetchOnPageLoad;

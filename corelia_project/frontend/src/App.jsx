@@ -36,14 +36,12 @@ function App() {
                     <BackToTopButton />
                     <Routes>
                         <Route path="/" element={<Home />} />
-                        {/* Note that there is no route for search parameter (e.g: "/discover-composers/?q=:query/") 
-                    because react router does not support this. It the aforementioned link as "/discover-composers/" */}
                         <Route
                             path="/discover-composers"
                             element={<DiscoverComposers />}
                         />
                         <Route
-                            path="/discover-composers/:composerName/"
+                            path="/discover-composers/:composerId/"
                             element={<ComposerProfile />}
                         >
                             <Route path="about" element={<ComposerProfile />} />
@@ -56,13 +54,12 @@ function App() {
                             path="/discover-composer/:composerName/about/"
                             element={<ComposerProfile />}
                         />
-                        <Route path="discover-composers/:composerName" />
                         <Route
                             path="/discover-composers/search"
                             element={
                                 <>
                                     <DiscoverComposers />
-                                    <SearchResultsContainer />
+                                    {/* <SearchResultsContainer /> */}
                                 </>
                             }
                         />

@@ -48,12 +48,7 @@ const Composer = ({ composer }) => {
     const navigate = useNavigate();
 
     function navigateToComposer() {
-        // We pass the id in state instead of url params (I think it is not safe in general to have id in url params. although
-        // it probably wouldn't matter in this case.)
-        navigate(
-            `/discover-composers/${composer.firstName}-${composer.lastName}`,
-            { state: { composerId: composer.id } }
-        );
+        navigate(`/discover-composers/${composer.id}`);
     }
 
     return (
@@ -62,7 +57,7 @@ const Composer = ({ composer }) => {
                 <FirstNameSpan>
                     {composer.firstName.toUpperCase()}
                 </FirstNameSpan>
-                <Img src={composer.picture} alt="composer picture" />
+                <Img src={composer.image} alt="composer picture" />
             </ImageContainer>
             <Span>
                 {composer.firstName} {composer.lastName}

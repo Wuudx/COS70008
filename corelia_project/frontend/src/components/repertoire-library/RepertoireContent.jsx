@@ -1,5 +1,4 @@
 import LoadMoreButton from '../buttons/LoadMoreButton';
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import stylingConstants from '../../utils/styling';
 import Repertoire from './Repertoire';
@@ -10,14 +9,21 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding: 10px;
     width: 100%;
     margin-top: ${stylingConstants.sizes.navbarHeight} + 10px;
 `;
 
-const LoadMoreContainer = styled.div`
-    margin: 0;
-    padding: 0;
+const Repertoires = styled.div`
+    display: grid;
+    justify-content: space-between;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 10px;
+    width: 100%;
+    margin-top: 10px;
 `;
 
 const songs = [
@@ -71,24 +77,18 @@ const songs = [
     },
 ];
 
-const RepertoireContent = () => {
-    // Change this to be the number of songs to be displayed after testing
-    const [numItems, setNumItems] = useState(2); // Change this too!
-
-    const handleLoadMore = () => {
-        setNumItems(numItems + 2);
-    };
-
+const RepertoireContent = ({ compositions, handleLoadMore, hasMore }) => {
     return (
         <Container>
-            {songs.slice(0, numItems).map((song) => (
-                <Repertoire key={song.id} song={song} />
-            ))}
-            {numItems !== songs.length ? (
-                <LoadMoreButton onClick={handleLoadMore} />
-            ) : (
-                ''
-            )}
+            <Repertoires>
+                {compositions.map((composition) => (
+                    <Repertoire
+                        key={composition.id}
+                        composition={composition}
+                    />
+                ))}
+            </Repertoires>
+            {hasMore ? <LoadMoreButton onClick={handleLoadMore} /> : ''}
         </Container>
     );
 };
