@@ -1,9 +1,7 @@
 import constants from "../utils/constants";
 
-export async function getComposers() {
-    const response = await fetch(
-        `http://localhost:8000/api/composers?limit=${constants.DISCOVER_COMPOSERS_LIMIT}`
-    );
+export async function getComposers(url) {
+    const response = await fetch(url);
     if (!response.ok) {
         throw new Error(response.status);
     }
