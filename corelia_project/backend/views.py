@@ -7,6 +7,7 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.pagination import LimitOffsetPagination
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
 from .serializers import *
+from .paginations import CustomPagination
 
 # Create your views here.
 
@@ -55,7 +56,7 @@ class GetComposersByLetter(ListAPIView):
 
 
 class SearchBarGetComposer(ListAPIView):
-    pagination_class = LimitOffsetPagination
+    pagination_class = CustomPagination
     serializer_class = SearchBarComposerSerializer
 
     def get_queryset(self):
@@ -64,7 +65,7 @@ class SearchBarGetComposer(ListAPIView):
 
 
 class SearchBarGetComposition(ListAPIView):
-    pagination_class = LimitOffsetPagination
+    pagination_class = CustomPagination
     serializer_class = SearchBarCompositionSerializer
 
     def get_queryset(self):
@@ -73,9 +74,27 @@ class SearchBarGetComposition(ListAPIView):
 
 
 class SearchBarGetPublisher(ListAPIView):
-    pagination_class = LimitOffsetPagination
+    pagination_class = CustomPagination
     serializer_class = SearchBarPublisherSerializer
 
     def get_queryset(self):
         query = self.kwargs['query']
         return Publisher.objects.all().filter(name__contains=query)
+
+class GetCompositionsByComposer(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = CompositionsByComposerSerializer
+
+    def get_queryset(self):
+        composer_id = self.kwargs['composer_id']
+        return Composition.objects.all().filter(composer_id=composer_id)
+        
+        
+        
+        
+
+
+    
+
+    
+    

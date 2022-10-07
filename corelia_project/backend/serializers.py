@@ -86,3 +86,9 @@ class SearchBarPublisherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publisher
         fields = ['id', 'name']
+
+class CompositionsByComposerSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Composition
+        fields = ['id', 'name', 'composer']
