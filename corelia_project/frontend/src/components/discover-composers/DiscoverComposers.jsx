@@ -9,6 +9,7 @@ import stylingConstants from "../../utils/styling";
 import LoadMoreButton from "../buttons/LoadMoreButton";
 import FilterBar from "../filter-bar/FilterBar";
 import SearchResultsContainer from "./SearchResultsContainer";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 // TODO: Layout this page with flex box.
 const FlexContainer = styled.div`
@@ -61,7 +62,7 @@ const DiscoverComposers = () => {
     let composers = "";
     let loadMoreButton = "";
     if (isLoading) {
-        loadMoreButton = <div>Loading...</div>;
+        loadMoreButton = <ScaleLoader color={stylingConstants.colours.blue1} />;
         if (isDataLoaded) {
             // Loading next page, so we still render what has already been loaded from api.
             composers = <SearchResultsContainer composers={data.results} />;
