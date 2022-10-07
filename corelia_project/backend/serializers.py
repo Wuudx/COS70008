@@ -7,7 +7,7 @@ class AllComposersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Composer
-        fields = ['id', 'firstName', 'lastName', 'image']
+        fields = ['id', 'firstName', 'lastName', 'composition_count']
 
 
 class ComposerSerializer(serializers.ModelSerializer):
@@ -44,36 +44,6 @@ class CompositionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class InstrumentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Instrument
-        fields = '__all__'
-
-
-class NationalitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Nationality
-        fields = '__all__'
-
-
-class ComposerNationalitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ComposerNationality
-        fields = '__all__'
-
-
-class CompositionInstrumentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CompositionInstrument
-        fields = '__all__'
-
-
-class PublisherSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Publisher
-        fields = '__all__'
-
-
 class FeaturedComposerSerializer(serializers.ModelSerializer):
     nationality_detail = serializers.SerializerMethodField()
 
@@ -82,4 +52,37 @@ class FeaturedComposerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Composer
-        fields = '__all__'
+        fields = ['firstName', 'lastName', 'birth',
+                  'death', 'nationality_detail', 'image']
+
+
+class ComposersByLetterSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Composer
+        fields = ['firstName', 'lastName', 'image']
+
+
+class SearchBarComposerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Composer
+        fields = ['id', 'firstName', 'lastName']
+
+
+class SearchBarCompositionSerializer(serializers.ModelSerializer):
+    composer_name = serializers.SerializerMethodField()
+
+    def get_composer_name(self, obj):
+        firstName = obj.composer.firstName
+        lastName = obj.composer.lastName
+        return firstName + ' ' + lastName
+
+    class Meta:
+        model = Composition
+        fields = ['id', 'name', 'composer_name']
+
+
+class SearchBarPublisherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Publisher
+        fields = ['id', 'name']

@@ -1,4 +1,5 @@
 from cmath import nan
+from email.policy import default
 from django.db import models
  
 
@@ -18,9 +19,10 @@ class Composer(models.Model):
     birth = models.IntegerField(blank=True, null=True)
     death = models.IntegerField(null=True, blank=True)
     nationality = models.ForeignKey(Nationality, on_delete=models.CASCADE)
-    biography = models.TextField(blank=True, null=True)
-    bio_source = models.CharField(max_length=200, blank=True, null=True)
+    biography = models.TextField(blank=True, null=True, default = 'No Information Available, Check Back Later')
+    bio_source = models.CharField(max_length=200, blank=True, null=True, default = "")
     featured = models.BooleanField(default=False)
+    composer_website = models.CharField(max_length=300, blank=True, null=True, default = "")
     image = models.CharField(max_length=300, default = "https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg")
 
     def __str__(self):
@@ -43,14 +45,14 @@ class Publisher(models.Model):
 
 class Composition(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=150, blank=True, null=True)
+    name = models.CharField(max_length=150, blank=True, null=True, default = "")
     composer = models.ForeignKey(Composer, on_delete=models.CASCADE)
     year = models.IntegerField(blank = True, null = True)
     duration = models.FloatField(blank = True, null = True)
-    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, blank=True, null=True)
-    recording_link = models.CharField(max_length=300, blank=True, null=True)
-    score_link = models.CharField(max_length=300, blank=True, null=True)
-
+    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, blank=True, null=True, default = "")
+    recording_link = models.CharField(max_length=300, blank=True, null=True, default = "")
+    score_link = models.CharField(max_length=300, blank=True, null=True, default = "")
+    
     def __str__(self):
         return self.name
 

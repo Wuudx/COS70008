@@ -41,7 +41,7 @@ function App() {
                             element={<DiscoverComposers />}
                         />
                         <Route
-                            path="/discover-composers/:composerName/"
+                            path="/discover-composers/:composerId/"
                             element={<ComposerProfile />}
                         >
                             <Route path="about" element={<ComposerProfile />} />
