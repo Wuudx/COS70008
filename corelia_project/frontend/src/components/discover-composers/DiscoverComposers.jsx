@@ -20,6 +20,7 @@ const DiscoverComposers = () => {
     const filterLetter = useSearchQuery("letter");
     const { data, isLoading, error, setData, setIsLoading, setError } =
         useFetchOnPageLoad(getComposers);
+    console.log(data);
     useFetchOnParamChange(
         () => filterComposersByLetter(filterLetter),
         filterLetter,
@@ -33,8 +34,8 @@ const DiscoverComposers = () => {
         composers = <div>Loading...</div>;
     } else if (error) {
         composers = <div>{error.message}</div>;
-    } else {
-        composers = <SearchResultsContainer composers={data} />;
+    } else if (data.count && data.count > 0) {
+        composers = <SearchResultsContainer composers={data.results} />;
     }
 
     return (
