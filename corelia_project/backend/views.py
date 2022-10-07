@@ -26,8 +26,10 @@ class ComposerView(ListAPIView):
 
 class AllCompositionsView(ListAPIView):
     pagination_class = LimitOffsetPagination
-    queryset = Composition.objects.all()
     serializer_class = AllCompositionsSerializer
+
+    def get_queryset(self):
+        return Composition.objects.select_related('composer').all()
 
 
 class CompositionView(ListAPIView):
@@ -229,11 +231,13 @@ def composition_detail(request, pk):
         composition.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 @api_view(['GET'])
 def get_composer_by_letter(request, letter):
     if request.method == 'GET':
         composers = Composer.objects.all().filter(lastName__startswith=letter)
 
-        serializer = ComposerSerializer(composers, context={'request': request}, many=True)
+        serializer = ComposerSerializer(
+            composers, context={'request': request}, many=True)
 
         return Response(serializer.data)

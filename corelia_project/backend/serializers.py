@@ -4,22 +4,13 @@ from .models import Composer, Composition, Instrument, Nationality, ComposerNati
 
 
 class AllComposersSerializer(serializers.ModelSerializer):
-    composition_count = serializers.SerializerMethodField()
-
-    def get_composition_count(self, obj):
-        return Composition.objects.filter(composer=obj).count()
 
     class Meta:
         model = Composer
-        fields = ['id', 'firstName', 'lastName', 'composition_count']
+        fields = ['id', 'firstName', 'lastName', 'image']
 
 
 class ComposerSerializer(serializers.ModelSerializer):
-    nationality_detail = serializers.SerializerMethodField()
-
-    def get_nationality_detail(self, obj):
-        return obj.nationality.name
-
     class Meta:
         model = Composer
         fields = '__all__'
@@ -27,13 +18,17 @@ class ComposerSerializer(serializers.ModelSerializer):
 
 class AllCompositionsSerializer(serializers.ModelSerializer):
     composer = serializers.SerializerMethodField()
+    composer_id = serializers.SerializerMethodField()
 
     def get_composer(self, obj):
         return obj.composer.firstName + ' ' + obj.composer.lastName
 
+    def get_composer_id(self, obj):
+        return obj.composer.id
+
     class Meta:
         model = Composition
-        fields = ['id', 'name', 'composer']
+        fields = ['id', 'name', 'composer', 'composer_id']
 
 
 class CompositionSerializer(serializers.ModelSerializer):

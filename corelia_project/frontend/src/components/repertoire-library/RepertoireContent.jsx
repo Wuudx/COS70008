@@ -1,5 +1,4 @@
 import LoadMoreButton from '../buttons/LoadMoreButton';
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import stylingConstants from '../../utils/styling';
 import Repertoire from './Repertoire';
@@ -10,14 +9,21 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    padding: 10px;
     width: 100%;
     margin-top: ${stylingConstants.sizes.navbarHeight} + 10px;
 `;
 
-const LoadMoreContainer = styled.div`
-    margin: 0;
-    padding: 0;
+const Repertoires = styled.div`
+    display: grid;
+    justify-content: space-between;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 10px;
+    width: 100%;
+    margin-top: 10px;
 `;
 
 const songs = [
@@ -71,53 +77,17 @@ const songs = [
     },
 ];
 
-const RepertoireContent = () => {
-    const page_size = 20;
-    const [fetchURL, setFetchURL] = useState(
-        'http://localhost:8000/api/compositions' + `?limit=${page_size}`
-    );
-    const [compositions, setCompositions] = useState([]);
-    const [hasMore, setHasMore] = useState(true);
-
-    async function fetchCompositions() {
-        try {
-            let response = await fetch(fetchURL);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-                return;
-            }
-
-            let data = await response.json();
-
-            if (!data) {
-                throw new Error('No data returned');
-                return;
-            }
-
-            setFetchURL(data.next);
-            setCompositions([...compositions, ...data.results]);
-            setHasMore(data.next !== null);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    console.log(compositions);
-    console.log(fetchURL);
-
-    useEffect(() => {
-        fetchCompositions();
-    }, []);
-
-    const handleLoadMore = () => {
-        fetchCompositions();
-    };
-
+const RepertoireContent = ({ compositions, handleLoadMore, hasMore }) => {
     return (
         <Container>
-            {compositions.map((composition) => (
-                <Repertoire key={composition.id} composition={composition} />
-            ))}
+            <Repertoires>
+                {compositions.map((composition) => (
+                    <Repertoire
+                        key={composition.id}
+                        composition={composition}
+                    />
+                ))}
+            </Repertoires>
             {hasMore ? <LoadMoreButton onClick={handleLoadMore} /> : ''}
         </Container>
     );
