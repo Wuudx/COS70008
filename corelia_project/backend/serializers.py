@@ -67,3 +67,19 @@ class BlogPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogPost
         fields = '__all__'
+
+class BlogCommentSerializer(serializers.ModelSerializer):
+    post_detail = serializers.SerializerMethodField()
+
+    #def get_post_detail(self, obj):
+    #    return obj.blogpost.id
+
+    #def get_author_detail(self, obj):
+    #    return obj.user.username
+
+    def get_comment_detail(self, obj):
+        return obj.user.username
+
+    class Meta:
+        model = BlogComment
+        fields = '__all__'

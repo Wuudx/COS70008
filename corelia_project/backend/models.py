@@ -83,7 +83,7 @@ class BlogPost(models.Model):
 
 class BlogComment(models.Model):
     id = models.AutoField(primary_key=True)
-    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE) 
+    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_posted = models.DateTimeField(blank=True, null=True)
     date_updated = models.DateTimeField(blank=True, null=True)
