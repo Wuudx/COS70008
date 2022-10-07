@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useSearchQuery from "../../hooks/useSearchQuery";
 import stylingConstants from "../../utils/styling";
@@ -30,9 +30,14 @@ const FilterLetter = ({ letter }) => {
     const navigate = useNavigate();
     const searchQuery = useSearchQuery("q");
     const letterFilter = useSearchQuery("letter");
+    const { pathname } = useLocation();
 
     function navigateToFilter() {
-        navigate(`?q=${searchQuery}&letter=${letter}`);
+        if (!searchQuery) {
+            navigate(`${pathname}?letter=${letter}`);
+        } else {
+            navigate(`${pathname}?q=${searchQuery}&letter=${letter}`);
+        }
     }
 
     const isLetterFocused = letter === letterFilter;

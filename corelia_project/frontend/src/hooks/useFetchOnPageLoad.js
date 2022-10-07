@@ -23,7 +23,7 @@ function useFetchOnPageLoad(apiFunction) {
         getData();
     }, []);
 
-    return { data, isLoading, error };
+    return { data, isLoading, error, setData, setIsLoading, setError };
 }
 
 export default useFetchOnPageLoad;

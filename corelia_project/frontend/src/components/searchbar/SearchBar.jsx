@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useSearchQuery from "../../hooks/useSearchQuery";
 import stylingConstants from "../../utils/styling";
@@ -27,10 +27,18 @@ const SearchBar = () => {
     const [searchQuery, setSearchQuery] = useState(currentSearchQuery || "");
     const navigate = useNavigate();
 
+    const { pathname } = useLocation();
+
     // Note that input in react is sanitised by default (I think, TODO: follow up on this.)
     function handleSearch(e) {
-        e.preventDefault(); // Prevent default form behaviour.
-        navigate(`discover-composers/search?q=${searchQuery}`);
+        e.preventDefault();
+        // This behaviour will be handled differently in future but we will keep it like this for now. Maybe have reddit
+        // like beahviour where user is indicated that they are searching for discover composers with a removable flair.
+        if (pathname.includes("discover-composers")) {
+            navigate(`${pathname}/search?q=${searchQuery}`);
+        } else {
+            navigate(`/search?q=${searchQuery}`);
+        }
     }
 
     function handleInput(e) {
