@@ -15,12 +15,7 @@ const H1 = styled.h1`
     margin: 0px;
 `;
 
-const ComposerInformation = ({
-    name,
-    nationality,
-    biography,
-    aboutInformation,
-}) => {
+const ComposerInformation = ({ biography, aboutInformation }) => {
     const [composerInformationElement, setComposerInformationElement] =
         useState();
     const { pathname } = useLocation();
@@ -39,7 +34,7 @@ const ComposerInformation = ({
         <FlexContainer>
             {" "}
             {/* This will be a flag next to composer name instead of nationality in text */}
-            <H1>{`${name} ${nationality}`}</H1>
+            <H1>{`${aboutInformation.name} ${aboutInformation.nationality}`}</H1>
             <div>Clarinet, Piano</div>
             <Navbar />
             {composerInformationElement}
