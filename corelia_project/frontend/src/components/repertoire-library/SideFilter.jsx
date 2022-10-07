@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import stylingConstants from '../../utils/styling';
 import React from 'react';
-import { useFetchOnPageLoad } from '../../hooks/useFetchOnPageLoad';
+import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
 import { getComposerCompositions } from '../../api/composers';
 
 const Li = styled.li`
@@ -52,13 +52,9 @@ const Count = styled.div`
 const SideFilter = ({ filter, selectedFilter, setSelectedFilter }) => {
     filter = JSON.parse(filter);
 
-    // const { data, isLoading, error } = useFetchOnPageLoad(
-    //     getComposerCompositions(filter.id)
-    // );
-
-    // console.log(data);
-
-    const count = 0;
+    const { data, isLoading, error } = useFetchOnPageLoad(() =>
+        getComposerCompositions(filter.id)
+    );
 
     const handleClick = () => {
         setSelectedFilter(filter.composer);
@@ -69,7 +65,9 @@ const SideFilter = ({ filter, selectedFilter, setSelectedFilter }) => {
     return (
         <Li isSelected={isSelected} onClick={handleClick}>
             <Filter>{filter.composer}</Filter>
-            <Count isSelected={isSelected}>{count}</Count>
+            <Count isSelected={isSelected}>
+                {!isLoading && !error ? data.count : '-'}
+            </Count>
         </Li>
     );
 };
