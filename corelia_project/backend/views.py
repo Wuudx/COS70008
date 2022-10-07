@@ -52,6 +52,7 @@ class GetComposersByLetter(ListAPIView):
 
 class SearchBarGetComposer(ListAPIView):
     pagination_class = LimitOffsetPagination
+    pagination_class.default_limit = 5
     serializer_class = SearchBarComposerSerializer
 
     def get_queryset(self):
@@ -60,6 +61,7 @@ class SearchBarGetComposer(ListAPIView):
 
 class SearchBarGetComposition(ListAPIView):
     pagination_class = LimitOffsetPagination
+    pagination_class.default_limit = 5
     serializer_class = SearchBarCompositionSerializer
 
     def get_queryset(self):
@@ -68,6 +70,7 @@ class SearchBarGetComposition(ListAPIView):
 
 class SearchBarGetPublisher(ListAPIView):
     pagination_class = LimitOffsetPagination
+    pagination_class.default_limit = 5
     serializer_class = SearchBarPublisherSerializer
 
     def get_queryset(self):
