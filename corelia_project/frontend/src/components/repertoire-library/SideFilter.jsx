@@ -1,6 +1,8 @@
-import styled from "styled-components";
-import stylingConstants from "../../utils/styling";
-import React from "react";
+import styled from 'styled-components';
+import stylingConstants from '../../utils/styling';
+import React from 'react';
+import { useFetchOnPageLoad } from '../../hooks/useFetchOnPageLoad';
+import { getComposerCompositions } from '../../api/composers';
 
 const Li = styled.li`
     list-style: none;
@@ -11,8 +13,8 @@ const Li = styled.li`
     align-items: center;
     justify-content: space-between;
     background-color: ${(props) =>
-        props.isSelected ? stylingConstants.colours.blue2Percent100 : "none"};
-    color: ${(props) => (props.isSelected ? "white" : "black")};
+        props.isSelected ? stylingConstants.colours.blue2Percent100 : 'none'};
+    color: ${(props) => (props.isSelected ? 'white' : 'black')};
     cursor: pointer;
 `;
 
@@ -22,7 +24,7 @@ const Filter = styled.div`
     padding: 0;
     border: none;
     cursor: pointer;
-    font-family: "Lato-bold";
+    font-family: 'Lato-bold';
     font-size: 0.8em;
 `;
 
@@ -31,7 +33,7 @@ const Count = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-family: "Lato-bold";
+    font-family: 'Lato-bold';
     padding: 2px 8px;
 
     font-size: 0.75em;
@@ -40,23 +42,33 @@ const Count = styled.div`
     border-radius: 4px;
 
     background-color: ${(props) =>
-        props.isSelected ? "white" : stylingConstants.colours.blue2Percent100};
+        props.isSelected ? 'white' : stylingConstants.colours.blue2Percent100};
     color: ${(props) =>
-        props.isSelected ? stylingConstants.colours.blue2Percent100 : "white"};
+        props.isSelected ? stylingConstants.colours.blue2Percent100 : 'white'};
 `;
 
 // TODO: Make the count bubble show up on the right side of the filter
 
-const SideFilter = ({ filter, count, selectedFilter, setSelectedFilter }) => {
+const SideFilter = ({ filter, selectedFilter, setSelectedFilter }) => {
+    filter = JSON.parse(filter);
+
+    // const { data, isLoading, error } = useFetchOnPageLoad(
+    //     getComposerCompositions(filter.id)
+    // );
+
+    // console.log(data);
+
+    const count = 0;
+
     const handleClick = () => {
-        setSelectedFilter(filter);
+        setSelectedFilter(filter.composer);
     };
 
-    const isSelected = filter === selectedFilter;
+    const isSelected = filter.composer === selectedFilter;
 
     return (
         <Li isSelected={isSelected} onClick={handleClick}>
-            <Filter>{filter}</Filter>
+            <Filter>{filter.composer}</Filter>
             <Count isSelected={isSelected}>{count}</Count>
         </Li>
     );

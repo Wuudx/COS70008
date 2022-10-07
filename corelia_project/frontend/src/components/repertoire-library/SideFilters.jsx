@@ -54,11 +54,10 @@ const SideFilters = ({ filters }) => {
 
     return (
         <Ul>
-            {filters.map((filter) => (
+            {filters.map((filter, index) => (
                 <SideFilter
-                    key={filter.id}
-                    filter={filter.composer}
-                    count={0}
+                    key={index}
+                    filter={filter}
                     selectedFilter={selectedFilter}
                     setSelectedFilter={setSelectedFilter}
                 />

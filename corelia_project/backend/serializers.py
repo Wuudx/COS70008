@@ -4,10 +4,9 @@ from .models import Composer, Composition, Instrument, Nationality, ComposerNati
 
 
 class AllComposersSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Composer
-        fields = ['id', 'firstName', 'lastName', 'composition_count']
+        fields = ['id', 'firstName', 'lastName']
 
 
 class ComposerSerializer(serializers.ModelSerializer):

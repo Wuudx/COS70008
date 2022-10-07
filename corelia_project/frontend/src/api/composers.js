@@ -1,5 +1,5 @@
 export async function getComposers() {
-    const response = await fetch("http://localhost:8000/api/composers");
+    const response = await fetch('http://localhost:8000/api/composers');
     if (!response.ok) {
         throw new Error(response.status);
     }
@@ -18,7 +18,7 @@ export async function filterComposersByLetter(letter) {
 
 export async function getComposersCompositionCount() {
     const response = await fetch(
-        "http://localhost:8000/api/composers/composition-count"
+        'http://localhost:8000/api/composers/composition-count'
     );
     if (!response.ok) {
         throw new Error(response.status);
@@ -28,6 +28,16 @@ export async function getComposersCompositionCount() {
 
 export async function getComposerById(id) {
     const response = await fetch(`http://localhost:8000/api/composers/${id}`);
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+    return response.json();
+}
+
+export async function getComposerCompositions(id) {
+    const response = await fetch(
+        `http://localhost:8000/api/composers/${id}/compositions`
+    );
     if (!response.ok) {
         throw new Error(response.status);
     }
