@@ -72,7 +72,7 @@ class CompositionInstrument(models.Model):
 
 class BlogPost(models.Model):
     id = models.AutoField(primary_key=True)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     date_posted = models.DateTimeField(blank=True, null=True)
     date_updated = models.DateTimeField(blank=True, null=True)
     title = models.CharField(max_length=300, blank=True, null=True)
@@ -85,7 +85,7 @@ class BlogPost(models.Model):
 class BlogComment(models.Model):
     id = models.AutoField(primary_key=True)
     post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     date_posted = models.DateTimeField(blank=True, null=True)
     date_updated = models.DateTimeField(blank=True, null=True)
     content = models.TextField(blank=True, null=True)
