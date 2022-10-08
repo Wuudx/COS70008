@@ -39,6 +39,14 @@ const Navbar = () => {
                     About
                 </StyledLink>
             </li>
+            <li>
+                <StyledLink
+                    className={setClassName("compositions")}
+                    to="compositions/"
+                >
+                    Compositions
+                </StyledLink>
+            </li>
         </Ul>
     );
 };

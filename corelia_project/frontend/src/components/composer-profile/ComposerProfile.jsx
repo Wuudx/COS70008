@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
 import { getComposerById } from "../../api/composers";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { getCompositionsByComposerId } from "../../api/compositions";
 
 const Container = styled.div`
     margin-left: ${stylingConstants.sizes.leftRightMargin};
@@ -37,7 +38,7 @@ const ComposerProfile = () => {
         nationality: composer.nationality,
         yearOfBirth: composer.birth,
         yearOfDeath: composer.death,
-        recordingLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        website: composer.composer_website,
     };
 
     let content;
@@ -59,6 +60,7 @@ const ComposerProfile = () => {
                         linkToScore="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
                     />
                     <ComposerInformation
+                        composerId={composerId}
                         biography={composer.biography}
                         aboutInformation={aboutInformation}
                     />

@@ -124,6 +124,7 @@ class BlogPostView(ListAPIView):
         user_id = self.kwargs['post_id']
         return BlogPost.objects.all().filter(author=user_id)
 
+
 class GetBlogPostsByUser(ListAPIView):
     pagination_class = LimitOffsetPagination
     serializer_class = BlogPostsSerializer
@@ -131,6 +132,7 @@ class GetBlogPostsByUser(ListAPIView):
     def get_queryset(self):
         user_id = self.kwargs['user_id']
         return BlogPost.objects.all().filter(author=user_id)
+
 
 class AllBlogComments(ListCreateAPIView):
     pagination_class = LimitOffsetPagination
@@ -175,6 +177,7 @@ class ForumCommentView(ListAPIView):
     def get_queryset(self):
         post_id = self.kwargs['post_id']
         return ForumComment.objects.all().filter(post=post_id)
+
 
 class GetPopularBlogPosts(ListAPIView):
     pagination_class = PopularBlogPagination

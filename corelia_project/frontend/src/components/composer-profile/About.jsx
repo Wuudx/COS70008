@@ -40,9 +40,9 @@ const About = ({ aboutInformation }) => {
                 <span>{aboutInformation.yearOfDeath}</span>
             </InnerFlexContainer>{" "}
             <InnerFlexContainer>
-                <h3>Recording Link</h3>
-                <a href={aboutInformation.recordingLink} target="_blank">
-                    {aboutInformation.recordingLink}
+                <h3>Website</h3>
+                <a href={aboutInformation.website} target="_blank">
+                    {aboutInformation.website}
                 </a>
             </InnerFlexContainer>
         </FlexContainer>

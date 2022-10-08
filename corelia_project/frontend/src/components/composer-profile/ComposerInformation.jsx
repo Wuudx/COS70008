@@ -4,6 +4,7 @@ import Biography from "./Biography";
 import { useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import About from "./About";
+import Compositions from "./Compositions";
 
 const FlexContainer = styled.div`
     display flex;
@@ -15,7 +16,7 @@ const H1 = styled.h1`
     margin: 0px;
 `;
 
-const ComposerInformation = ({ biography, aboutInformation }) => {
+const ComposerInformation = ({ composerId, biography, aboutInformation }) => {
     const [composerInformationElement, setComposerInformationElement] =
         useState();
     const { pathname } = useLocation();
@@ -26,6 +27,10 @@ const ComposerInformation = ({ biography, aboutInformation }) => {
         } else if (pathname.includes("about")) {
             setComposerInformationElement(
                 <About aboutInformation={aboutInformation} />
+            );
+        } else if (pathname.includes("compositions")) {
+            setComposerInformationElement(
+                <Compositions composerId={composerId} />
             );
         }
     }, [pathname]);
