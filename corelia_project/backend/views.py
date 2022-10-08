@@ -94,7 +94,7 @@ class SearchBarGetPublisher(ListAPIView):
 
 class GetCompositionsByComposer(ListAPIView):
     pagination_class = CustomPagination
-    serializer_class = CompositionsByComposerSerializer
+    serializer_class = AllCompositionsSerializer
 
     def get_queryset(self):
         composer_id = self.kwargs['composer_id']
@@ -117,6 +117,7 @@ class AllBlogPosts(ListCreateAPIView):
 
 
 class BlogPostView(ListAPIView):
+    pagination_class = LimitOffsetPagination
     serializer_class = BlogPostsSerializer
 
     def get_queryset(self):
@@ -124,6 +125,7 @@ class BlogPostView(ListAPIView):
         return BlogPost.objects.all().filter(author=user_id)
 
 class GetBlogPostsByUser(ListAPIView):
+    pagination_class = LimitOffsetPagination
     serializer_class = BlogPostsSerializer
 
     def get_queryset(self):
@@ -137,6 +139,7 @@ class AllBlogComments(ListCreateAPIView):
 
 
 class BlogCommentView(ListAPIView):
+    pagination_class = LimitOffsetPagination
     serializer_class = BlogPostCommentsSerializer
 
     def get_queryset(self):
@@ -151,6 +154,7 @@ class AllForumPosts(ListCreateAPIView):
 
 
 class ForumPostView(ListAPIView):
+    pagination_class = LimitOffsetPagination
     serializer_class = ForumPostsSerializer
 
     def get_queryset(self):
