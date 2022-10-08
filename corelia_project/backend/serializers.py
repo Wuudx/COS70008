@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
+from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment
 
 
 class AllComposersSerializer(serializers.ModelSerializer):
@@ -63,7 +63,7 @@ class ComposersByLetterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Composer
-        fields = ['firstName', 'lastName', 'image']
+        fields = ['id', 'firstName', 'lastName', 'image']
 
 
 class SearchBarComposerSerializer(serializers.ModelSerializer):
@@ -115,3 +115,44 @@ class CompositionByLetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Composition
         fields = ['id', 'name', 'first_name', 'last_name', 'composer_id']
+
+class BlogPostsSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
+    
+    def get_author_name(self, obj):
+        return obj.author.username
+
+    class Meta:
+        model = BlogPost
+        fields = ['id', 'author', 'content', 'date_posted', 'title', 'votes', 'author_name', 'post']
+
+
+class BlogPostCommentsSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
+    
+    def get_author_name(self, obj):
+        return obj.author.username
+
+    class Meta:
+        model = BlogComment
+        fields = ['id', 'author', 'content', 'date_posted', 'author_name']
+
+class ForumPostsSerializer(serializers.ModelSerializer):
+    user_name = serializers.SerializerMethodField()
+    
+    def get_author_name(self, obj):
+        return obj.user.username
+
+    class Meta:
+        model = ForumPost
+        fields = ['id', 'user', 'content', 'date_posted', 'votes', 'user_name']
+
+class ForumPostCommentsSerializer(serializers.ModelSerializer):
+    user_name = serializers.SerializerMethodField()
+    
+    def get_author_name(self, obj):
+        return obj.user.username
+
+    class Meta:
+        model = ForumComment
+        fields = ['id', 'user', 'content', 'date_posted', 'user_name', 'post']

@@ -1,6 +1,8 @@
 from cmath import nan
 from email.policy import default
 from django.db import models
+from users.models import User
+
  
 
 # Create your models here.
@@ -70,5 +72,48 @@ class CompositionInstrument(models.Model):
 
     def __str__(self):
         return self.instrument
-    
+
+
+class ForumPost(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    content = models.TextField(blank = True, null = True)
+    votes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.content
+
+class ForumComment(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    content = models.TextField(blank = True, null = True)
+    post = models.ForeignKey(ForumPost, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.content
+
+class BlogPost(models.Model):
+    id = models.AutoField(primary_key=True)
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    date_posted = models.DateTimeField(blank=True, null=True)
+    date_updated = models.DateTimeField(blank=True, null=True)
+    title = models.CharField(max_length=300, blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
+    votes = models.IntegerField(blank=True, default=0)
+
+    def __str__(self):
+        return self.title
+
+class BlogComment(models.Model):
+    id = models.AutoField(primary_key=True)
+    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    date_posted = models.DateTimeField(blank=True, null=True)
+    date_updated = models.DateTimeField(blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.content
 

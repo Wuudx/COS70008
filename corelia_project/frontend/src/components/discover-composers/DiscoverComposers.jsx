@@ -10,7 +10,6 @@ import LoadMoreButton from "../buttons/LoadMoreButton";
 import FilterBar from "../filter-bar/FilterBar";
 import SearchResultsContainer from "./SearchResultsContainer";
 import ScaleLoader from "react-spinners/ScaleLoader";
-import { useParams } from "react-router-dom";
 
 // TODO: Fix issue where if user navigaes to /dsicvoer-composers from filtering, no results are retreived.
 const FlexContainer = styled.div`
