@@ -12,16 +12,19 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         
-        #Nationality.objects.all().delete()
-        #Publisher.objects.all().delete()
-        #Composer.objects.all().delete()
-        #ComposerNationality.objects.all().delete()
+        Nationality.objects.all().delete()
+        Publisher.objects.all().delete()
+        Composer.objects.all().delete()
+        ComposerNationality.objects.all().delete()
         Composition.objects.all().delete()
         
         
 
         df = pd.read_csv('Database information1.csv', delimiter=',', na_values= None)
         df = df.replace("?", "")
+        df = df.fillna("")
+        df['Duration (mins)'] = df['Duration (mins)'].replace("", 0)
+    
         
         df["LastName"] = df["Name of Composer"].apply(lambda x: x[0:x.find(",")])
         df["FirstName"] = df["Name of Composer"].apply(lambda x: x[x.find(",")+2:])
