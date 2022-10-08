@@ -14,6 +14,16 @@ urlpatterns = [
     path('search-compositions/<query>', SearchBarGetComposition.as_view()),
     path('search-publishers/<query>', SearchBarGetPublisher.as_view()),
     path('composers/<composer_id>/compositions', GetCompositionsByComposer.as_view()),
+    path('blogs', AllBlogPosts.as_view()),
+    path('blogs/<user_id>', BlogPost.as_view()),
+    path('blogs/posts/<post_id>', BlogPost.as_view()),
+    path('blogs/comments', AllBlogComments.as_view()),
+    path('forums', AllForumPosts.as_view()),
+    path('forums/<user_id>', ForumPost.as_view()),
+    path('forum/comments', AllForumComments.as_view()),
+    path('forum/comments/<post_id>', ForumComment.as_view()),
+
+
 
 
 
