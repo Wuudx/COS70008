@@ -137,7 +137,6 @@ class AllBlogComments(ListAPIView):
 
 class BlogCommentView(ListAPIView):
     serializer_class = BlogPostCommentsSerializer
-    pagination_class = LimitOffsetPagination
 
     def get_queryset(self):
         post_id = self.kwargs['post_id']

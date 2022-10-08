@@ -140,7 +140,7 @@ class BlogPostCommentsSerializer(serializers.ModelSerializer):
 class ForumPostsSerializer(serializers.ModelSerializer):
     user_name = serializers.SerializerMethodField()
     
-    def get_author_name(self, obj):
+    def get_user_name(self, obj):
         return obj.user.username
 
     class Meta:
@@ -150,7 +150,7 @@ class ForumPostsSerializer(serializers.ModelSerializer):
 class ForumPostCommentsSerializer(serializers.ModelSerializer):
     user_name = serializers.SerializerMethodField()
     
-    def get_author_name(self, obj):
+    def get_user_name(self, obj):
         return obj.user.username
 
     class Meta:
