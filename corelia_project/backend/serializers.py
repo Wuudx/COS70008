@@ -10,6 +10,11 @@ class AllComposersSerializer(serializers.ModelSerializer):
 
 
 class ComposerSerializer(serializers.ModelSerializer):
+    nationality_name = serializers.SerializerMethodField()
+
+    def get_nationality_name (self, obj):
+        return obj.nationality.name
+
     class Meta:
         model = Composer
         fields = '__all__'
