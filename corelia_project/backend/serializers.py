@@ -63,7 +63,7 @@ class ComposersByLetterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Composer
-        fields = ['firstName', 'lastName', 'image']
+        fields = ['id', 'firstName', 'lastName', 'image']
 
 
 class SearchBarComposerSerializer(serializers.ModelSerializer):

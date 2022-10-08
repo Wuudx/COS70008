@@ -12,10 +12,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         
-        Nationality.objects.all().delete()
-        Publisher.objects.all().delete()
-        Composer.objects.all().delete()
-        ComposerNationality.objects.all().delete()
+        #Nationality.objects.all().delete()
+        #Publisher.objects.all().delete()
+        #Composer.objects.all().delete()
+        #ComposerNationality.objects.all().delete()
         Composition.objects.all().delete()
         
         
@@ -41,6 +41,7 @@ class Command(BaseCommand):
         df['Composer_website'] = df['Composer_website'].astype(str)
         df['Biography'] = df['Biography'].astype(str)
         df['Bio_source'] = df['Bio_source'].astype(str)
+        df['Nameofpiece'] = df['Nameofpiece'].str.capitalize()
 
 
         for nationality in df.Nationality:
@@ -75,13 +76,15 @@ class Command(BaseCommand):
                     models = ComposerNationality(composer_id = c_id, nationality_id = n_id)
                     models.save()
 
-        
         for index, row in df.iterrows():
             if (Composition.objects.filter(name = row['Nameofpiece']).count() == 0):
-                composer = Composer.objects.get(firstName = row['FirstName'], lastName = row['LastName'])
-                c_id = composer.id
-                publisher = Publisher.objects.get(name = row['Publisher'])
-                p_id = publisher.id
+                if (row['Nameofpiece'] == ""):
+                    continue
+                else:
+                    composer = Composer.objects.get(firstName = row['FirstName'], lastName = row['LastName'])
+                    c_id = composer.id
+                    publisher = Publisher.objects.get(name = row['Publisher'])
+                    p_id = publisher.id
                     
                 
                 models = Composition(name = row['Nameofpiece'], composer = Composer.objects.get(id = c_id), year = row['Year'], duration = row['Duration (mins)'], publisher = Publisher.objects.get(id = p_id), recording_link = row['Recording'], score_link = row['Score'])
