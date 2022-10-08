@@ -115,13 +115,19 @@ class AllBlogPosts(ListAPIView):
     serializer_class = BlogPostsSerializer
 
 
-class BlogPost(ListAPIView):
+class BlogPostView(ListAPIView):
+    serializer_class = BlogPostsSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['post_id']
+        return BlogPost.objects.all().filter(author=user_id)
+
+class GetBlogPostsByUser(ListAPIView):
     serializer_class = BlogPostsSerializer
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
-        return BlogPost.objects.filter(author=user_id)
-
+        return BlogPost.objects.all().filter(author=user_id)
 
 class AllBlogComments(ListAPIView):
     pagination_class = LimitOffsetPagination
