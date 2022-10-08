@@ -135,13 +135,13 @@ class AllBlogComments(ListAPIView):
     serializer_class = BlogPostCommentsSerializer
 
 
-class BlogComment(ListAPIView):
+class BlogCommentView(ListAPIView):
     serializer_class = BlogPostCommentsSerializer
     pagination_class = LimitOffsetPagination
 
     def get_queryset(self):
         post_id = self.kwargs['post_id']
-        return BlogComment.objects.filter(post=post_id)
+        return BlogComment.objects.all().filter(post=post_id)
 
 
 class AllForumPosts(ListAPIView):
@@ -150,12 +150,12 @@ class AllForumPosts(ListAPIView):
     serializer_class = ForumPostsSerializer
 
 
-class ForumPost(ListAPIView):
+class ForumPostView(ListAPIView):
     serializer_class = ForumPostsSerializer
 
     def get_queryset(self):
         user_id = self.kwargs['user_id']
-        return ForumPost.objects.filter(user=user_id)
+        return ForumPost.objects.all().filter(user=user_id)
 
 
 class AllForumComments(ListAPIView):
@@ -164,10 +164,10 @@ class AllForumComments(ListAPIView):
     serializer_class = ForumPostCommentsSerializer
 
 
-class ForumComment(ListAPIView):
+class ForumCommentView(ListAPIView):
     serializer_class = ForumPostCommentsSerializer
     pagination_class = LimitOffsetPagination
 
     def get_queryset(self):
         post_id = self.kwargs['post_id']
-        return ForumComment.objects.filter(post=post_id)
+        return ForumComment.objects.all().filter(post=post_id)

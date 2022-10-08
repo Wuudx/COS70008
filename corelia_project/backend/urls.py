@@ -19,9 +19,9 @@ urlpatterns = [
     path('blogs/posts/<int:post_id>', BlogPostView.as_view()),
     path('blogs/comments', AllBlogComments.as_view()),
     path('forums', AllForumPosts.as_view()),
-    path('forums/<user_id>', ForumPost.as_view()),
+    path('forums/<user_id>', ForumPostView.as_view()),
     path('forum/comments', AllForumComments.as_view()),
-    path('forum/comments/<post_id>', ForumComment.as_view()),
+    path('forum/comments/<post_id>', ForumCommentView.as_view()),
 
 
 
