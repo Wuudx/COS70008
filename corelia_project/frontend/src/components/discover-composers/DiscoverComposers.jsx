@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { filterComposersByLetter, getComposers } from "../../api/composers";
 import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
@@ -10,8 +10,9 @@ import LoadMoreButton from "../buttons/LoadMoreButton";
 import FilterBar from "../filter-bar/FilterBar";
 import SearchResultsContainer from "./SearchResultsContainer";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import { useParams } from "react-router-dom";
 
-// TODO: Layout this page with flex box.
+// TODO: Fix issue where if user navigaes to /dsicvoer-composers from filtering, no results are retreived.
 const FlexContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -56,6 +57,25 @@ const DiscoverComposers = () => {
             setIsLoading(false);
         }
     }
+
+    // Fetch composers if user goes back to /discover-composers from querying.
+    useEffect(() => {
+        async function getAllComposers() {
+            setIsLoading(true);
+            try {
+                const json = await getComposers(INITIAL_URL);
+                setData(json);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        if (!searchQuery && !filterLetter) {
+            getAllComposers();
+        }
+    }, [searchQuery, filterLetter]);
 
     const isDataLoaded = "count" in data && data.count > 0;
 

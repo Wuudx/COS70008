@@ -8,6 +8,8 @@ from rest_framework.pagination import LimitOffsetPagination
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
 from .serializers import *
 from .paginations import CustomPagination
+from rest_framework.permissions import IsAuthenticated
+from knox.auth import TokenAuthentication
 
 # Create your views here.
 
@@ -30,11 +32,7 @@ class AllCompositionsView(ListAPIView):
     serializer_class = AllCompositionsSerializer
 
     def get_queryset(self):
-        queryset = Composition.objects.select_related('composer').all()
-        composer_id = self.request.query_params.get('composer_id', None)
-        if composer_id is not None:
-            queryset = queryset.filter(composer_id=composer_id)
-        return queryset
+        return Composition.objects.select_related('composer').all()
 
 
 class CompositionView(ListAPIView):
@@ -85,7 +83,6 @@ class SearchBarGetPublisher(ListAPIView):
         query = self.kwargs['query']
         return Publisher.objects.all().filter(name__contains=query)
 
-
 class GetCompositionsByComposer(ListAPIView):
     pagination_class = CustomPagination
     serializer_class = CompositionsByComposerSerializer
@@ -93,3 +90,21 @@ class GetCompositionsByComposer(ListAPIView):
     def get_queryset(self):
         composer_id = self.kwargs['composer_id']
         return Composition.objects.all().filter(composer_id=composer_id)
+
+class GetCompositionByLetter(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    serializer_class = CompositionByLetterSerializer
+
+    def get_queryset(self):
+        letter = self.kwargs['letter']
+        return Composition.objects.all().filter(name__startswith=letter)
+        
+        
+        
+        
+
+
+    
+
+    
+    
