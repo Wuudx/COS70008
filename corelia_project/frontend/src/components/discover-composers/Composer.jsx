@@ -48,7 +48,7 @@ const Composer = ({ composer }) => {
     const navigate = useNavigate();
 
     function navigateToComposer() {
-        navigate(`/discover-composers/${composer.id}`);
+        navigate(`/discover-composers/${composer.id}/biography`);
     }
 
     return (
