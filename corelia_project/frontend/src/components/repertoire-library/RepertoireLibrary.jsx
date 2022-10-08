@@ -5,6 +5,9 @@ import SideFilters from './SideFilters';
 import RepertoireContent from './RepertoireContent';
 import React from 'react';
 import { useState, useEffect } from 'react';
+import useSearchQuery from '../../hooks/useSearchQuery';
+import useRemoveSearchQuery from '../../hooks/useRemoveSearchQuery';
+import { useLocation } from 'react-router-dom';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -30,13 +33,19 @@ const Padding = styled.div`
 `;
 
 const RepertoireLibrary = () => {
-    const page_size = 24;
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const searchQuery = searchParams.get('letter');
+    const page_size = 96;
+    const [selectedFilter, setSelectedFilter] = useState('All');
     const [fetchURL, setFetchURL] = useState(
         'http://localhost:8000/api/compositions?limit=' + page_size
     );
+
     const [compositions, setCompositions] = useState([]);
-    const [hasMore, setHasMore] = useState(true);
+    const [hasMore, setHasMore] = useState(false);
     const [filters, setFilters] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const getUniqueComposers = (compositions) => {
         const composers = new Set();
@@ -44,7 +53,8 @@ const RepertoireLibrary = () => {
             composers.add(
                 JSON.stringify({
                     id: composition.composer_id,
-                    composer: composition.composer,
+                    first_name: composition.first_name,
+                    last_name: composition.last_name,
                 })
             );
         });
@@ -55,42 +65,72 @@ const RepertoireLibrary = () => {
         setFilters(getUniqueComposers(compositions));
     }, [compositions]);
 
-    async function fetchCompositions() {
+    async function fetchCompositions(url) {
         try {
-            let response = await fetch(fetchURL);
+            setIsLoading(true);
+            let response = await fetch(url);
             if (!response.ok) {
-                throw new Error('Network response was not ok');
-                return;
+                throw new Error(response.statusText);
             }
 
             let data = await response.json();
 
-            if (!data) {
-                throw new Error('No data returned');
-                return;
+            data.next ? setFetchURL(data.next) : null;
+            data.next ? setHasMore(data.next !== null) : setHasMore(false);
+            console.log(data);
+            if (data.results) {
+                setCompositions([...compositions, ...data.results]);
+            } else {
+                setCompositions(data);
             }
-
-            setFetchURL(data.next);
-            setCompositions([...compositions, ...data.results]);
-            setHasMore(data.next !== null);
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
     useEffect(() => {
-        fetchCompositions();
-    }, []);
+        if (searchQuery) {
+            fetchCompositions(
+                'http://localhost:8000/api/compositions/' + searchQuery
+            );
+
+            setSelectedFilter(null);
+        }
+    }, [searchQuery]);
+
+    useEffect(() => {
+        setCompositions([]);
+        searchParams.delete('letter');
+        if (selectedFilter === 'All') {
+            fetchCompositions(
+                'http://localhost:8000/api/compositions?limit=' + page_size
+            );
+        } else if (selectedFilter) {
+            fetchCompositions(
+                'http://localhost:8000/api/compositions?limit=0' +
+                    '&composer_id=' +
+                    selectedFilter
+            );
+        }
+        console.log(searchQuery);
+        console.log(selectedFilter);
+    }, [selectedFilter]);
 
     const handleLoadMore = () => {
-        fetchCompositions();
+        fetchCompositions(fetchURL);
     };
 
     return (
         <FlexContainer>
             <FilterBar initialSearchType={'Artist'} />
             <ContentContainer>
-                <SideFilters filters={filters} />
+                <SideFilters
+                    filters={filters}
+                    selectedFilter={selectedFilter}
+                    setSelectedFilter={setSelectedFilter}
+                />
                 <RepertoireContent
                     compositions={compositions}
                     handleLoadMore={handleLoadMore}

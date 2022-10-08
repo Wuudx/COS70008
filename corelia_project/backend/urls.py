@@ -1,5 +1,5 @@
 from .views import *
-from django.urls import path, re_path
+from django.urls import path
 from backend import views
 
 urlpatterns = [
@@ -8,13 +8,23 @@ urlpatterns = [
     path('featured-composers', GetFeaturedComposers.as_view()),
     path('compositions', AllCompositionsView.as_view()),
     path('compositions/<int:pk>', CompositionView.as_view()),
+    path('compositions/<letter>', GetCompositionByLetter.as_view()),
     path('discover-composers/<letter>', GetComposersByLetter.as_view()),
     path('search-composers/<query>', SearchBarGetComposer.as_view()),
     path('search-compositions/<query>', SearchBarGetComposition.as_view()),
     path('search-publishers/<query>', SearchBarGetPublisher.as_view()),
     path('composers/<composer_id>/compositions', GetCompositionsByComposer.as_view()),
-	#re_path(r'blog/$', views.all_blog_posts),
-    #re_path(r'blog/([0-9])$', views.all_blog_posts_detail),
-    path('blog', AllBlogPostsView.as_view()),
-    path('blog/<int:pk>', BlogPostView.as_view()),
+    path('blogs', AllBlogPosts.as_view()),
+    path('blogs/<user_id>', BlogPost.as_view()),
+    path('blogs/posts/<post_id>', BlogPost.as_view()),
+    path('blogs/comments', AllBlogComments.as_view()),
+    path('forums', AllForumPosts.as_view()),
+    path('forums/<user_id>', ForumPost.as_view()),
+    path('forum/comments', AllForumComments.as_view()),
+    path('forum/comments/<post_id>', ForumComment.as_view()),
+
+
+
+
+
 ]

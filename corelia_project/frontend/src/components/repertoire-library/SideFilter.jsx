@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import stylingConstants from '../../utils/styling';
 import React from 'react';
-import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
+import useFetchOnPageLoadNoSearch from '../../hooks/useFetchOnPageLoadNoSearch';
 import { getComposerCompositions } from '../../api/composers';
+import { getCompositionsCount } from '../../api/compositions';
 
 const Li = styled.li`
     list-style: none;
@@ -52,19 +53,24 @@ const Count = styled.div`
 const SideFilter = ({ filter, selectedFilter, setSelectedFilter }) => {
     filter = JSON.parse(filter);
 
-    const { data, isLoading, error } = useFetchOnPageLoad(() =>
-        getComposerCompositions(filter.id)
-    );
+    const filterName = filter.first_name + ' ' + filter.last_name;
+
+    const { data, isLoading, error } =
+        filter.id !== 'All'
+            ? useFetchOnPageLoadNoSearch(() =>
+                  getComposerCompositions(filter.id)
+              )
+            : useFetchOnPageLoadNoSearch(() => getCompositionsCount());
 
     const handleClick = () => {
-        setSelectedFilter(filter.composer);
+        setSelectedFilter(filter.id);
     };
 
-    const isSelected = filter.composer === selectedFilter;
+    const isSelected = filter.id === selectedFilter;
 
     return (
         <Li isSelected={isSelected} onClick={handleClick}>
-            <Filter>{filter.composer}</Filter>
+            <Filter>{filterName}</Filter>
             <Count isSelected={isSelected}>
                 {!isLoading && !error ? data.count : '-'}
             </Count>

@@ -7,8 +7,6 @@ function useFetchOnPageLoad(apiFunction) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const { search } = useLocation();
-
     // Function defined inside use effect callback because of race conditions.
     useEffect(() => {
         async function getData() {
@@ -22,10 +20,8 @@ function useFetchOnPageLoad(apiFunction) {
                 setIsLoading(false);
             }
         }
-        // So if user refreshes the page with query params in url, it will not fetch (useFetchOnParamChange handles this).
-        if (!search) {
-            getData();
-        }
+
+        getData();
     }, []);
 
     return { data, isLoading, error, setData, setIsLoading, setError };

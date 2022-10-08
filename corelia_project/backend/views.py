@@ -5,9 +5,11 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.pagination import LimitOffsetPagination
-from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher
+from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment
 from .serializers import *
 from .paginations import CustomPagination
+from rest_framework.permissions import IsAuthenticated
+from knox.auth import TokenAuthentication
 
 # Create your views here.
 
@@ -30,7 +32,14 @@ class AllCompositionsView(ListAPIView):
     serializer_class = AllCompositionsSerializer
 
     def get_queryset(self):
-        return Composition.objects.select_related('composer').all()
+        queryset = Composition.objects.select_related(
+            'composer').all().order_by('name')
+        # if there is a composer id supplied in the query params
+        composer_id = self.request.query_params.get('composer_id', None)
+        if composer_id is not None:  # if there is a composer id supplied in the query params, filter by it
+            # if there is a composer id supplied in the query params, filter by it
+            queryset = queryset.filter(composer_id=composer_id)
+        return queryset
 
 
 class CompositionView(ListAPIView):
@@ -81,6 +90,7 @@ class SearchBarGetPublisher(ListAPIView):
         query = self.kwargs['query']
         return Publisher.objects.all().filter(name__contains=query)
 
+
 class GetCompositionsByComposer(ListAPIView):
     pagination_class = CustomPagination
     serializer_class = CompositionsByComposerSerializer
@@ -89,51 +99,69 @@ class GetCompositionsByComposer(ListAPIView):
         composer_id = self.kwargs['composer_id']
         return Composition.objects.all().filter(composer_id=composer_id)
 
-# @api_view(['GET', 'POST'])
-# def all_blog_posts(request):
-#     if request.method == 'GET':
-#         blog_posts = BlogPost.objects.all()
 
-#         serializer = BlogPostSerializer(blog_posts, context={'request': request}, many=True)
-
-#         return Response(serializer.data)
-    
-#     elif request.method == 'POST':
-#         serializer = BlogPostSerializer(blog_posts=request.data)
-
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(status=status.HTTP_201_CREATED)
-
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# @api_view(['PUT', 'DELETE'])
-# def all_blog_posts_detail(request, pk):
-#     try:
-#         blog_post = BlogPost.objects.get(pk=pk)
-#     except BlogPost.DoesNotExist:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-
-#     if request.method == 'PUT':
-#         serializer = BlogPostSerializer(blog_post, data=request.data, context={'request': request})
-
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(status=status.HTTP_204_NO_CONTENT)
-        
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-#     elif request.method == 'DELETE':
-#         blog_post.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-
-class AllBlogPostsView(ListAPIView):
+class GetCompositionByLetter(ListAPIView):
     pagination_class = LimitOffsetPagination
-    queryset = BlogPost.objects.all()
-    serializer_class = AllComposersSerializer
-
-class BlogPostView(ListAPIView):
-    serializer_class = BlogPostSerializer
+    serializer_class = CompositionByLetterSerializer
 
     def get_queryset(self):
-        return BlogPost.objects.filter(id=self.kwargs['pk'])
+        letter = self.kwargs['letter']
+        return Composition.objects.all().filter(name__startswith=letter)
+
+
+class AllBlogPosts(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostsSerializer
+
+
+class BlogPost(ListAPIView):
+    serializer_class = BlogPostsSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return BlogPost.objects.filter(author=user_id)
+
+
+class AllBlogComments(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = BlogComment.objects.all()
+    serializer_class = BlogPostCommentsSerializer
+
+
+class BlogComment(ListAPIView):
+    serializer_class = BlogPostCommentsSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        post_id = self.kwargs['post_id']
+        return BlogComment.objects.filter(post=post_id)
+
+
+class AllForumPosts(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = ForumPost.objects.all()
+    serializer_class = ForumPostsSerializer
+
+
+class ForumPost(ListAPIView):
+    serializer_class = ForumPostsSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return ForumPost.objects.filter(user=user_id)
+
+
+class AllForumComments(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = ForumComment.objects.all()
+    serializer_class = ForumPostCommentsSerializer
+
+
+class ForumComment(ListAPIView):
+    serializer_class = ForumPostCommentsSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        post_id = self.kwargs['post_id']
+        return ForumComment.objects.filter(post=post_id)

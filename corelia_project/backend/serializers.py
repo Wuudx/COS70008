@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment
+from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment
 
 
 class AllComposersSerializer(serializers.ModelSerializer):
@@ -16,18 +16,22 @@ class ComposerSerializer(serializers.ModelSerializer):
 
 
 class AllCompositionsSerializer(serializers.ModelSerializer):
-    composer = serializers.SerializerMethodField()
+    first_name = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
     composer_id = serializers.SerializerMethodField()
 
-    def get_composer(self, obj):
-        return obj.composer.firstName + ' ' + obj.composer.lastName
+    def get_first_name(self, obj):
+        return obj.composer.firstName
+
+    def get_last_name(self, obj):
+        return obj.composer.lastName
 
     def get_composer_id(self, obj):
         return obj.composer.id
 
     class Meta:
         model = Composition
-        fields = ['id', 'name', 'composer', 'composer_id']
+        fields = ['id', 'name', 'first_name', 'last_name', 'composer_id']
 
 
 class CompositionSerializer(serializers.ModelSerializer):
@@ -59,7 +63,7 @@ class ComposersByLetterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Composer
-        fields = ['firstName', 'lastName', 'image']
+        fields = ['id', 'firstName', 'lastName', 'image']
 
 
 class SearchBarComposerSerializer(serializers.ModelSerializer):
@@ -93,56 +97,62 @@ class CompositionsByComposerSerializer(serializers.ModelSerializer):
         model = Composition
         fields = ['id', 'name', 'composer']
 
-#class BlogPostSerializer(serializers.ModelSerializer):
-#    user_detail = serializers.SerializerMethodField()
-#
-#    def get_user_detail(self, obj):
-#        return obj.user.username
-#    
-#    class Meta:
-#        model = BlogPost
-#        fields = '__all__'
+class CompositionByLetterSerializer(serializers.ModelSerializer):
 
-#class BlogCommentSerializer(serializers.ModelSerializer):
-#    user_detail = serializers.SerializerMethodField()
-#
-#    #def get_post_detail(self, obj):
-#    #    return obj.blogpost.id
-#
-#    #def get_author_detail(self, obj):
-#    #    return obj.user.username
-#
-#    def get_user_detail(self, obj):
-#        return obj.user.username
-#
-#    class Meta:
-#        model = BlogComment
-#        fields = '__all__'
+    first_name = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
+    composer_id = serializers.SerializerMethodField()
 
-class AllBlogPostsSerializer(serializers.ModelSerializer):
-    author_name = serializers.SerializerMethodField()
-    #author_id = serializers.SerializerMethodField()
+    def get_first_name(self, obj):
+        return obj.composer.firstName
 
-    def get_author(self, obj):
-        return obj.user.username
+    def get_last_name(self, obj):
+        return obj.composer.lastName
 
-    #def get_author_id(self, obj):
-    #    return obj.user.id
+    def get_composer_id(self, obj):
+        return obj.composer.id
     
     class Meta:
-        model = BlogPost
-        fields = ['id', 'author', 'date_posted', 'date_updated', 'title', 'content', 'votes']
+        model = Composition
+        fields = ['id', 'name', 'first_name', 'last_name', 'composer_id']
 
-class BlogPostSerializer(serializers.ModelSerializer):
+class BlogPostsSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
-    #author_id = serializers.SerializerMethodField()
+    
+    def get_author_name(self, obj):
+        return obj.author.username
 
+    class Meta:
+        model = BlogPost
+        fields = ['id', 'author', 'content', 'date_posted', 'title', 'votes', 'author_name', 'post']
+
+
+class BlogPostCommentsSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
+    
+    def get_author_name(self, obj):
+        return obj.author.username
+
+    class Meta:
+        model = BlogComment
+        fields = ['id', 'author', 'content', 'date_posted', 'author_name']
+
+class ForumPostsSerializer(serializers.ModelSerializer):
+    user_name = serializers.SerializerMethodField()
+    
     def get_author_name(self, obj):
         return obj.user.username
 
-    #def get_author_id(self, obj):
-    #    return obj.user.id
+    class Meta:
+        model = ForumPost
+        fields = ['id', 'user', 'content', 'date_posted', 'votes', 'user_name']
+
+class ForumPostCommentsSerializer(serializers.ModelSerializer):
+    user_name = serializers.SerializerMethodField()
+    
+    def get_author_name(self, obj):
+        return obj.user.username
 
     class Meta:
-        model = Composition
-        fields = '__all__'
+        model = ForumComment
+        fields = ['id', 'user', 'content', 'date_posted', 'user_name', 'post']

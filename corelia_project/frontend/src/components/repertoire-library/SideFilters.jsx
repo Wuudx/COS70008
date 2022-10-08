@@ -45,12 +45,15 @@ const filters = [
     },
 ];
 
-const SideFilters = ({ filters }) => {
-    // if (filters[0].name !== 'All Music') {
-    //     filters.unshift({ name: 'All Music', id: 9001 });
-    // }
-
-    const [selectedFilter, setSelectedFilter] = useState('All Music');
+const SideFilters = ({ filters, selectedFilter, setSelectedFilter }) => {
+    const allMusicFilter = JSON.stringify({
+        id: 'All',
+        first_name: 'All',
+        last_name: 'Compositions',
+    });
+    if (filters[0] !== allMusicFilter) {
+        filters.unshift(allMusicFilter);
+    }
 
     return (
         <Ul>

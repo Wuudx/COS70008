@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
 import FeaturedMusicTrack from "./FeaturedMusicTrack";
@@ -7,6 +6,7 @@ import ComposerInformation from "./ComposerInformation";
 import { useParams } from "react-router-dom";
 import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
 import { getComposerById } from "../../api/composers";
+import ScaleLoader from "react-spinners/ScaleLoader";
 
 const Container = styled.div`
     margin-left: ${stylingConstants.sizes.leftRightMargin};
@@ -15,6 +15,12 @@ const Container = styled.div`
 
 const OuterFlexContainer = styled.div`
     display: flex;
+`;
+
+const LoaderFlexContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const ComposerProfile = () => {
@@ -36,7 +42,11 @@ const ComposerProfile = () => {
 
     let content;
     if (isLoading) {
-        content = <div>Loading...</div>;
+        content = (
+            <LoaderFlexContainer>
+                <ScaleLoader color={stylingConstants.colours.blue1} />
+            </LoaderFlexContainer>
+        );
     } else if (error) {
         content = <div>{error.message}</div>;
     } else {

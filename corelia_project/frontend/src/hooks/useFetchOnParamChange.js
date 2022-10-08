@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function useFetchOnParamChange(
     apiFunction,
@@ -8,7 +9,6 @@ function useFetchOnParamChange(
     setError
 ) {
     useEffect(() => {
-        console.log("made it");
         async function getData() {
             try {
                 setIsLoading(true);
