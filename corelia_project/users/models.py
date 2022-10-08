@@ -5,18 +5,21 @@ from django.utils.translation import gettext_lazy as _
 
 from .managers import UserManager
 
+
 class UserTier(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
 
     def __str__(self):
         return self.name
 
+
 class User(AbstractBaseUser, PermissionsMixin):
-    #id (Primary Key)?
+    # id (Primary Key)?
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=30, unique=True)
-    tier = models.ForeignKey(UserTier, on_delete=models.CASCADE, blank=True, null=True) #should be NOT NULL, default=0? Testing
+    # should be NOT NULL, default=0? Testing
+    tier = models.ForeignKey(
+        UserTier, on_delete=models.DO_NOTHING, null=True, blank=True)
     authenticated = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
