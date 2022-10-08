@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { filterComposersByLetter, getComposers } from "../../api/composers";
+import {
+    filterComposersByLetter,
+    getComposers,
+    searchComposers,
+} from "../../api/composers";
 import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
 import useFetchOnParamChange from "../../hooks/useFetchOnParamChange";
 import useSearchQuery from "../../hooks/useSearchQuery";
@@ -30,6 +34,13 @@ const DiscoverComposers = () => {
     useFetchOnParamChange(
         () => filterComposersByLetter(filterLetter),
         filterLetter,
+        setData,
+        setIsLoading,
+        setError
+    );
+    useFetchOnParamChange(
+        () => searchComposers(searchQuery),
+        searchQuery,
         setData,
         setIsLoading,
         setError

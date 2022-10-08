@@ -32,10 +32,11 @@ const SearchBar = () => {
     // Note that input in react is sanitised by default (I think, TODO: follow up on this.)
     function handleSearch(e) {
         e.preventDefault();
+        let newPathname = pathname.replace("/search", "");
         // This behaviour will be handled differently in future but we will keep it like this for now. Maybe have reddit
         // like beahviour where user is indicated that they are searching for discover composers with a removable flair.
         if (pathname.includes("discover-composers")) {
-            navigate(`${pathname}/search?q=${searchQuery}`);
+            navigate(`${newPathname}/search?q=${searchQuery}`);
         } else {
             navigate(`/search?q=${searchQuery}`);
         }

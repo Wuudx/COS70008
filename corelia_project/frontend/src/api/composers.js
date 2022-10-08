@@ -8,6 +8,16 @@ export async function getComposers(url) {
     return response.json();
 }
 
+export async function searchComposers(query) {
+    const response = await fetch(
+        `http://localhost:8000/api/search-composers/${query}?limit=${constants.DISCOVER_COMPOSERS_LIMIT}`
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+    return response.json();
+}
+
 export async function filterComposersByLetter(letter) {
     const response = await fetch(
         `http://localhost:8000/api/discover-composers/${letter}?limit=${constants.DISCOVER_COMPOSERS_LIMIT}`
