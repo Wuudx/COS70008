@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import ReadButton from '../buttons/ReadButton';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Song = styled.div`
     display: flex;
@@ -41,6 +42,7 @@ const SongArtist = styled.p`
 `;
 
 const Repertoire = ({ composition }) => {
+    const navigate = useNavigate();
     const trimDescription = (description) => {
         const maxLength = 100;
         return description.length > maxLength
@@ -49,7 +51,7 @@ const Repertoire = ({ composition }) => {
     };
 
     const handleClick = () => {
-        console.log('Clicked'); // TODO: Implement this
+        navigate(`/repertoire-library/${composition.id}`);
     };
 
     return (

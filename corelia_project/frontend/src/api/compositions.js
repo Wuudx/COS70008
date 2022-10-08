@@ -6,6 +6,16 @@ export async function getCompositions() {
     return response.json();
 }
 
+export async function getCompositionById(id) {
+    const response = await fetch(
+        `http://localhost:8000/api/compositions/${id}`
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+    return response.json();
+}
+
 export async function getCompositionsCount() {
     const response = await fetch(
         'http://localhost:8000/api/compositions?limit=1'

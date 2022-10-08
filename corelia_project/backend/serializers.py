@@ -36,11 +36,15 @@ class AllCompositionsSerializer(serializers.ModelSerializer):
 
 class CompositionSerializer(serializers.ModelSerializer):
     composer_name = serializers.SerializerMethodField()
+    publisher_name = serializers.SerializerMethodField()
 
     def get_composer_name(self, obj):
         firstName = obj.composer.firstName
         lastName = obj.composer.lastName
         return firstName + ' ' + lastName
+
+    def get_publisher_name(self, obj):
+        return obj.publisher.name
 
     class Meta:
         model = Composition
@@ -97,6 +101,7 @@ class CompositionsByComposerSerializer(serializers.ModelSerializer):
         model = Composition
         fields = ['id', 'name', 'composer']
 
+
 class CompositionByLetterSerializer(serializers.ModelSerializer):
 
     first_name = serializers.SerializerMethodField()
@@ -111,25 +116,27 @@ class CompositionByLetterSerializer(serializers.ModelSerializer):
 
     def get_composer_id(self, obj):
         return obj.composer.id
-    
+
     class Meta:
         model = Composition
         fields = ['id', 'name', 'first_name', 'last_name', 'composer_id']
 
+
 class BlogPostsSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
-    
+
     def get_author_name(self, obj):
         return obj.author.username
 
     class Meta:
         model = BlogPost
-        fields = ['id', 'author', 'content', 'date_posted', 'title', 'votes', 'author_name', 'post']
+        fields = ['id', 'author', 'content', 'date_posted',
+                  'title', 'votes', 'author_name', 'post']
 
 
 class BlogPostCommentsSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
-    
+
     def get_author_name(self, obj):
         return obj.author.username
 
@@ -137,9 +144,10 @@ class BlogPostCommentsSerializer(serializers.ModelSerializer):
         model = BlogComment
         fields = ['id', 'author', 'content', 'date_posted', 'author_name']
 
+
 class ForumPostsSerializer(serializers.ModelSerializer):
     user_name = serializers.SerializerMethodField()
-    
+
     def get_author_name(self, obj):
         return obj.user.username
 
@@ -147,9 +155,10 @@ class ForumPostsSerializer(serializers.ModelSerializer):
         model = ForumPost
         fields = ['id', 'user', 'content', 'date_posted', 'votes', 'user_name']
 
+
 class ForumPostCommentsSerializer(serializers.ModelSerializer):
     user_name = serializers.SerializerMethodField()
-    
+
     def get_author_name(self, obj):
         return obj.user.username
 

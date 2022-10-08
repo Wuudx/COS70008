@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import MusicPlayer from "./MusicPlayer";
-import LinkToScore from "./LinkToScore";
+import React from 'react';
+import styled from 'styled-components';
+import MusicPlayer from './MusicPlayer';
+import LinkToScore from './LinkToScore';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -17,7 +17,7 @@ const H1 = styled.h1`
 const FeaturedMusicTrack = ({ composerImage, featuredSong, linkToScore }) => {
     return (
         <FlexContainer>
-            <img src={composerImage} alt="Composer Picture" />
+            <img src={composerImage} alt='Composer Picture' />
             <h4>Featured Music Track</h4>
             <MusicPlayer linkToSong={featuredSong} />
             <LinkToScore linkToScore={linkToScore} />
