@@ -91,6 +91,8 @@ const SignUpForm = ({ handleChangeView }) => {
                 email,
                 password,
             });
+
+            console.log(response);
             if (response) {
                 navigate('/');
             }
