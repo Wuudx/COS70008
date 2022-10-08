@@ -3,6 +3,7 @@ import stylingConstants from '../../utils/styling';
 import React from 'react';
 import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
 import { getComposerCompositions } from '../../api/composers';
+import { getCompositionsCount } from '../../api/compositions';
 
 const Li = styled.li`
     list-style: none;
@@ -49,17 +50,23 @@ const Count = styled.div`
 
 // TODO: Make the count bubble show up on the right side of the filter
 
-const SideFilter = ({ filter, selectedFilter, handleFilterChange }) => {
+const SideFilter = ({
+    filter,
+    selectedFilter,
+    setSelectedFilter,
+    handleSetTotal,
+}) => {
     filter = JSON.parse(filter);
 
     const filterName = filter.first_name + ' ' + filter.last_name;
 
-    const { data, isLoading, error } = useFetchOnPageLoad(() =>
-        getComposerCompositions(filter.id)
-    );
+    const { data, isLoading, error } =
+        filter.id !== 'All'
+            ? useFetchOnPageLoad(() => getComposerCompositions(filter.id))
+            : useFetchOnPageLoad(() => getCompositionsCount());
 
     const handleClick = () => {
-        handleFilterChange(filter.id);
+        setSelectedFilter(filter.id);
     };
 
     const isSelected = filter.id === selectedFilter;

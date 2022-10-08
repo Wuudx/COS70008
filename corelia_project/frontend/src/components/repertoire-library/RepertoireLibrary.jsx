@@ -63,19 +63,24 @@ const RepertoireLibrary = () => {
         setFilters(getUniqueComposers(compositions));
     }, [compositions]);
 
-    async function fetchCompositions() {
+    async function fetchCompositions(url) {
+        console.log(url);
         try {
             setIsLoading(true);
-            let response = await fetch(fetchURL);
+            let response = await fetch(url);
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
 
             let data = await response.json();
 
-            setFetchURL(data.next);
-            setHasMore(data.next !== null);
-            setCompositions([...compositions, ...data.results]);
+            data.next ? setFetchURL(data.next) : null;
+            data.next ? setHasMore(data.next !== null) : setHasMore(false);
+            if (data.results) {
+                setCompositions([...compositions, ...data.results]);
+            } else {
+                setCompositions(data);
+            }
         } catch (error) {
             console.log(error);
         } finally {
@@ -84,15 +89,19 @@ const RepertoireLibrary = () => {
     }
 
     useEffect(() => {
-        fetchCompositions();
-    }, []);
+        if (selectedFilter === 'All') {
+            fetchCompositions('http://localhost:8000/api/compositions');
+        } else {
+            fetchCompositions(
+                'http://localhost:8000/api/compositions?limit=0' +
+                    '&composer_id=' +
+                    selectedFilter
+            );
+        }
+    }, [selectedFilter]);
 
     const handleLoadMore = () => {
-        fetchCompositions();
-    };
-
-    const handleFilterChange = (filter) => {
-        setSelectedFilter(filter);
+        fetchCompositions(fetchURL);
     };
 
     return (
@@ -102,7 +111,7 @@ const RepertoireLibrary = () => {
                 <SideFilters
                     filters={filters}
                     selectedFilter={selectedFilter}
-                    handleFilterChange={handleFilterChange}
+                    setSelectedFilter={setSelectedFilter}
                 />
                 <RepertoireContent
                     compositions={compositions}

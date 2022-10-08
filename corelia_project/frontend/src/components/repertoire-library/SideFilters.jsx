@@ -45,7 +45,16 @@ const filters = [
     },
 ];
 
-const SideFilters = ({ filters, selectedFilter, handleFilterChange }) => {
+const SideFilters = ({ filters, selectedFilter, setSelectedFilter }) => {
+    const allMusicFilter = JSON.stringify({
+        id: 'All',
+        first_name: 'All',
+        last_name: 'Compositions',
+    });
+    if (filters[0] !== allMusicFilter) {
+        filters.unshift(allMusicFilter);
+    }
+
     return (
         <Ul>
             {filters.map((filter, index) => (
@@ -53,7 +62,7 @@ const SideFilters = ({ filters, selectedFilter, handleFilterChange }) => {
                     key={index}
                     filter={filter}
                     selectedFilter={selectedFilter}
-                    handleFilterChange={handleFilterChange}
+                    setSelectedFilter={setSelectedFilter}
                 />
             ))}
         </Ul>
