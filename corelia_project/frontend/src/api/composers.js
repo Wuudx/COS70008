@@ -1,7 +1,7 @@
-import constants from '../utils/constants';
+import constants from "../utils/constants";
 
-export async function getComposers() {
-    const response = await fetch('http://localhost:8000/api/composers');
+export async function getComposers(url) {
+    const response = await fetch(url);
     if (!response.ok) {
         throw new Error(response.status);
     }
@@ -20,7 +20,7 @@ export async function filterComposersByLetter(letter) {
 
 export async function getComposersCompositionCount() {
     const response = await fetch(
-        'http://localhost:8000/api/composers/composition-count'
+        "http://localhost:8000/api/composers/composition-count"
     );
     if (!response.ok) {
         throw new Error(response.status);

@@ -8,7 +8,6 @@ function useFetchOnParamChange(
     setError
 ) {
     useEffect(() => {
-        console.log("made it");
         async function getData() {
             try {
                 setIsLoading(true);
