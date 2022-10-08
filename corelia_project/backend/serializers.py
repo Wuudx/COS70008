@@ -31,7 +31,7 @@ class AllCompositionsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Composition
-        fields = ['id', 'name', 'first_name', 'last_name', 'composer_id']
+        fields = ['id', 'name', 'first_name', 'last_name', 'composer_id', 'recording_link']
 
 
 class CompositionSerializer(serializers.ModelSerializer):
