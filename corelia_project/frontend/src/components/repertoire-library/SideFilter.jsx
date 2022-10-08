@@ -50,12 +50,7 @@ const Count = styled.div`
 
 // TODO: Make the count bubble show up on the right side of the filter
 
-const SideFilter = ({
-    filter,
-    selectedFilter,
-    setSelectedFilter,
-    handleSetTotal,
-}) => {
+const SideFilter = ({ filter, selectedFilter, setSelectedFilter }) => {
     filter = JSON.parse(filter);
 
     const filterName = filter.first_name + ' ' + filter.last_name;

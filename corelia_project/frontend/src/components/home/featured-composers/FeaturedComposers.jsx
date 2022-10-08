@@ -25,11 +25,8 @@ const FeaturedComposers = () => {
         console.log(error);
         featuredComposers = <div>{error.message}</div>;
     } else {
-        featuredComposers = data.map((featuredComposer) => (
-            <FeaturedComposer
-                key={featuredComposer.id}
-                featuredComposer={featuredComposer}
-            />
+        featuredComposers = data.map((featuredComposer, index) => (
+            <FeaturedComposer key={index} featuredComposer={featuredComposer} />
         ));
     }
 
