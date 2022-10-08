@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, ListCreateAPIView
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -7,9 +7,10 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.pagination import LimitOffsetPagination
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment
 from .serializers import *
-from .paginations import CustomPagination
+from .paginations import CustomPagination, PopularBlogPagination
 from rest_framework.permissions import IsAuthenticated
 from knox.auth import TokenAuthentication
+import datetime
 
 # Create your views here.
 
@@ -109,7 +110,7 @@ class GetCompositionByLetter(ListAPIView):
         return Composition.objects.all().filter(name__startswith=letter)
 
 
-class AllBlogPosts(ListAPIView):
+class AllBlogPosts(ListCreateAPIView):
     pagination_class = LimitOffsetPagination
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostsSerializer
@@ -129,7 +130,7 @@ class GetBlogPostsByUser(ListAPIView):
         user_id = self.kwargs['user_id']
         return BlogPost.objects.all().filter(author=user_id)
 
-class AllBlogComments(ListAPIView):
+class AllBlogComments(ListCreateAPIView):
     pagination_class = LimitOffsetPagination
     queryset = BlogComment.objects.all()
     serializer_class = BlogPostCommentsSerializer
@@ -143,7 +144,7 @@ class BlogCommentView(ListAPIView):
         return BlogComment.objects.all().filter(post=post_id)
 
 
-class AllForumPosts(ListAPIView):
+class AllForumPosts(ListCreateAPIView):
     pagination_class = LimitOffsetPagination
     queryset = ForumPost.objects.all()
     serializer_class = ForumPostsSerializer
@@ -157,7 +158,7 @@ class ForumPostView(ListAPIView):
         return ForumPost.objects.all().filter(user=user_id)
 
 
-class AllForumComments(ListAPIView):
+class AllForumComments(ListCreateAPIView):
     pagination_class = LimitOffsetPagination
     queryset = ForumComment.objects.all()
     serializer_class = ForumPostCommentsSerializer
@@ -170,3 +171,8 @@ class ForumCommentView(ListAPIView):
     def get_queryset(self):
         post_id = self.kwargs['post_id']
         return ForumComment.objects.all().filter(post=post_id)
+
+class GetPopularBlogPosts(ListAPIView):
+    pagination_class = PopularBlogPagination
+    queryset = BlogPost.objects.all().order_by('-votes')
+    serializer_class = BlogPostsSerializer
