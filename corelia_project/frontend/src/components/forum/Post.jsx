@@ -6,6 +6,7 @@ import CommentForm from "./CommentForm";
 import PostContent from "./PostContent";
 import PostUserAndTime from "./PostUserAndTime";
 import React from "react";
+import { getTimeElapsedFromCreation } from "../../utils/date-time";
 
 const Container = styled.div`
     background: white;
@@ -19,16 +20,18 @@ const Container = styled.div`
 `;
 
 const Post = ({ post }) => {
+    const timeFromPost = getTimeElapsedFromCreation(post.date_posted);
+
     return (
         <Container>
             <PostUserAndTime
                 profilePicture={post.profilePicture}
-                username={post.username}
-                timeFromPost={post.timeFromPost}
+                username={post.author_name}
+                timeFromPost={timeFromPost}
             />
             <PostContent content={post.content} />
             <AttachedImage />
-            <CommentAndShare numComments={post.numComments} postId={post.id} />
+            <CommentAndShare numComments={4} postId={post.id} />
             <CommentForm profilePicture={post.profilePicture} />
         </Container>
     );
