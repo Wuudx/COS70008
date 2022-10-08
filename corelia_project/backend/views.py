@@ -107,3 +107,61 @@ class GetCompositionByLetter(ListAPIView):
     def get_queryset(self):
         letter = self.kwargs['letter']
         return Composition.objects.all().filter(name__startswith=letter)
+
+
+class AllBlogPosts(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostsSerializer
+
+
+class BlogPost(ListAPIView):
+    serializer_class = BlogPostsSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return BlogPost.objects.filter(author=user_id)
+
+
+class AllBlogComments(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = BlogComment.objects.all()
+    serializer_class = BlogPostCommentsSerializer
+
+
+class BlogComment(ListAPIView):
+    serializer_class = BlogPostCommentsSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        post_id = self.kwargs['post_id']
+        return BlogComment.objects.filter(post=post_id)
+
+
+class AllForumPosts(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = ForumPost.objects.all()
+    serializer_class = ForumPostsSerializer
+
+
+class ForumPost(ListAPIView):
+    serializer_class = ForumPostsSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        return ForumPost.objects.filter(user=user_id)
+
+
+class AllForumComments(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = ForumComment.objects.all()
+    serializer_class = ForumPostCommentsSerializer
+
+
+class ForumComment(ListAPIView):
+    serializer_class = ForumPostCommentsSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        post_id = self.kwargs['post_id']
+        return ForumComment.objects.filter(post=post_id)
