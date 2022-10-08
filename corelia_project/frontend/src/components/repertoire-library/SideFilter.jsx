@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import stylingConstants from '../../utils/styling';
 import React from 'react';
-import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
+import useFetchOnPageLoadNoSearch from '../../hooks/useFetchOnPageLoadNoSearch';
 import { getComposerCompositions } from '../../api/composers';
 import { getCompositionsCount } from '../../api/compositions';
 
@@ -57,8 +57,10 @@ const SideFilter = ({ filter, selectedFilter, setSelectedFilter }) => {
 
     const { data, isLoading, error } =
         filter.id !== 'All'
-            ? useFetchOnPageLoad(() => getComposerCompositions(filter.id))
-            : useFetchOnPageLoad(() => getCompositionsCount());
+            ? useFetchOnPageLoadNoSearch(() =>
+                  getComposerCompositions(filter.id)
+              )
+            : useFetchOnPageLoadNoSearch(() => getCompositionsCount());
 
     const handleClick = () => {
         setSelectedFilter(filter.id);

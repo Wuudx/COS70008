@@ -6,6 +6,8 @@ import RepertoireContent from './RepertoireContent';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import useSearchQuery from '../../hooks/useSearchQuery';
+import useRemoveSearchQuery from '../../hooks/useRemoveSearchQuery';
+import { useLocation } from 'react-router-dom';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -31,7 +33,9 @@ const Padding = styled.div`
 `;
 
 const RepertoireLibrary = () => {
-    const searchQuery = useSearchQuery('letter');
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const searchQuery = searchParams.get('letter');
     const page_size = 96;
     const [selectedFilter, setSelectedFilter] = useState('All');
     const [fetchURL, setFetchURL] = useState(
@@ -73,6 +77,7 @@ const RepertoireLibrary = () => {
 
             data.next ? setFetchURL(data.next) : null;
             data.next ? setHasMore(data.next !== null) : setHasMore(false);
+            console.log(data);
             if (data.results) {
                 setCompositions([...compositions, ...data.results]);
             } else {
@@ -86,11 +91,23 @@ const RepertoireLibrary = () => {
     }
 
     useEffect(() => {
+        if (searchQuery) {
+            fetchCompositions(
+                'http://localhost:8000/api/compositions/' + searchQuery
+            );
+
+            setSelectedFilter(null);
+        }
+    }, [searchQuery]);
+
+    useEffect(() => {
+        setCompositions([]);
+        searchParams.delete('letter');
         if (selectedFilter === 'All') {
             fetchCompositions(
                 'http://localhost:8000/api/compositions?limit=' + page_size
             );
-        } else {
+        } else if (selectedFilter) {
             fetchCompositions(
                 'http://localhost:8000/api/compositions?limit=0' +
                     '&composer_id=' +
@@ -98,7 +115,8 @@ const RepertoireLibrary = () => {
             );
         }
         console.log(searchQuery);
-    }, [selectedFilter, searchQuery]);
+        console.log(selectedFilter);
+    }, [selectedFilter]);
 
     const handleLoadMore = () => {
         fetchCompositions(fetchURL);
