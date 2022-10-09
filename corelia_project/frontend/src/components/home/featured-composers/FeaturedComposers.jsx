@@ -14,13 +14,12 @@ const FlexContainer = styled.div`
 `;
 
 const FeaturedComposers = () => {
-    const { data, isLoading, error } = useFetchOnPageLoad(getFeaturedComposers);
+    const [data, isLoading, error] = useFetchOnPageLoad(getFeaturedComposers);
 
     let featuredComposers;
     if (isLoading) {
         featuredComposers = <div>Loading...</div>;
     } else if (error) {
-        console.log(error);
         featuredComposers = <div>{error.message}</div>;
     } else {
         featuredComposers = data.map((featuredComposer, index) => (

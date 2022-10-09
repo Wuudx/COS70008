@@ -15,7 +15,6 @@ import FilterBar from "../filter-bar/FilterBar";
 import SearchResultsContainer from "./SearchResultsContainer";
 import ScaleLoader from "react-spinners/ScaleLoader";
 
-// TODO: Fix issue where if user navigaes to /dsicvoer-composers from filtering, no results are retreived.
 const FlexContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -25,10 +24,11 @@ const FlexContainer = styled.div`
 
 const INITIAL_URL = `http://localhost:8000/api/composers?limit=${constants.DISCOVER_COMPOSERS_LIMIT}`;
 
+// TODO: ALLOW USER TO FILTER BY LETTER AND SEARCH QUERY.
 const DiscoverComposers = () => {
     const searchQuery = useSearchQuery("q");
     const filterLetter = useSearchQuery("letter");
-    const { data, isLoading, error, setData, setIsLoading, setError } =
+    const [data, isLoading, error, setData, setIsLoading, setError] =
         useFetchOnPageLoad(() => getComposers(INITIAL_URL));
     let nextPageApiEndpoint = "";
     useFetchOnParamChange(

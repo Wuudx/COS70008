@@ -1,12 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
-import { getCompositionById } from '../../api/compositions';
-import MusicPlayer from '../composer-profile/MusicPlayer';
-import LinkToScore from '../composer-profile/LinkToScore';
-import ScaleLoader from 'react-spinners/ScaleLoader';
-import stylingConstants from '../../utils/styling';
+import React from "react";
+import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
+import { getCompositionById } from "../../api/compositions";
+import MusicPlayer from "../composer-profile/MusicPlayer";
+import LinkToScore from "../composer-profile/LinkToScore";
+import ScaleLoader from "react-spinners/ScaleLoader";
+import stylingConstants from "../../utils/styling";
 
 const Container = styled.div`
     display: flex;
@@ -32,14 +32,14 @@ const CompositionContainer = styled.div`
 `;
 
 const CompositionName = styled.h1`
-    font-family: 'Lato-bold';
+    font-family: "Lato-bold";
     font-size: 1.5em;
     margin: 10px;
     padding: 0;
 `;
 
 const CompositionArtist = styled.h2`
-    font-family: 'Lato-regular';
+    font-family: "Lato-regular";
     font-size: 1.2em;
     margin: 10px;
     padding: 0;
@@ -55,7 +55,7 @@ const ScoreContainer = styled.div`
 `;
 
 const Publisher = styled.p`
-    font-family: 'Lato-regular';
+    font-family: "Lato-regular";
     font-size: 1em;
     margin: 10px;
     padding: 0;
@@ -65,7 +65,7 @@ const Publisher = styled.p`
 const Composition = () => {
     const { compositionId } = useParams();
 
-    const { data, isLoading, error } = useFetchOnPageLoad(() =>
+    const [data, isLoading, error] = useFetchOnPageLoad(() =>
         getCompositionById(compositionId)
     );
     const composition = data[0] || {};

@@ -11,7 +11,7 @@ const FlexContainer = styled.div`
 `;
 
 const Compositions = ({ composerId }) => {
-    const { data, isLoading, error } = useFetchOnPageLoad(() =>
+    const [data, isLoading, error] = useFetchOnPageLoad(() =>
         getCompositionsByComposerId(composerId)
     );
 
