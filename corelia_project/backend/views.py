@@ -1,3 +1,4 @@
+from time import strftime
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, ListCreateAPIView
 from rest_framework import status
@@ -183,3 +184,13 @@ class GetPopularBlogPosts(ListAPIView):
     pagination_class = PopularBlogPagination
     queryset = BlogPost.objects.all().order_by('-votes')
     serializer_class = BlogPostsSerializer
+
+
+class GetBlogPostsByMonth(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = BlogPostsSerializer
+
+    def get_queryset(self):
+        month = self.kwargs['month']
+        return BlogPost.objects.filter(date_posted__month = month)
+        

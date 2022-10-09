@@ -129,9 +129,11 @@ class CompositionByLetterSerializer(serializers.ModelSerializer):
 
 class BlogPostsSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
+    
 
     def get_author_name(self, obj):
         return obj.author.username
+    
 
     class Meta:
         model = BlogPost

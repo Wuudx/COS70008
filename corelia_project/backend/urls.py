@@ -21,6 +21,7 @@ urlpatterns = [
     path('blogs/comments', AllBlogComments.as_view()),
     path('blogs/comments/<int:post_id>', BlogCommentView.as_view()),
     path('blogs/popular', GetPopularBlogPosts.as_view()),
+    path('blogs/<int:month>/posts', GetBlogPostsByMonth.as_view()),
     path('forums', AllForumPosts.as_view()),
     path('forums/<int:post_id>', ForumPostView.as_view()),
     path('forums/comments/all', AllForumComments.as_view()),
