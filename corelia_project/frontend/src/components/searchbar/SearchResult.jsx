@@ -36,27 +36,32 @@ const SearchResult = ({ result }) => {
 
     let heading;
     let content;
-    if (result.type === 'compositions') {
-        heading = 'Compositions with Title';
-        content = result.results
-            .slice(0, 3)
-            .map((composition, index) => (
-                <CompositionResult key={index} composition={composition} />
-            ));
-    } else if (result.type === 'composers') {
-        heading = 'Popular Composers';
-        content = result.results
-            .slice(0, 3)
-            .map((composer, index) => (
-                <ComposerResult key={index} composer={composer} />
-            ));
-    } else if (result.type === 'publishers') {
-        heading = 'Publishers';
-        content = result.results
-            .slice(0, 3)
-            .map((publisher, index) => (
-                <PublisherResult key={index} publisher={publisher} />
-            ));
+    if (result.results.length > 0) {
+        if (result.type === 'compositions') {
+            heading = 'Compositions with Title';
+            content = result.results
+                .slice(0, 3)
+                .map((composition, index) => (
+                    <CompositionResult key={index} composition={composition} />
+                ));
+        } else if (result.type === 'composers') {
+            heading = 'Popular Composers';
+            content = result.results
+                .slice(0, 3)
+                .map((composer, index) => (
+                    <ComposerResult key={index} composer={composer} />
+                ));
+        } else if (result.type === 'publishers') {
+            heading = 'Publishers';
+            content = result.results
+                .slice(0, 3)
+                .map((publisher, index) => (
+                    <PublisherResult key={index} publisher={publisher} />
+                ));
+        } else {
+            heading = null;
+            content = null;
+        }
     } else {
         heading = null;
         content = null;
@@ -65,8 +70,7 @@ const SearchResult = ({ result }) => {
     return (
         <ResultContainer>
             <ResultHeading>
-                {heading}
-                <BiChevronRight size='1.5em' />
+                {heading} {heading !== null ?? <BiChevronRight size='1.5em' />}
             </ResultHeading>
             <ResultContents>{content}</ResultContents>
         </ResultContainer>
