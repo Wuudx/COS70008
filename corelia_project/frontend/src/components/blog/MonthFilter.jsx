@@ -1,13 +1,13 @@
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import stylingConstants from "../../utils/styling";
-import React from "react";
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import stylingConstants from '../../utils/styling';
+import React from 'react';
 
 const Button = styled.button`
     width: 100%;
     background: ${(props) =>
-        props.isFocused ? stylingConstants.colours.blue2Percent100 : "none"};
-    color: ${(props) => (props.isFocused ? "white" : "black")};
+        props.isFocused ? stylingConstants.colours.blue2Percent100 : 'none'};
+    color: ${(props) => (props.isFocused ? 'white' : 'black')};
     border: none;
     cursor: pointer;
     font-family: lato-bold;
@@ -20,13 +20,17 @@ const Button = styled.button`
 
 const MonthFilter = ({ month, focusedMonth, setFocusedMonth }) => {
     const navigate = useNavigate();
+    const isFocused = focusedMonth === month;
 
     function handleClick() {
-        setFocusedMonth(month);
-        navigate(`?month=${month}`);
+        if (isFocused) {
+            setFocusedMonth('');
+            navigate('/blog');
+        } else {
+            setFocusedMonth(month);
+            navigate(`?month=${month}`);
+        }
     }
-
-    const isFocused = focusedMonth === month;
 
     return (
         <Button isFocused={isFocused} onClick={handleClick}>

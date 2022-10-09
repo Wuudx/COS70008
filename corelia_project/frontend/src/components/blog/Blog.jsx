@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import MonthFilters from './MonthFilters';
 import stylingConstants from '../../utils/styling';
 import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
+import useFetchOnParamChange from '../../hooks/useFetchOnParamChange';
+import useSearchQuery from '../../hooks/useSearchQuery';
 import { getBlogPosts } from '../../api/blogs';
 import BlogPosts from './BlogPosts';
 
@@ -21,13 +23,21 @@ const Padding = styled.div`
 `;
 
 const Blog = () => {
-    const { data, isLoading, error } = useFetchOnPageLoad(getBlogPosts);
+    const currentMonthFilter = useSearchQuery('month');
+    const [blogPosts, isLoading, error, setblogPosts, setIsLoading, setError] =
+        useFetchOnPageLoad(getBlogPosts);
+    useFetchOnParamChange(
+        getBlogPosts,
+        currentMonthFilter,
+        setblogPosts,
+        setIsLoading,
+        setError
+    );
 
-    console.log(data);
     return (
         <BlogContainer>
             <MonthFilters />
-            <BlogPosts blogPosts={data} />
+            <BlogPosts blogPosts={blogPosts} />
             <Padding />
         </BlogContainer>
     );

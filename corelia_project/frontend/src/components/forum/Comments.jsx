@@ -1,9 +1,9 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { getForumPostById } from "../../api/forum";
-import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
-import Loader from "../../shared-styled-components/Loader";
-import Post from "./Post";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { getForumPostById } from '../../api/forum';
+import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
+// import Loader from "../../shared-styled-components/Loader";
+import Post from './Post';
 
 const Comments = () => {
     // const { postId } = useParams();
