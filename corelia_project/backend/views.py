@@ -6,7 +6,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.pagination import LimitOffsetPagination
-from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment
+
+from users.serializers import UserAnalyticsSerializer
+from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment, User
 from .serializers import *
 from .paginations import CustomPagination, PopularBlogPagination
 from rest_framework.permissions import IsAuthenticated
@@ -193,4 +195,32 @@ class GetBlogPostsByMonth(ListAPIView):
     def get_queryset(self):
         month = self.kwargs['month']
         return BlogPost.objects.filter(date_posted__month = month)
-        
+
+# Admin Dashboard
+
+class GetUsersByJoinDate(ListAPIView):
+    serializer_class = UserAnalyticsSerializer
+    #pagination_class = ?
+
+    def get_queryset(self):
+        # Currently limits results by count argument. Could be by date?
+        count = self.kwargs['count']
+        return User.objects.all().order_by('-date_joined')[:count]
+
+class GetBlogPostsByVotes(ListAPIView):
+    serializer_class = BlogPostsSerializer
+    #pagination_class = ?
+
+    def get_queryset(self):
+        # Currently limits results by count argument. Could be by date?
+        count = self.kwargs['count']
+        return BlogPost.objects.all().order_by('-votes')[:count]
+
+class GetForumPostsByVotes(ListAPIView):
+    serializer_class = ForumPostsSerializer
+    #pagination_class = ?
+
+    def get_queryset(self):
+        # Currently limits results by count argument. Could be by date?
+        count = self.kwargs['count']
+        return ForumPost.objects.all().order_by('-votes')[:count]

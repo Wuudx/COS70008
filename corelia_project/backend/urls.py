@@ -26,4 +26,9 @@ urlpatterns = [
     path('forums/<int:post_id>', ForumPostView.as_view()),
     path('forums/comments/all', AllForumComments.as_view()),
     path('forums/comments/<post_id>', ForumCommentView.as_view()),
+
+    # Admin Dash
+    path('dash/users/<int:count>', GetUsersByJoinDate.as_view()),
+    path('dash/blogs/<int:count>', GetBlogPostsByVotes.as_view()),
+    path('dash/forums/<int:count>', GetForumPostsByVotes.as_view()),
 ]
