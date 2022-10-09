@@ -14,7 +14,7 @@ const FlexContainer = styled.div`
 `;
 
 const Posts = () => {
-    const { data, isLoading, error } = useFetchOnPageLoad(getAllForumPosts);
+    const [data, isLoading, error] = useFetchOnPageLoad(getAllForumPosts);
 
     let content;
     if (isLoading) {

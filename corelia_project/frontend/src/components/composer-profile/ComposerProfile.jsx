@@ -26,7 +26,7 @@ const LoaderFlexContainer = styled.div`
 
 const ComposerProfile = () => {
     const { composerId } = useParams();
-    const { data, isLoading, error } = useFetchOnPageLoad(() =>
+    const [data, isLoading, error] = useFetchOnPageLoad(() =>
         getComposerById(composerId)
     );
     const composer = data[0] || {};

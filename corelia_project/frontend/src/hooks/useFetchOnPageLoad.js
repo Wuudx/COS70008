@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 function useFetchOnPageLoad(apiFunction) {
     const [data, setData] = useState([]);
@@ -28,7 +28,7 @@ function useFetchOnPageLoad(apiFunction) {
         }
     }, []);
 
-    return { data, isLoading, error, setData, setIsLoading, setError };
+    return [data, isLoading, error, setData, setIsLoading, setError];
 }
 
 export default useFetchOnPageLoad;
