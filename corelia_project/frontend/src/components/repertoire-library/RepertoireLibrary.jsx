@@ -77,7 +77,6 @@ const RepertoireLibrary = () => {
 
             data.next ? setFetchURL(data.next) : null;
             data.next ? setHasMore(data.next !== null) : setHasMore(false);
-            console.log(data);
             if (data.results) {
                 setCompositions([...compositions, ...data.results]);
             } else {

@@ -1,18 +1,19 @@
 import { useEffect } from 'react';
+import { searchAll } from '../api/search';
 
-function useFetchOnParamChange(
-    apiFunction,
-    param,
-    setData,
+function useFetchOnSearchChange(
+    searchQuery,
+    setResults,
     setIsLoading,
-    setError
+    setError,
+    pathname
 ) {
     useEffect(() => {
         async function getData() {
             try {
                 setIsLoading(true);
-                const json = await apiFunction();
-                setData(json);
+                const result = await searchAll(searchQuery, pathname);
+                setResults(result);
             } catch (error) {
                 setError(error);
             } finally {
@@ -21,7 +22,7 @@ function useFetchOnParamChange(
         }
 
         getData();
-    }, [param]);
+    }, [searchQuery]);
 }
 
-export default useFetchOnParamChange;
+export default useFetchOnSearchChange;
