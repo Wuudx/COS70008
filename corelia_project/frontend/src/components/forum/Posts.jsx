@@ -25,7 +25,7 @@ const Posts = () => {
         content = (
             <FlexContainer>
                 {data.map((post) => (
-                    <Post key={post.id} post={post} />
+                    <Post key={post.id} post={post} postContainerWidth="100%" />
                 ))}
             </FlexContainer>
         );
