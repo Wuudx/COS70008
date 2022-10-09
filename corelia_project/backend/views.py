@@ -72,7 +72,7 @@ class SearchBarGetComposer(ListAPIView):
 
     def get_queryset(self):
         query = self.kwargs['query']
-        return Composer.objects.all().filter(firstName__contains=query)
+        return Composer.objects.all().filter(firstName__icontains=query)
 
 
 class SearchBarGetComposition(ListAPIView):
@@ -81,7 +81,7 @@ class SearchBarGetComposition(ListAPIView):
 
     def get_queryset(self):
         query = self.kwargs['query']
-        return Composition.objects.all().filter(name__contains=query)
+        return Composition.objects.all().filter(name__icontains=query)
 
 
 class SearchBarGetPublisher(ListAPIView):
@@ -90,7 +90,7 @@ class SearchBarGetPublisher(ListAPIView):
 
     def get_queryset(self):
         query = self.kwargs['query']
-        return Publisher.objects.all().filter(name__contains=query)
+        return Publisher.objects.all().filter(name__icontains=query)
 
 
 class GetCompositionsByComposer(ListAPIView):
