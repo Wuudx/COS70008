@@ -15,6 +15,7 @@ const OuterFlexContainer = styled.div`
     width: 100%;
 `;
 
+// TODO: Add message if there are no comments on a post.
 const Comments = () => {
     const { postId } = useParams();
     const [post, postIsLoading, postError] = useFetchOnPageLoad(() =>
