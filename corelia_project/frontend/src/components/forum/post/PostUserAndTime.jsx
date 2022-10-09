@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import RoundedImage from "../../shared-styled-components/RoundedImage";
+import RoundedImage from "../../../shared-styled-components/RoundedImage";
 import React from "react";
 
 const FlexContainer = styled.div`

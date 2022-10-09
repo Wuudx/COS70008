@@ -15,7 +15,7 @@ import Navbar from "./components/navbar/Navbar";
 import RepertoireLibrary from "./components/repertoire-library/RepertoireLibrary";
 import SearchBar from "./components/searchbar/SearchBar";
 import { AuthProvider } from "./context/context";
-import Comments from "./components/forum/Comments";
+import Comments from "./components/forum/comment/Comments";
 
 // Important so that footer sticks to bottom of page!
 const AppDiv = styled.div`

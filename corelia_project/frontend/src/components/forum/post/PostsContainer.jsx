@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CreatePostForm from "./CreatePostForm";
+import CreatePostForm from "../CreatePostForm";
 import Posts from "./Posts";
 import React from "react";
 

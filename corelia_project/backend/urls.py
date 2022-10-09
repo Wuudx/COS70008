@@ -25,9 +25,4 @@ urlpatterns = [
     path('forums/<int:post_id>', ForumPostView.as_view()),
     path('forums/comments/all', AllForumComments.as_view()),
     path('forums/comments/<post_id>', ForumCommentView.as_view()),
-
-
-
-
-
 ]

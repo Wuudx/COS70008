@@ -2,8 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import Post from "./Post";
 import React from "react";
-import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
-import { getAllForumPosts } from "../../api/forum";
+import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
+import { getAllForumPosts } from "../../../api/forum";
 import ScaleLoader from "react-spinners/ScaleLoader";
 
 const FlexContainer = styled.div`

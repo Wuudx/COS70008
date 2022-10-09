@@ -1,11 +1,11 @@
-import AttachedImage from "./AttachedImage";
-import CommentAndShare from "./CommentAndShare";
-import CommentForm from "./CommentForm";
+import AttachedImage from "../AttachedImage";
+import CommentAndShare from "../CommentAndShare";
+import CommentForm from "../CommentForm";
 import PostContent from "./PostContent";
 import PostUserAndTime from "./PostUserAndTime";
 import React from "react";
-import { getTimeElapsedFromCreation } from "../../utils/date-time";
-import PostContainer from "../../shared-styled-components/PostContainer";
+import { getTimeElapsedFromCreation } from "../../../utils/date-time";
+import PostContainer from "../../../shared-styled-components/PostContainer";
 
 const Post = ({ post, postContainerWidth }) => {
     const timeFromPost = getTimeElapsedFromCreation(post.date_posted);

@@ -1,11 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { getForumPostById } from "../../api/forum";
-import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
-import Post from "./Post";
+import { getCommentsOnPost, getForumPostById } from "../../../api/forum";
+import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
+import Post from "../post/Post";
 import ScaleLoader from "react-spinners/ScaleLoader";
-import stylingConstants from "../../utils/styling";
+import stylingConstants from "../../../utils/styling";
 import styled from "styled-components";
+import Comment from "./Comment";
 
 const OuterFlexContainer = styled.div`
     display: flex;
@@ -19,6 +20,11 @@ const Comments = () => {
     const [post, postIsLoading, postError] = useFetchOnPageLoad(() =>
         getForumPostById(postId)
     );
+
+    const [comments, commentsIsLoading, commentsError] = useFetchOnPageLoad(
+        () => getCommentsOnPost(postId)
+    );
+
     let postElement;
     if (postIsLoading) {
         postElement = <ScaleLoader color={stylingConstants.colours.blue1} />;
@@ -37,7 +43,25 @@ const Comments = () => {
         );
     }
 
-    return postElement;
+    let commentsElement;
+    if (commentsIsLoading) {
+        commentsElement = (
+            <ScaleLoader color={stylingConstants.colours.blue1} />
+        );
+    } else if (commentsError) {
+        commentsElement = <div>{commentsError.message}</div>;
+    } else if (comments.length > 0) {
+        commentsElement = comments.map((comment) => (
+            <Comment comment={comment} />
+        ));
+    }
+
+    return (
+        <>
+            {postElement}
+            {commentsElement}
+        </>
+    );
 };
 
 export default Comments;
