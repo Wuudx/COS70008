@@ -1,21 +1,20 @@
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
+import Login from './components/account/Login';
 import BackToTopButton from './components/back-to-top-button/BackToTopButton';
-import Forum from './components/forum/Forum';
+import ComposerProfile from './components/composer-profile/ComposerProfile';
+import Composition from './components/composition/Composition';
 import ContactUsForm from './components/contact-corelia/ContactUsForm';
 import DiscoverComposers from './components/discover-composers/DiscoverComposers';
 import Footer from './components/footer/Footer';
+import Forum from './components/forum/Forum';
 import Home from './components/home/Home';
+import JoinCorelia from './components/join-corelia/JoinCorelia';
 import Navbar from './components/navbar/Navbar';
 import RepertoireLibrary from './components/repertoire-library/RepertoireLibrary';
-import Composition from './components/composition/Composition';
 import SearchBar from './components/searchbar/SearchBar';
-import React from 'react';
-import JoinCorelia from './components/join-corelia/JoinCorelia';
-import ComposerProfile from './components/composer-profile/ComposerProfile';
-import Login from './components/account/Login';
 import { AuthProvider } from './context/context';
-import Blog from './components/blog/Blog';
 import Comments from './components/forum/Comments';
 
 // Important so that footer sticks to bottom of page!

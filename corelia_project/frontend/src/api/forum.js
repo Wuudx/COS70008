@@ -15,3 +15,14 @@ export async function getForumPostById(id) {
     const json = await response.json();
     return json;
 }
+
+export async function getCommentsOnPost(postId) {
+    const response = await fetch(
+        `http://localhost:8000/api/forums/comments/${postId}`
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+    const json = await response.json();
+    return json;
+}

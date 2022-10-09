@@ -160,8 +160,8 @@ class ForumPostView(ListAPIView):
     serializer_class = ForumPostsSerializer
 
     def get_queryset(self):
-        user_id = self.kwargs['user_id']
-        return ForumPost.objects.all().filter(user=user_id)
+        post_id = self.kwargs['post_id']
+        return ForumPost.objects.all().filter(id=post_id)
 
 
 class AllForumComments(ListCreateAPIView):
