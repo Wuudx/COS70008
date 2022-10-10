@@ -8,12 +8,12 @@ import SearchInput from './SearchInput';
 import React from 'react';
 import SearchResults from './SearchResults';
 import useFetchOnSearchChange from '../../hooks/useFetchOnSearchChange';
-import ScaleLoader from 'react-spinners/ScaleLoader';
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 `;
 
 const SearchContainer = styled.div``;
@@ -31,6 +31,13 @@ const SearchResultContainer = styled.div`
     height: 100%;
     background-color: white;
     align-items: center;
+`;
+
+const SearchResultsContainer = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 `;
 
 const SearchBar = () => {
@@ -70,26 +77,28 @@ const SearchBar = () => {
     }
 
     let searchContent;
-    if (isLoading) {
-        searchContent = <ScaleLoader color={stylingConstants.colours.blue1} />;
-    } else if (error) {
+    if (error) {
         searchContent = <div>Error: {error}</div>;
     } else {
-        searchContent = <SearchResults results={results} />;
+        searchContent = (
+            <SearchResults results={results} isLoading={isLoading} />
+        );
     }
 
     return (
         <Container>
-            <SearchContainer>
-                <SearchBarForm onSubmit={handleSearch}>
-                    <SearchInput
-                        searchQuery={searchQuery}
-                        handleInput={handleInput}
-                    />
-                    <SearchButton />
-                </SearchBarForm>
-                <SearchResultContainer>{searchContent}</SearchResultContainer>
-            </SearchContainer>
+            {/* <SearchContainer> */}
+            <SearchBarForm onSubmit={handleSearch}>
+                <SearchInput
+                    searchQuery={searchQuery}
+                    handleInput={handleInput}
+                />
+                <SearchButton />
+            </SearchBarForm>
+            <SearchResultsContainer>{searchContent}</SearchResultsContainer>
+            {/* <SearchResultContainer> */}
+            {/* </SearchResultContainer> */}
+            {/* </SearchContainer> */}
         </Container>
     );
 };
