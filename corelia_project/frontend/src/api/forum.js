@@ -1,5 +1,10 @@
-export async function getAllForumPosts() {
-    const response = await fetch("http://localhost:8000/api/forums");
+import constants from "../utils/constants";
+
+export async function getForumPosts(optionalUrl) {
+    const url =
+        optionalUrl ||
+        `http://localhost:8000/api/forums?limit=${constants.POSTS_LIMIT}`;
+    const response = await fetch(url);
     if (!response.ok) {
         throw new Error(response.status);
     }

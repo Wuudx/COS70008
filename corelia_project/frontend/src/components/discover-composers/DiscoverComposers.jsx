@@ -14,6 +14,7 @@ import LoadMoreButton from "../buttons/LoadMoreButton";
 import FilterBar from "../filter-bar/FilterBar";
 import SearchResultsContainer from "./SearchResultsContainer";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import fetchNextPage from "../../api/fetch-next-page";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -46,26 +47,15 @@ const DiscoverComposers = () => {
         setError
     );
 
-    async function fetchNextPage() {
-        if (!nextPageApiEndpoint) {
-            // No more data left.
-            return;
-        }
-        setIsLoading(true);
-        try {
-            const json = await getComposers(nextPageApiEndpoint);
-            const currentResults = data.results;
-            const addedResults = json.results;
-            const newData = {
-                ...json,
-                results: [...currentResults, ...addedResults],
-            };
-            setData(newData);
-        } catch (error) {
-            setError(error);
-        } finally {
-            setIsLoading(false);
-        }
+    function handleLoadMore() {
+        fetchNextPage(
+            nextPageApiEndpoint,
+            () => getComposers(nextPageApiEndpoint),
+            data,
+            setData,
+            setIsLoading,
+            setError
+        );
     }
 
     // Fetch composers if user goes back to /discover-composers from querying.
@@ -87,7 +77,7 @@ const DiscoverComposers = () => {
         }
     }, [searchQuery, filterLetter]);
 
-    const isDataLoaded = "count" in data && data.count > 0;
+    const isDataLoaded = "count" in data && data.count >= 0;
 
     let composers = "";
     let loadMoreButton = "";
@@ -101,8 +91,12 @@ const DiscoverComposers = () => {
         loadMoreButton = <div>{error.message}</div>;
     } else if (isDataLoaded) {
         nextPageApiEndpoint = data.next;
+        if (!nextPageApiEndpoint) {
+            loadMoreButton = "";
+        } else {
+            loadMoreButton = <LoadMoreButton onClick={handleLoadMore} />;
+        }
         composers = <SearchResultsContainer composers={data.results} />;
-        loadMoreButton = <LoadMoreButton onClick={fetchNextPage} />;
     }
 
     return (

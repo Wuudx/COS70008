@@ -13,6 +13,7 @@ urlpatterns = [
     path('search-composers/<query>', SearchBarGetComposer.as_view()),
     path('search-compositions/<query>', SearchBarGetComposition.as_view()),
     path('search-publishers/<query>', SearchBarGetPublisher.as_view()),
+    path('search-blogs/<query>', SearchBarGetBlogPosts.as_view()),
     path('composers/<composer_id>/compositions',
          GetCompositionsByComposer.as_view()),
     path('blogs', AllBlogPosts.as_view()),

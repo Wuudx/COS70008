@@ -12,14 +12,22 @@ const LoadMore = styled.div`
     font-family: "Lato-bold";
     cursor: pointer;
     user-select: none;
+    width: ${(props) => (props.width ? props.width : "auto")};
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
         background-color: ${stylingConstants.colours.blue1Percent80};
     }
 `;
 
-const LoadMoreButton = ({ onClick }) => {
-    return <LoadMore onClick={onClick}>LOAD MORE</LoadMore>;
+const LoadMoreButton = ({ onClick, width }) => {
+    return (
+        <LoadMore onClick={onClick} width={width}>
+            LOAD MORE
+        </LoadMore>
+    );
 };
 
 export default LoadMoreButton;

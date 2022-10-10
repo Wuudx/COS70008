@@ -103,6 +103,17 @@ class SearchBarPublisherSerializer(serializers.ModelSerializer):
         model = Publisher
         fields = ['id', 'name']
 
+class SearchBarBlogPostsSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
+    
+    def get_author_name(self, obj):
+        return obj.author.username
+
+    class Meta:
+        model = BlogPost
+        fields = ['id', 'author', 'content', 'date_posted',
+                  'title', 'votes', 'author_name']
+
 
 class CompositionsByComposerSerializer(serializers.ModelSerializer):
 

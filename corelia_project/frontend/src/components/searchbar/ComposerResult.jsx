@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -7,6 +8,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: flex-start;
     width: 30%;
+    cursor: pointer;
 `;
 
 const ComposerName = styled.div`
@@ -17,8 +19,14 @@ const ComposerName = styled.div`
 `;
 
 export const ComposerResult = ({ composer }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/discover-composers/${composer.id}`);
+    };
+
     return (
-        <Container>
+        <Container onClick={handleClick}>
             <ComposerName>
                 {composer.firstName} {composer.lastName}
             </ComposerName>

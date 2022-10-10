@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useSearchQuery from '../../hooks/useSearchQuery';
@@ -8,12 +8,14 @@ import SearchInput from './SearchInput';
 import React from 'react';
 import SearchResults from './SearchResults';
 import useFetchOnSearchChange from '../../hooks/useFetchOnSearchChange';
-import ScaleLoader from 'react-spinners/ScaleLoader';
+import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    padding: 20px;
 `;
 
 const SearchContainer = styled.div``;
@@ -23,7 +25,6 @@ const SearchBarForm = styled.form`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding-top: 20px;
 `;
 
 const SearchResultContainer = styled.div`
@@ -33,11 +34,19 @@ const SearchResultContainer = styled.div`
     align-items: center;
 `;
 
+const SearchResultsContainer = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+`;
+
 const SearchBar = () => {
+    const resultsRef = useRef(null);
+    const [isOpen, setisOpen] = useDetectOutsideClick(resultsRef, false);
     const currentSearchQuery = useSearchQuery('q');
     const [searchQuery, setSearchQuery] = useState(currentSearchQuery || '');
     const navigate = useNavigate();
-
     const { pathname } = useLocation();
 
     const [results, setResults] = useState([]);
@@ -51,6 +60,10 @@ const SearchBar = () => {
         setError,
         pathname
     );
+
+    useEffect(() => {
+        setisOpen(false);
+    }, [pathname]);
 
     // Note that input in react is sanitised by default (I think, TODO: follow up on this.)
     function handleSearch(e) {
@@ -67,29 +80,38 @@ const SearchBar = () => {
 
     function handleInput(e) {
         setSearchQuery(e.target.value);
+        setisOpen(e.target.value !== '');
     }
 
     let searchContent;
-    if (isLoading) {
-        searchContent = <ScaleLoader color={stylingConstants.colours.blue1} />;
-    } else if (error) {
+    if (error) {
         searchContent = <div>Error: {error}</div>;
+    } else if (isOpen) {
+        searchContent = (
+            <SearchResults
+                results={results}
+                isLoading={isLoading}
+                searchQuery={searchQuery}
+            />
+        );
     } else {
-        searchContent = <SearchResults results={results} />;
+        searchContent = null;
     }
 
     return (
-        <Container>
-            <SearchContainer>
-                <SearchBarForm onSubmit={handleSearch}>
-                    <SearchInput
-                        searchQuery={searchQuery}
-                        handleInput={handleInput}
-                    />
-                    <SearchButton />
-                </SearchBarForm>
-                <SearchResultContainer>{searchContent}</SearchResultContainer>
-            </SearchContainer>
+        <Container ref={resultsRef}>
+            {/* <SearchContainer> */}
+            <SearchBarForm onSubmit={handleSearch}>
+                <SearchInput
+                    searchQuery={searchQuery}
+                    handleInput={handleInput}
+                />
+                <SearchButton />
+            </SearchBarForm>
+            <SearchResultsContainer>{searchContent}</SearchResultsContainer>
+            {/* <SearchResultContainer> */}
+            {/* </SearchResultContainer> */}
+            {/* </SearchContainer> */}
         </Container>
     );
 };

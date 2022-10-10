@@ -94,6 +94,13 @@ class SearchBarGetPublisher(ListAPIView):
         query = self.kwargs['query']
         return Publisher.objects.all().filter(name__icontains=query)
 
+class SearchBarGetBlogPosts(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = SearchBarBlogPostsSerializer
+
+    def get_queryset(self):
+        query = self.kwargs['query']
+        return BlogPost.objects.filter(title__icontains=query)
 
 class GetCompositionsByComposer(ListAPIView):
     pagination_class = CustomPagination
