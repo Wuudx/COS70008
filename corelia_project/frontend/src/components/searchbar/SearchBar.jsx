@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useSearchQuery from '../../hooks/useSearchQuery';
@@ -8,6 +8,7 @@ import SearchInput from './SearchInput';
 import React from 'react';
 import SearchResults from './SearchResults';
 import useFetchOnSearchChange from '../../hooks/useFetchOnSearchChange';
+import { useDetectOutsideClick } from '../../hooks/useDetectOutsideClick';
 
 const Container = styled.div`
     display: flex;
@@ -41,6 +42,8 @@ const SearchResultsContainer = styled.div`
 `;
 
 const SearchBar = () => {
+    const resultsRef = useRef(null);
+    const [isOpen, setisOpen] = useDetectOutsideClick(resultsRef, false);
     const currentSearchQuery = useSearchQuery('q');
     const [searchQuery, setSearchQuery] = useState(currentSearchQuery || '');
     const navigate = useNavigate();
@@ -74,19 +77,22 @@ const SearchBar = () => {
 
     function handleInput(e) {
         setSearchQuery(e.target.value);
+        setisOpen(e.target.value !== '');
     }
 
     let searchContent;
     if (error) {
         searchContent = <div>Error: {error}</div>;
-    } else {
+    } else if (isOpen) {
         searchContent = (
             <SearchResults results={results} isLoading={isLoading} />
         );
+    } else {
+        searchContent = null;
     }
 
     return (
-        <Container>
+        <Container ref={resultsRef}>
             {/* <SearchContainer> */}
             <SearchBarForm onSubmit={handleSearch}>
                 <SearchInput

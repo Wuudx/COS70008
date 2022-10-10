@@ -4,6 +4,7 @@ import CompositionResult from './CompositionResult';
 import ComposerResult from './ComposerResult';
 import PublisherResult from './PublisherResult';
 import { BiChevronRight } from 'react-icons/bi';
+import stylingConstants from '../../utils/styling';
 
 const ResultContainer = styled.div`
     display: flex;
@@ -21,21 +22,39 @@ const ResultHeading = styled.div`
     padding: 6px;
     font-family: 'Lato-Bold';
     font-size: 1em;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+        color: ${stylingConstants.colours.blue1Percent100};
+    }
 `;
 
 const ResultContents = styled.div`
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: baseline;
     width: 100%;
+    padding: 5px 20px;
+
+    & > * {
+        margin-right: 10px;
+    }
+
+    & > *:last-child {
+        margin-right: 0;
+    }
+
+    & > *:hover {
+        color: ${stylingConstants.colours.blue2Percent100};
+    }
 `;
 
 const SearchResult = ({ result }) => {
-    console.log(result);
-
     let heading;
     let content;
+
     if (result.results.length > 0) {
         if (result.type === 'compositions') {
             heading = 'Compositions with Title';
@@ -70,7 +89,8 @@ const SearchResult = ({ result }) => {
     return (
         <ResultContainer>
             <ResultHeading>
-                {heading} {heading !== null ?? <BiChevronRight size='1.5em' />}
+                {heading}
+                <BiChevronRight size='1.5em' />
             </ResultHeading>
             <ResultContents>{content}</ResultContents>
         </ResultContainer>

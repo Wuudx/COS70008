@@ -7,6 +7,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: flex-start;
     width: 30%;
+    cursor: pointer;
 `;
 
 const ComposerName = styled.div`
