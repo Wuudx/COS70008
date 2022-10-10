@@ -7,6 +7,7 @@ import ScaleLoader from "react-spinners/ScaleLoader";
 import stylingConstants from "../../../utils/styling";
 import LoadMoreButton from "../../buttons/LoadMoreButton";
 import fetchNextPage from "../../../api/fetch-next-page";
+import { useState } from "react";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -19,11 +20,9 @@ const FlexContainer = styled.div`
 const Posts = () => {
     const [data, isLoading, error, setData, setIsLoading, setError] =
         useFetchOnPageLoad(getForumPosts);
+    const [hasMore, setHasMore] = useState(true);
 
     let nextPageApiEndpoint = "";
-
-    let content;
-    const isDataLoaded = "count" in data && data.count > 0;
 
     function handleLoadMore() {
         fetchNextPage(
@@ -36,21 +35,43 @@ const Posts = () => {
         );
     }
 
+    let loadMoreButton;
+    let content;
+    const isDataLoaded = "count" in data && data.count > 0;
     if (isLoading) {
-        content = <ScaleLoader color={stylingConstants.colours.blue1} />;
+        loadMoreButton = (
+            <ScaleLoader width="30%" color={stylingConstants.colours.blue1} />
+        );
+        if (isDataLoaded) {
+            // Loading next page, so we still render what has already been loaded from api.
+            content = data.results.map((post) => (
+                <Post key={post.id} post={post} postContainerWidth="100%" />
+            ));
+        }
     } else if (error) {
-        content = <span>{error.message}</span>;
+        loadMoreButton = <div>{error.message}</div>;
     } else if (isDataLoaded) {
         nextPageApiEndpoint = data.next;
+        if (!nextPageApiEndpoint) {
+            loadMoreButton = "";
+        } else {
+            loadMoreButton = (
+                <LoadMoreButton width="30%" onClick={handleLoadMore} />
+            );
+        }
         content = data.results.map((post) => (
             <Post key={post.id} post={post} postContainerWidth="100%" />
         ));
     }
 
+    if (!hasMore) {
+        loadMoreButton = "";
+    }
+
     return (
         <FlexContainer>
             {content}
-            <LoadMoreButton width="30%" onClick={handleLoadMore} />
+            {loadMoreButton}
         </FlexContainer>
     );
 };

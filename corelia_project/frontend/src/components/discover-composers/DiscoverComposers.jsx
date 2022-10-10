@@ -91,8 +91,12 @@ const DiscoverComposers = () => {
         loadMoreButton = <div>{error.message}</div>;
     } else if (isDataLoaded) {
         nextPageApiEndpoint = data.next;
+        if (!nextPageApiEndpoint) {
+            loadMoreButton = "";
+        } else {
+            loadMoreButton = <LoadMoreButton onClick={handleLoadMore} />;
+        }
         composers = <SearchResultsContainer composers={data.results} />;
-        loadMoreButton = <LoadMoreButton onClick={handleLoadMore} />;
     }
 
     return (
