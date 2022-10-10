@@ -17,15 +17,8 @@ class ComposerSerializer(serializers.ModelSerializer):
     #def get_nationality_name (self, obj):
         #return obj.nationality.name
     def get_nationality_names (self, obj):
-        #query_set = obj.composernationality.objects.filter(composer=obj.nationality.name)
-        #query_set = 
-        #query_set = ComposerNationality.objects.values('name').group_by('name')
-        #return ComposerNationality.objects.aggregate(arr=StringAgg('composer_id', delimiter='/')).values()
-        #return ComposerNationality.objects.values('composer_id').order_by('composer_id').annotate(nationality_names=StringAgg('nationality__name', delimiter='/'))
-        #return ComposerNationality.objects.values('nationality__name').order_by('composer_id').annotate(names=StringAgg('nationality__name', delimiter='/'))
-        #return ComposerNationality.objects.all().filter(composer=obj).aggregate(arr=StringAgg('nationality__name', delimiter='/'))
-        #return ComposerNationality.objects.all().filter(composer=obj).aggregate(arr=StringAgg('nationality__name', delimiter='/')).values()
-        return ComposerNationality.objects.filter(composer=obj).aggregate(arr=StringAgg('nationality__name', delimiter='/', ordering='id'))
+        return ComposerNationality.objects.filter(composer=obj).aggregate(names=StringAgg('nationality__name', delimiter='/', ordering='id'))['names']
+        
     class Meta:
         model = Composer
         fields = '__all__'
