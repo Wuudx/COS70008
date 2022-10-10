@@ -5,6 +5,7 @@ import ComposerResult from './ComposerResult';
 import PublisherResult from './PublisherResult';
 import { BiChevronRight } from 'react-icons/bi';
 import stylingConstants from '../../utils/styling';
+import { useNavigate } from 'react-router-dom';
 
 const ResultContainer = styled.div`
     display: flex;
@@ -51,13 +52,18 @@ const ResultContents = styled.div`
     }
 `;
 
-const SearchResult = ({ result }) => {
+const SearchResult = ({ result, searchQuery }) => {
+    console.log(result);
+    const navigate = useNavigate();
+
     let heading;
+    let headingNavigatePath;
     let content;
 
     if (result.results.length > 0) {
         if (result.type === 'compositions') {
             heading = 'Compositions with Title';
+            headingNavigatePath = `/repertoire-library?letter=${searchQuery}`;
             content = result.results
                 .slice(0, 3)
                 .map((composition, index) => (
@@ -65,6 +71,7 @@ const SearchResult = ({ result }) => {
                 ));
         } else if (result.type === 'composers') {
             heading = 'Popular Composers';
+            headingNavigatePath = `/discover-composers?letter=${searchQuery}`;
             content = result.results
                 .slice(0, 3)
                 .map((composer, index) => (
@@ -72,6 +79,7 @@ const SearchResult = ({ result }) => {
                 ));
         } else if (result.type === 'publishers') {
             heading = 'Publishers';
+            headingNavigatePath = `/discover-composers?letter=${searchQuery}`;
             content = result.results
                 .slice(0, 3)
                 .map((publisher, index) => (
@@ -86,9 +94,14 @@ const SearchResult = ({ result }) => {
         content = null;
     }
 
+    const handleHeadingClick = () => {
+        navigate(headingNavigatePath);
+        console.log('heading clicked');
+    };
+
     return (
         <ResultContainer>
-            <ResultHeading>
+            <ResultHeading onClick={handleHeadingClick}>
                 {heading}
                 <BiChevronRight size='1.5em' />
             </ResultHeading>

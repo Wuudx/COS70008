@@ -23,7 +23,7 @@ const ResultsContainer = styled.div`
     box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.2);
 `;
 
-const SearchResults = ({ results, isLoading }) => {
+const SearchResults = ({ results, isLoading, searchQuery }) => {
     if (isLoading) {
         return (
             <ResultsContainer>
@@ -35,7 +35,11 @@ const SearchResults = ({ results, isLoading }) => {
             <ResultsContainer>
                 {results.map((result, index) =>
                     result.count !== 0 ? (
-                        <SearchResult key={index} result={result} />
+                        <SearchResult
+                            key={index}
+                            result={result}
+                            searchQuery={searchQuery}
+                        />
                     ) : null
                 )}
             </ResultsContainer>

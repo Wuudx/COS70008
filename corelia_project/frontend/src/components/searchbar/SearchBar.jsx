@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useSearchQuery from '../../hooks/useSearchQuery';
@@ -15,6 +15,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    padding: 20px;
 `;
 
 const SearchContainer = styled.div``;
@@ -24,7 +25,6 @@ const SearchBarForm = styled.form`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding-top: 20px;
 `;
 
 const SearchResultContainer = styled.div`
@@ -47,7 +47,6 @@ const SearchBar = () => {
     const currentSearchQuery = useSearchQuery('q');
     const [searchQuery, setSearchQuery] = useState(currentSearchQuery || '');
     const navigate = useNavigate();
-
     const { pathname } = useLocation();
 
     const [results, setResults] = useState([]);
@@ -61,6 +60,10 @@ const SearchBar = () => {
         setError,
         pathname
     );
+
+    useEffect(() => {
+        setisOpen(false);
+    }, [pathname]);
 
     // Note that input in react is sanitised by default (I think, TODO: follow up on this.)
     function handleSearch(e) {
@@ -85,7 +88,11 @@ const SearchBar = () => {
         searchContent = <div>Error: {error}</div>;
     } else if (isOpen) {
         searchContent = (
-            <SearchResults results={results} isLoading={isLoading} />
+            <SearchResults
+                results={results}
+                isLoading={isLoading}
+                searchQuery={searchQuery}
+            />
         );
     } else {
         searchContent = null;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -24,8 +25,13 @@ const CompositionAuthor = styled.div`
 `;
 
 const CompositionResult = ({ composition }) => {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(`/repertoire-library/${composition.id}`);
+    };
+
     return (
-        <Container>
+        <Container onClick={handleClick}>
             <CompositionTitle>{composition.name}</CompositionTitle>
             <CompositionAuthor>{composition.composer_name}</CompositionAuthor>
         </Container>
