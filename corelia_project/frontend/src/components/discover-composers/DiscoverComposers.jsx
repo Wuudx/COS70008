@@ -14,6 +14,7 @@ import LoadMoreButton from "../buttons/LoadMoreButton";
 import FilterBar from "../filter-bar/FilterBar";
 import SearchResultsContainer from "./SearchResultsContainer";
 import ScaleLoader from "react-spinners/ScaleLoader";
+import fetchNextPage from "../../api/fetch-next-page";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -46,26 +47,15 @@ const DiscoverComposers = () => {
         setError
     );
 
-    async function fetchNextPage() {
-        if (!nextPageApiEndpoint) {
-            // No more data left.
-            return;
-        }
-        setIsLoading(true);
-        try {
-            const json = await getComposers(nextPageApiEndpoint);
-            const currentResults = data.results;
-            const addedResults = json.results;
-            const newData = {
-                ...json,
-                results: [...currentResults, ...addedResults],
-            };
-            setData(newData);
-        } catch (error) {
-            setError(error);
-        } finally {
-            setIsLoading(false);
-        }
+    function handleLoadMore() {
+        fetchNextPage(
+            nextPageApiEndpoint,
+            () => getComposers(nextPageApiEndpoint),
+            data,
+            setData,
+            setIsLoading,
+            setError
+        );
     }
 
     // Fetch composers if user goes back to /discover-composers from querying.
@@ -102,7 +92,7 @@ const DiscoverComposers = () => {
     } else if (isDataLoaded) {
         nextPageApiEndpoint = data.next;
         composers = <SearchResultsContainer composers={data.results} />;
-        loadMoreButton = <LoadMoreButton onClick={fetchNextPage} />;
+        loadMoreButton = <LoadMoreButton onClick={handleLoadMore} />;
     }
 
     return (
