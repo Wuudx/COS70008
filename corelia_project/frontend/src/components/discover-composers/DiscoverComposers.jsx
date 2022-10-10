@@ -87,7 +87,7 @@ const DiscoverComposers = () => {
         }
     }, [searchQuery, filterLetter]);
 
-    const isDataLoaded = "count" in data && data.count > 0;
+    const isDataLoaded = "count" in data && data.count >= 0;
 
     let composers = "";
     let loadMoreButton = "";

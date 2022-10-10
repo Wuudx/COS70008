@@ -8,8 +8,9 @@ import stylingConstants from "../../../utils/styling";
 import styled from "styled-components";
 import Comment from "./Comment";
 
-const OuterFlexContainer = styled.div`
+const FlexContainer = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -30,18 +31,14 @@ const Comments = () => {
     if (postIsLoading) {
         postElement = <ScaleLoader color={stylingConstants.colours.blue1} />;
     } else if (postError) {
-        postElement = <OuterFlexContainer>{error.message}</OuterFlexContainer>;
+        postElement = <span>{error.message}</span>;
     } else if (post.length > 0) {
         // We add this check because initially, post is an empty array until after it loads (this is due to the fact that
         // the custom hook useFetchOnPageLoad sets data initially as an empty array.)
 
         // We get the first element because "post" is an array of length 1.
         const postContent = post[0];
-        postElement = (
-            <OuterFlexContainer>
-                <Post post={postContent} postContainerWidth="50%" />
-            </OuterFlexContainer>
-        );
+        postElement = <Post post={postContent} postContainerWidth="50%" />;
     }
 
     let commentsElement;
@@ -58,10 +55,10 @@ const Comments = () => {
     }
 
     return (
-        <>
+        <FlexContainer>
             {postElement}
             {commentsElement}
-        </>
+        </FlexContainer>
     );
 };
 
