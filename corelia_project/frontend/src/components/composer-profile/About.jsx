@@ -37,12 +37,12 @@ const About = ({ aboutInformation }) => {
             </InnerFlexContainer>{" "}
             <InnerFlexContainer>
                 <h3>Year of Death</h3>
-                <span>{aboutInformation.yearOfDeath}</span>
+                <span>{aboutInformation.yearOfDeath || "-"}</span>
             </InnerFlexContainer>{" "}
             <InnerFlexContainer>
                 <h3>Website</h3>
                 <a href={aboutInformation.website} target="_blank">
-                    {aboutInformation.website}
+                    {aboutInformation.website || "Information not available"}
                 </a>
             </InnerFlexContainer>
         </FlexContainer>
