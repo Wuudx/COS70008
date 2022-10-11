@@ -13,6 +13,7 @@ import Account from "../account/Account";
 import StyledLink from "../../shared-styled-components/StyledLink";
 import { getScreenType, screenTypes } from "../../utils/get-screen-type";
 import useHandleWindowResize from "../../hooks/useHandleWindowResize";
+import ToggleDropdownButton from "./ToggleDropdownButton";
 
 const Img = styled.img`
     position: absolute;
@@ -45,19 +46,10 @@ const Container = styled.div`
     background-color: white;
 `;
 
-const Button = styled(NavButton)`
-    font-family: lato-bold;
-    border-bottom: 3px solid white; // So that the navbar does not jump up on hover.
-    &:hover {
-        border-bottom: 3px solid ${stylingConstants.colours.blue2Percent30};
-    }
-`;
-
 // TODO: Increasing the size of the up arrows (IoIosArrowUp) using size={x} ruins alignment of navbar. Figure out why!!!!
 const Navbar = () => {
     const navigate = useNavigate();
     const windowWidth = useHandleWindowResize();
-    console.log(windowWidth);
 
     const exploreRepDropdownRef = useRef();
     const getInvolvedDropdownRef = useRef();
@@ -69,7 +61,6 @@ const Navbar = () => {
 
     let logo;
     const screenType = getScreenType(parseInt(windowWidth));
-    console.log(screenType);
     if (
         screenType === screenTypes.mobile ||
         screenType === screenTypes.tablet
@@ -77,6 +68,14 @@ const Navbar = () => {
         logo = "";
     } else {
         logo = <Img src={NavLogo} alt="logo" onClick={() => navigate("/")} />;
+    }
+
+    function toggleExploreRepDropdown() {
+        setIsExploreRepDropdownVisible(!isExploreRepDropdownVisible);
+    }
+
+    function toggleGetInvolvedDropdown() {
+        setIsGetInvolvedDropdownVisible(!isGetInvolvedDropdownVisible);
     }
 
     return (
@@ -93,33 +92,11 @@ const Navbar = () => {
                         </StyledLink>
                     </li>
                     <li ref={exploreRepDropdownRef}>
-                        <Button
-                            type="button"
-                            onClick={() =>
-                                setIsExploreRepDropdownVisible(
-                                    !isExploreRepDropdownVisible
-                                )
-                            }
-                        >
-                            Explore Repertoire
-                            {isExploreRepDropdownVisible ? (
-                                <IoIosArrowUp
-                                    color={
-                                        stylingConstants.colours.blue2Percent30
-                                    }
-                                    // This ensures that arrow is inline with text.
-                                    style={{ verticalAlign: "bottom" }}
-                                />
-                            ) : (
-                                <IoIosArrowDown
-                                    color={
-                                        stylingConstants.colours.blue2Percent30
-                                    }
-                                    // This ensures that arrow is inline with text.
-                                    style={{ verticalAlign: "bottom" }}
-                                />
-                            )}
-                        </Button>
+                        <ToggleDropdownButton
+                            buttonText="Explore Repertoire"
+                            toggleDropdownFunction={toggleExploreRepDropdown}
+                            isDropdownVisible={isExploreRepDropdownVisible}
+                        />
                         <Dropdown
                             isVisible={isExploreRepDropdownVisible}
                             dropdownName="Explore Repertoire"
@@ -129,33 +106,11 @@ const Navbar = () => {
                         <StyledLink to="/blog">Blog</StyledLink>
                     </li>
                     <li ref={getInvolvedDropdownRef}>
-                        <Button
-                            type="button"
-                            onClick={() =>
-                                setIsGetInvolvedDropdownVisible(
-                                    !isGetInvolvedDropdownVisible
-                                )
-                            }
-                        >
-                            Get Involved
-                            {isGetInvolvedDropdownVisible ? (
-                                <IoIosArrowUp
-                                    color={
-                                        stylingConstants.colours.blue2Percent30
-                                    }
-                                    // This ensures that arrow is inline with text.
-                                    style={{ verticalAlign: "bottom" }}
-                                />
-                            ) : (
-                                <IoIosArrowDown
-                                    color={
-                                        stylingConstants.colours.blue2Percent30
-                                    }
-                                    // This ensures that arrow is inline with text.
-                                    style={{ verticalAlign: "bottom" }}
-                                />
-                            )}
-                        </Button>
+                        <ToggleDropdownButton
+                            buttonText="Get Involved"
+                            toggleDropdownFunction={toggleGetInvolvedDropdown}
+                            isDropdownVisible={isGetInvolvedDropdownVisible}
+                        />
                         <Dropdown
                             isVisible={isGetInvolvedDropdownVisible}
                             dropdownName="Get Involved"
