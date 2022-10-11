@@ -14,6 +14,7 @@ const FlexContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
+    gap: 2em;
 `;
 
 // TODO: Add message if there are no comments on a post.
@@ -31,7 +32,7 @@ const Comments = () => {
     if (postIsLoading) {
         postElement = <ScaleLoader color={stylingConstants.colours.blue1} />;
     } else if (postError) {
-        postElement = <span>{error.message}</span>;
+        postElement = <span>{postError.message}</span>;
     } else if (post.length > 0) {
         // We add this check because initially, post is an empty array until after it loads (this is due to the fact that
         // the custom hook useFetchOnPageLoad sets data initially as an empty array.)

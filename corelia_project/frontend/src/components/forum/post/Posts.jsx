@@ -20,7 +20,6 @@ const FlexContainer = styled.div`
 const Posts = () => {
     const [data, isLoading, error, setData, setIsLoading, setError] =
         useFetchOnPageLoad(getForumPosts);
-    const [hasMore, setHasMore] = useState(true);
 
     let nextPageApiEndpoint = "";
 
@@ -62,10 +61,6 @@ const Posts = () => {
         content = data.results.map((post) => (
             <Post key={post.id} post={post} postContainerWidth="100%" />
         ));
-    }
-
-    if (!hasMore) {
-        loadMoreButton = "";
     }
 
     return (
