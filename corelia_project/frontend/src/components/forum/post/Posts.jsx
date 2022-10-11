@@ -1,13 +1,12 @@
-import styled from "styled-components";
-import Post from "./Post";
 import React from "react";
-import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
+import { ScaleLoader } from "react-spinners";
+import styled from "styled-components";
+import fetchNextPage from "../../../api/fetch-next-page";
 import { getForumPosts } from "../../../api/forum";
-import ScaleLoader from "react-spinners/ScaleLoader";
+import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
 import stylingConstants from "../../../utils/styling";
 import LoadMoreButton from "../../buttons/LoadMoreButton";
-import fetchNextPage from "../../../api/fetch-next-page";
-import { useState } from "react";
+import Post from "./Post";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -38,9 +37,7 @@ const Posts = () => {
     let content;
     const isDataLoaded = "count" in data && data.count > 0;
     if (isLoading) {
-        loadMoreButton = (
-            <ScaleLoader width="30%" color={stylingConstants.colours.blue1} />
-        );
+        loadMoreButton = <ScaleLoader color={stylingConstants.colours.blue1} />;
         if (isDataLoaded) {
             // Loading next page, so we still render what has already been loaded from api.
             content = data.results.map((post) => (
