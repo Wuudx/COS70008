@@ -78,6 +78,18 @@ class Command(BaseCommand):
 
                     models = Composition(name = row['Nameofpiece'], composer = Composer.objects.get(id = composer_id), year = row['Year'], duration = row['Duration (mins)'], publisher = Publisher.objects.get(id = publisher_id), recording_link = row['Recording'], score_link = row['Score'])
                     models.save()
+
+                    # Instrumentation - The Nightmare Begins
+
+                    # First separate out bracketed conent, which is often used to denote an enseble type
+                    # E.g: Wind Quartet (Flute, Oboe, Clarinet, Bassoon)
+                    instruments = row['Instrumentation'].split('(', 1)
+
+                    # Get ensemble type - THIS DOES NOT EXIST IN THE DATASET, CONSIDER ADDING IT
+                    #ensemble_type = instruments[0]
+
+                    # Get bracket contents
+                    instruments = instruments[1][:-1].split(',')
         
         
         
