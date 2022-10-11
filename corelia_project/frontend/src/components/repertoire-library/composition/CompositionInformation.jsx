@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import useFetchOnParamChange from '../../hooks/useFetchOnParamChange';
-import { getCompositionById } from '../../api/compositions';
-import MusicPlayer from '../composer-profile/MusicPlayer';
-import LinkToScore from '../composer-profile/LinkToScore';
+import useFetchOnParamChange from '../../../hooks/useFetchOnParamChange';
+import { getCompositionById } from '../../../api/compositions';
+import MusicPlayer from '../../composer-profile/MusicPlayer';
+import LinkToScore from '../../composer-profile/LinkToScore';
 import ScaleLoader from 'react-spinners/ScaleLoader';
-import stylingConstants from '../../utils/styling';
+import stylingConstants from '../../../utils/styling';
 import { useState } from 'react';
 
 const Container = styled.div`
@@ -63,7 +63,7 @@ const Publisher = styled.p`
     width: 50%;
 `;
 
-const Composition = () => {
+const CompositionInformation = () => {
     const { compositionId } = useParams();
 
     const [data, setData] = useState([]);
@@ -106,4 +106,4 @@ const Composition = () => {
     }
     return <Container>{content}</Container>;
 };
-export default Composition;
+export default CompositionInformation;

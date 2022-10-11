@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Login from './components/account/Login';
 import BackToTopButton from './components/back-to-top-button/BackToTopButton';
 import ComposerProfile from './components/composer-profile/ComposerProfile';
-import Composition from './components/composition/Composition';
 import ContactUsForm from './components/contact-corelia/ContactUsForm';
 import DiscoverComposers from './components/discover-composers/DiscoverComposers';
 import Footer from './components/footer/Footer';
@@ -17,6 +16,7 @@ import SearchBar from './components/searchbar/SearchBar';
 import { AuthProvider } from './context/context';
 import Comments from './components/forum/comment/Comments';
 import Blog from './components/blog/Blog';
+import CompositionInformation from './components/repertoire-library/composition/CompositionInformation';
 
 // Important so that footer sticks to bottom of page!
 const AppDiv = styled.div`
@@ -72,7 +72,7 @@ function App() {
                         />
                         <Route
                             path='/repertoire-library/:compositionId/'
-                            element={<Composition />}
+                            element={<CompositionInformation />}
                         />
                         <Route path='/forum' element={<Forum />} />
                         <Route

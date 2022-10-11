@@ -63,7 +63,7 @@ const SearchResult = ({ result, searchQuery }) => {
     if (result.results.length > 0) {
         if (result.type === 'compositions') {
             heading = 'Compositions with Title';
-            headingNavigatePath = `/repertoire-library?letter=${searchQuery}`;
+            headingNavigatePath = '/repertoire-library?letter=';
             content = result.results
                 .slice(0, 3)
                 .map((composition, index) => (
@@ -71,7 +71,7 @@ const SearchResult = ({ result, searchQuery }) => {
                 ));
         } else if (result.type === 'composers') {
             heading = 'Popular Composers';
-            headingNavigatePath = `/discover-composers?letter=${searchQuery}`;
+            headingNavigatePath = '/discover-composers?letter=';
             content = result.results
                 .slice(0, 3)
                 .map((composer, index) => (
@@ -79,7 +79,7 @@ const SearchResult = ({ result, searchQuery }) => {
                 ));
         } else if (result.type === 'publishers') {
             heading = 'Publishers';
-            headingNavigatePath = `/discover-composers?letter=${searchQuery}`;
+            headingNavigatePath = '/discover-composers?letter=';
             content = result.results
                 .slice(0, 3)
                 .map((publisher, index) => (
@@ -95,8 +95,11 @@ const SearchResult = ({ result, searchQuery }) => {
     }
 
     const handleHeadingClick = () => {
-        navigate(headingNavigatePath);
-        console.log('heading clicked');
+        navigate(
+            headingNavigatePath +
+                searchQuery.charAt(0).toUpperCase() +
+                searchQuery.slice(1)
+        );
     };
 
     return (
