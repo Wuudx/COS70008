@@ -17,6 +17,7 @@ import { AuthProvider } from './context/context';
 import Comments from './components/forum/comment/Comments';
 import Blog from './components/blog/Blog';
 import CompositionInformation from './components/repertoire-library/composition/CompositionInformation';
+import About from './components/about/About';
 
 // Important so that footer sticks to bottom of page!
 const AppDiv = styled.div`
@@ -39,6 +40,7 @@ function App() {
                             path='/discover-composers'
                             element={<DiscoverComposers />}
                         />
+                        <Route path='/about' element={<About />} />
                         <Route
                             path='/discover-composers/:composerId/'
                             element={<ComposerProfile />}
