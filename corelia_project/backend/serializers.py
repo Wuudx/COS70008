@@ -165,7 +165,7 @@ class BlogPostCommentsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogComment
-        fields = ['id', 'author', 'content', 'date_posted', 'author_name']
+        fields = ['id', 'author', 'content', 'date_posted', 'author_name', 'post']
 
 
 class ForumPostsSerializer(serializers.ModelSerializer):
