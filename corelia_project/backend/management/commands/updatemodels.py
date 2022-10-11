@@ -81,21 +81,33 @@ class Command(BaseCommand):
 
                     # Instrumentation - The Nightmare Begins
 
-                    # First separate out bracketed conent, which is often used to denote an enseble type
-                    # E.g: Wind Quartet (Flute, Oboe, Clarinet, Bassoon)
-                    instruments = row['Instrumentation'].split('(', 1)
+                    instruments = None
+                    ensemble_type = None
 
-                    # Get ensemble type - THIS DOES NOT EXIST IN THE DATASET, CONSIDER ADDING IT
-                    #ensemble_type = instruments[0]
+                    # First determine if there is bracketed conent, which is often used to denote an enseble type
+                    if '(' in row['Instrumentation']:
+                        # Split the ensemble_type from the bracketed content and store it
+                        instruments = re.split(r'[\()]', row['Instrumentation'])
+                        ensemble_type = instruments[0] # ENSEMBLE TYPE DOES NOT EXIST IN DATABASE, CONSIDER ADDING IT
 
-                    # Get bracket contents
-                    instruments = instruments[1][:-1].split(',')
-        
-        
-        
-        
+                        # Split the rest by commas or ands
+                        instruments = re.split(r', | and ', instruments[1])
+                    else:
+                        # If there isn't any brackets then just split by commas or ands
+                        instruments = re.split(r', | and ', row['Instrumentation'])
 
+                    # Next determine the quantities of instruments
+                    for instrument in instruments:
+                        if any(char.isdigit() for char in instrument):
+                            # Split the number from the name and store them both
+                            instrument = re.findall(r'[A-Za-z]+|\d+', instrument)
 
-            
-        
-        
+                            # Depluralise name (very basic, but would need to install an extra package for something better)
+                            if instrument[1].endswith('s'):
+                                instrument[1] = instrument[1][:-1]
+
+                            # Convert the quantity to an int
+                            instrument[0] = int(instrument[0])
+                        else:
+                            # Just store the name with a quantity of 1
+                            instrument = [1, instrument]
