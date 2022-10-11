@@ -1,8 +1,10 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useAuthState } from "../../context";
 import RoundedImage from "../../shared-styled-components/RoundedImage";
 import SubmitInput from "../../shared-styled-components/SubmitInput";
 import stylingConstants from "../../utils/styling";
-import React from "react";
 
 const FlexContainer = styled.div`
     margin-top: 0.5em;
@@ -29,19 +31,34 @@ const TextArea = styled.textarea`
 `;
 
 const CommentForm = ({ profilePicture }) => {
-    return (
-        <FlexContainer>
-            <RoundedImage
-                width="30px"
-                height="30px"
-                src={profilePicture}
-                alt="Profile Picture"
-            />
-            <Form>
-                <TextArea />
-                <SubmitInput width="20%" height="1.8em" value="Comment" />
-            </Form>
-        </FlexContainer>
-    );
+    const user = useAuthState();
+    let content;
+    if (!user.user) {
+        content = (
+            <p>
+                Want to contribute? Press <Link to="/join-corelia">here</Link>{" "}
+                to comment!
+            </p>
+        );
+    } else {
+        content = (
+            <>
+                <RoundedImage
+                    width="30px"
+                    height="30px"
+                    src={profilePicture}
+                    alt="Profile Picture"
+                />
+                <Form>
+                    <TextArea
+                        placeholder={`comment as ${user.user.username}`}
+                    />
+                    <SubmitInput width="20%" height="1.8em" value="Comment" />
+                </Form>
+            </>
+        );
+    }
+
+    return <FlexContainer>{content}</FlexContainer>;
 };
 export default CommentForm;

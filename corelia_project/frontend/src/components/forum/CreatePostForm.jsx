@@ -1,8 +1,10 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useAuthState } from "../../context";
 import RoundedImage from "../../shared-styled-components/RoundedImage";
 import SubmitInput from "../../shared-styled-components/SubmitInput";
 import stylingConstants from "../../utils/styling";
-import React from "react";
 
 // Having both of these elements with vertica align of bottom centers them.
 const Form = styled.form`
@@ -46,25 +48,41 @@ const TextArea = styled.textarea`
 
 // TODO: Add submit button (not sure where, guidelines are confusing)
 const CreatePostForm = () => {
-    return (
-        <Form>
-            <RoundedImage
-                width="30px"
-                height="30px"
-                src="https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg"
-                alt="Profile Picture"
-            />
-            <FormItemsFlexContainer>
-                <TextArea type="text" placeholder="Create Post" />
-                <SubmitInput
-                    width="40%"
-                    height="3em"
-                    type="submit"
-                    value="Submit"
+    const user = useAuthState();
+    let content;
+    if (!user.user) {
+        content = (
+            <p>
+                Want to contribute? Press <Link to="/join-corelia">here</Link>{" "}
+                to post!
+            </p>
+        );
+    } else {
+        content = (
+            <>
+                <RoundedImage
+                    width="30px"
+                    height="30px"
+                    src="https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg"
+                    alt="Profile Picture"
                 />
-            </FormItemsFlexContainer>
-            <AttachImageButton>+</AttachImageButton>
-        </Form>
-    );
+                <FormItemsFlexContainer>
+                    <TextArea
+                        type="text"
+                        placeholder={`Create post as ${user.user.username}`}
+                    />
+                    <SubmitInput
+                        width="40%"
+                        height="3em"
+                        type="submit"
+                        value="Submit"
+                    />
+                </FormItemsFlexContainer>
+                <AttachImageButton>+</AttachImageButton>
+            </>
+        );
+    }
+
+    return <Form>{content}</Form>;
 };
 export default CreatePostForm;
