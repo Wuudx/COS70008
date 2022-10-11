@@ -11,21 +11,16 @@ class Command(BaseCommand):
        pass
 
     def handle(self, *args, **options):
-
-        
         Nationality.objects.all().delete()
         Publisher.objects.all().delete()
         Composer.objects.all().delete()
         ComposerNationality.objects.all().delete()
         Composition.objects.all().delete()
-        
-        
 
         df = pd.read_csv('Database information1.csv', delimiter=',', na_values= None)
         df = df.replace("?", "")
         df = df.fillna("")
         df['Duration (mins)'] = df['Duration (mins)'].replace("", 0)
-    
         
         df["LastName"] = df["Name of Composer"].apply(lambda x: x[0:x.find(",")])
         df["FirstName"] = df["Name of Composer"].apply(lambda x: x[x.find(",")+2:])
@@ -47,20 +42,6 @@ class Command(BaseCommand):
         df['Bio_source'] = df['Bio_source'].astype(str)
         df['Nameofpiece'] = df['Nameofpiece'].str.capitalize()
 
-
-        # for nationality in df.Nationality:
-        #     nationalities = nationality.strip('()').split(' ')
-
-        #     for nationality_split in nationalities:
-        #         if (Nationality.objects.filter(name = nationality_split).count() == 0):
-        #             models = Nationality(name = nationality_split)
-        #             models.save()
-
-        # for publisher in df.Publisher:
-        #     if (Publisher.objects.filter(name = publisher).count() == 0):
-        #         models = Publisher(name = publisher)
-        #         models.save()
-
         # TEMP - remove nationality_id from database/model
         models = Nationality(id = -1, name = 'YOU SHOULD NOT BE SEEING THIS!')
         models.save()
@@ -68,25 +49,9 @@ class Command(BaseCommand):
 
         for index, row in df.iterrows():
             if (Composer.objects.filter(firstName=row['FirstName'], lastName=row['LastName']).count() == 0):
-                #models = Composer(firstName = row['FirstName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = Nationality.objects.get(name = row['Nationality']), biography = row['Biography'], bio_source = row['Bio_source'], composer_website = row['Composer_website'])
                 models = Composer(firstName = row['FirstName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = error_nationality, biography = row['Biography'], bio_source = row['Bio_source'], composer_website = row['Composer_website'])
                 models.save()
 
-                # for nationality in row['Nationality']:
-                #     nationalities = nationality.strip('()').split(' ')
-
-                #     for nationality_split in nationalities:
-                #         if (Nationality.objects.filter(name = nationality_split).count() == 0):
-                #             models = Nationality(name = nationality_split)
-                #             models.save()
-
-                #         composer_id = Composer.objects.get(firstName=row['FirstName'], lastName=row['LastName']).id
-                #         nationality_id = Nationality.objects.get(name = nationality_split).id
-
-                #         models = ComposerNationality(composer_id = composer_id, nationality_id=nationality_id)
-                #         models.save()
-                #nationalities = row['Nationality'].replace('()').split(' ')
-                #nationalities = re.split('\s\/', row['Nationality'].strip('()'))
                 nationalities = re.sub(r'[()/]', ' ', row['Nationality']).split()
 
                 for nationality_split in nationalities:
@@ -113,33 +78,6 @@ class Command(BaseCommand):
 
                     models = Composition(name = row['Nameofpiece'], composer = Composer.objects.get(id = composer_id), year = row['Year'], duration = row['Duration (mins)'], publisher = Publisher.objects.get(id = publisher_id), recording_link = row['Recording'], score_link = row['Score'])
                     models.save()
-
-        # for index, row in df.iterrows():
-        #     ###
-        #     if (Composer.objects.filter(firstName=row['FirstName'], lastName=row['LastName']).count() == 1):
-        #         composer = Composer.objects.get(firstName=row['FirstName'], lastName=row['LastName'])
-        #         c_id = composer.id
-        #         #nationality = Nationality.objects.get(name= row['Nationality'])
-        #         #n_id = nationality.id
-        #         for nationality in df.Nationality
-
-        #         if (ComposerNationality.objects.filter(composer_id = c_id).count() == 0):
-        #             models = ComposerNationality(composer_id = c_id, nationality_id = n_id)
-        #             models.save()
-
-        # for index, row in df.iterrows():
-        #     if (Composition.objects.filter(name = row['Nameofpiece']).count() == 0):
-        #         if (row['Nameofpiece'] == ""):
-        #             continue
-        #         else:
-        #             composer = Composer.objects.get(firstName = row['FirstName'], lastName = row['LastName'])
-        #             c_id = composer.id
-        #             publisher = Publisher.objects.get(name = row['Publisher'])
-        #             p_id = publisher.id
-                    
-                
-        #         models = Composition(name = row['Nameofpiece'], composer = Composer.objects.get(id = c_id), year = row['Year'], duration = row['Duration (mins)'], publisher = Publisher.objects.get(id = p_id), recording_link = row['Recording'], score_link = row['Score'])
-        #         models.save()
         
         
         
