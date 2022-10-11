@@ -79,7 +79,6 @@ class ForumPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     date_posted = models.DateTimeField(auto_now_add=True)
     content = models.TextField(blank = True, null = True)
-    votes = models.IntegerField(default=0)
 
     def __str__(self):
         return self.content
@@ -97,8 +96,8 @@ class ForumComment(models.Model):
 class BlogPost(models.Model):
     id = models.AutoField(primary_key=True)
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    date_posted = models.DateTimeField(blank=True, null=True)
-    date_updated = models.DateTimeField(blank=True, null=True)
+    date_posted = models.DateTimeField(auto_now_add = True, blank=True, null=True)
+    date_updated = models.DateTimeField(auto_now_add = True, blank=True, null=True)
     title = models.CharField(max_length=300, blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     votes = models.IntegerField(blank=True, default=0)
@@ -110,8 +109,8 @@ class BlogComment(models.Model):
     id = models.AutoField(primary_key=True)
     post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    date_posted = models.DateTimeField(blank=True, null=True)
-    date_updated = models.DateTimeField(blank=True, null=True)
+    date_posted = models.DateTimeField(auto_now_add = True, blank=True, null=True)
+    date_updated = models.DateTimeField(auto_now_add = True, blank=True, null=True)
     content = models.TextField(blank=True, null=True)
 
     def __str__(self):
