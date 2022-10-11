@@ -11,6 +11,8 @@ import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
 import React from "react";
 import Account from "../account/Account";
 import StyledLink from "../../shared-styled-components/StyledLink";
+import { getScreenType, screenTypes } from "../../utils/get-screen-type";
+import useHandleWindowResize from "../../hooks/useHandleWindowResize";
 
 const Img = styled.img`
     position: absolute;
@@ -54,6 +56,8 @@ const Button = styled(NavButton)`
 // TODO: Increasing the size of the up arrows (IoIosArrowUp) using size={x} ruins alignment of navbar. Figure out why!!!!
 const Navbar = () => {
     const navigate = useNavigate();
+    const windowWidth = useHandleWindowResize();
+    console.log(windowWidth);
 
     const exploreRepDropdownRef = useRef();
     const getInvolvedDropdownRef = useRef();
@@ -63,9 +67,21 @@ const Navbar = () => {
     const [isGetInvolvedDropdownVisible, setIsGetInvolvedDropdownVisible] =
         useDetectOutsideClick(getInvolvedDropdownRef, false);
 
+    let logo;
+    const screenType = getScreenType(parseInt(windowWidth));
+    console.log(screenType);
+    if (
+        screenType === screenTypes.mobile ||
+        screenType === screenTypes.tablet
+    ) {
+        logo = "";
+    } else {
+        logo = <Img src={NavLogo} alt="logo" onClick={() => navigate("/")} />;
+    }
+
     return (
         <Container>
-            <Img src={NavLogo} alt="logo" onClick={() => navigate("/")} />
+            {logo}
             <Nav>
                 <Ul gap="3em">
                     <li>
