@@ -176,7 +176,7 @@ class ForumPostsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ForumPost
-        fields = ['id', 'user', 'content', 'date_posted', 'votes', 'author_name']
+        fields = ['id', 'user', 'content', 'date_posted', 'author_name']
 
 
 class ForumPostCommentsSerializer(serializers.ModelSerializer):
