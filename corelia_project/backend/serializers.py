@@ -64,7 +64,8 @@ class FeaturedComposerSerializer(serializers.ModelSerializer):
     nationality_detail = serializers.SerializerMethodField()
 
     def get_nationality_detail(self, obj):
-        return obj.nationality.name
+    #    return obj.nationality.name
+        return ComposerNationality.objects.filter(composer=obj).aggregate(names=StringAgg('nationality__name', delimiter='/', ordering='id'))['names']
 
     class Meta:
         model = Composer
