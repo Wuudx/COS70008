@@ -23,6 +23,10 @@ class AllComposersView(ListAPIView):
     queryset = Composer.objects.all()
     serializer_class = AllComposersSerializer
 
+class ComposerUpdateView(RetrieveUpdateDestroyAPIView):
+    queryset = Composer.objects.all()
+    serializer_class = ComposerSerializer
+
 
 class ComposerView(ListAPIView):
     serializer_class = ComposerSerializer
@@ -181,7 +185,7 @@ class ModifyBlogComment(RetrieveUpdateDestroyAPIView):
 
 class AllForumPosts(ListCreateAPIView):
     pagination_class = LimitOffsetPagination
-    queryset = ForumPost.objects.all()
+    queryset = ForumPost.objects.all().order_by('-date_posted')
     serializer_class = ForumPostsSerializer
 
     def perform_create(self, serializer):
