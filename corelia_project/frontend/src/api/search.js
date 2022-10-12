@@ -44,8 +44,6 @@ export async function searchAll(query, path) {
         results.unshift(mainSearch[0]);
     }
 
-    console.log('resutls sorted', results);
-
     return results;
 }
 
