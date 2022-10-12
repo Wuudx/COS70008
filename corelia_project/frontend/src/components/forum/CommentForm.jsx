@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
@@ -34,7 +35,6 @@ const TextArea = styled.textarea`
 
 const CommentForm = ({ postId, profilePicture, addComment }) => {
     const user = useAuthState();
-    const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [commentContent, setCommentContent] = useState("");
 
@@ -51,9 +51,9 @@ const CommentForm = ({ postId, profilePicture, addComment }) => {
         try {
             await createComment(newComment);
             addComment(newComment);
+            toast.success("Succesfully commented!");
         } catch (error) {
-            setError(error);
-            console.log(error);
+            toast.error(`Error ${error.message}`);
         } finally {
             setIsLoading(false);
         }

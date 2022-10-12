@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
@@ -52,7 +52,6 @@ const TextArea = styled.textarea`
 // TODO: Update posts on frontend after getting from backend.
 const CreatePostForm = ({ addNewPost }) => {
     const user = useAuthState();
-    const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
     const [postContent, setPostContent] = useState("");
 
@@ -116,9 +115,9 @@ const CreatePostForm = ({ addNewPost }) => {
             await createPost(newPost);
             addNewPost(newPost);
             setPostContent("");
-            toast("Success");
+            toast.success("Succesfully created post!");
         } catch (error) {
-            setError(error);
+            toast.error(`Error ${error}`);
         } finally {
             setIsLoading(false);
         }

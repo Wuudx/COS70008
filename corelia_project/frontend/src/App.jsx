@@ -88,7 +88,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                     </Routes>
                     <Footer />
-                    <Toaster />
+                    <Toaster position="bottom-center" />
                 </AppDiv>
             </Router>
         </AuthProvider>

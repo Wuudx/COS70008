@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { AiFillDelete } from "react-icons/ai";
 import { ScaleLoader } from "react-spinners";
 import { deletePost } from "../../../api/forum";
@@ -31,8 +32,9 @@ const DeleteButton = ({ postId, deletePostFrontend }) => {
         try {
             await deletePost(postId);
             deletePostFrontend(postId);
+            toast.success("Succesfully deleted post!");
         } catch (error) {
-            console.log(error);
+            toast.error(`Error ${error.message}`);
         } finally {
             setIsLoading(false);
         }
