@@ -170,13 +170,17 @@ class BlogPostCommentsSerializer(serializers.ModelSerializer):
 
 class ForumPostsSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
+    num_comments = serializers.SerializerMethodField()
 
     def get_author_name(self, obj):
         return obj.user.username
 
+    def get_num_comments(self, obj):
+        return ForumComment.objects.filter(post=obj).count()
+
     class Meta:
         model = ForumPost
-        fields = ['id', 'user', 'content', 'date_posted', 'author_name']
+        fields = ['id', 'user', 'content', 'date_posted', 'author_name', 'image', 'num_comments']
 
 
 class ForumPostCommentsSerializer(serializers.ModelSerializer):
