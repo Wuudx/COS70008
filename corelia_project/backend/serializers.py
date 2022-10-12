@@ -69,7 +69,7 @@ class FeaturedComposerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Composer
-        fields = ['firstName', 'lastName', 'birth',
+        fields = ['id','firstName', 'lastName', 'birth',
                   'death', 'nationality_detail', 'image']
 
 
@@ -165,18 +165,22 @@ class BlogPostCommentsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogComment
-        fields = ['id', 'author', 'content', 'date_posted', 'author_name']
+        fields = ['id', 'author', 'content', 'date_posted', 'author_name', 'post']
 
 
 class ForumPostsSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
+    num_comments = serializers.SerializerMethodField()
 
     def get_author_name(self, obj):
         return obj.user.username
 
+    def get_num_comments(self, obj):
+        return ForumComment.objects.filter(post=obj).count()
+
     class Meta:
         model = ForumPost
-        fields = ['id', 'user', 'content', 'date_posted', 'votes', 'author_name']
+        fields = ['id', 'user', 'content', 'date_posted', 'author_name', 'image', 'num_comments']
 
 
 class ForumPostCommentsSerializer(serializers.ModelSerializer):

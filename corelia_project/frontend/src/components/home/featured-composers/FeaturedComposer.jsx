@@ -15,8 +15,8 @@ const FeaturedComposer = ({ featuredComposer }) => {
             <RoundedImage src={featuredComposer.image} alt='Composer Picture' />
             <div>
                 <Link
-                    to={`/composers/${
-                        featuredComposer.firstName + featuredComposer.lastName
+                    to={`/discover-composers/${
+                        featuredComposer.id
                     }`}
                 >
                     {featuredComposer.firstName +

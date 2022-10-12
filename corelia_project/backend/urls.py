@@ -4,6 +4,7 @@ from backend import views
 
 urlpatterns = [
     path('composers', AllComposersView.as_view()),
+    path('composers/<int:pk>/modify', ComposerUpdateView.as_view()),
     path('composers/<int:pk>', ComposerView.as_view()),
     path('featured-composers', GetFeaturedComposers.as_view()),
     path('compositions', AllCompositionsView.as_view()),
@@ -23,10 +24,16 @@ urlpatterns = [
     path('blogs/comments/<int:post_id>', BlogCommentView.as_view()),
     path('blogs/popular', GetPopularBlogPosts.as_view()),
     path('blogs/<int:month>/posts', GetBlogPostsByMonth.as_view()),
+
+    path('blogs/<int:pk>/modify', ModifyBlogPost.as_view()),
+    path('blogs/comments/<int:pk>/modify', ModifyBlogComment.as_view()),
+
     path('forums', AllForumPosts.as_view()),
     path('forums/<int:post_id>', ForumPostView.as_view()),
     path('forums/comments/all', AllForumComments.as_view()),
     path('forums/comments/<post_id>', ForumCommentView.as_view()),
+    path('forums/<int:pk>/modify', ModifyForumPost.as_view()),
+    path('forums/comments/<int:pk>/modify', ModifyForumComment.as_view()),
 
     # Admin Dash
     path('dash/users/<int:count>', GetUsersByJoinDate.as_view()),

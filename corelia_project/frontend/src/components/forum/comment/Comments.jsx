@@ -1,11 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import ScaleLoader from "react-spinners/ScaleLoader";
+import styled from "styled-components";
 import { getCommentsOnPost, getForumPostById } from "../../../api/forum";
 import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
-import Post from "../post/Post";
-import ScaleLoader from "react-spinners/ScaleLoader";
 import stylingConstants from "../../../utils/styling";
-import styled from "styled-components";
+import Post from "../post/Post";
 import Comment from "./Comment";
 
 const FlexContainer = styled.div`
@@ -14,7 +14,7 @@ const FlexContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 2em;
+    gap: 0.5em;
 `;
 
 // TODO: Add message if there are no comments on a post.
@@ -24,9 +24,12 @@ const Comments = () => {
         getForumPostById(postId)
     );
 
-    const [comments, commentsIsLoading, commentsError] = useFetchOnPageLoad(
-        () => getCommentsOnPost(postId)
-    );
+    const [comments, commentsIsLoading, commentsError, setComments] =
+        useFetchOnPageLoad(() => getCommentsOnPost(postId));
+
+    function addComment(newComment) {
+        setComments([...comments, newComment]);
+    }
 
     let postElement;
     if (postIsLoading) {
@@ -39,7 +42,13 @@ const Comments = () => {
 
         // We get the first element because "post" is an array of length 1.
         const postContent = post[0];
-        postElement = <Post post={postContent} postContainerWidth="50%" />;
+        postElement = (
+            <Post
+                post={postContent}
+                postContainerWidth="50%"
+                addComment={addComment}
+            />
+        );
     }
 
     let commentsElement;
@@ -51,7 +60,7 @@ const Comments = () => {
         commentsElement = <div>{commentsError.message}</div>;
     } else if (comments.length > 0) {
         commentsElement = comments.map((comment) => (
-            <Comment comment={comment} />
+            <Comment key={comment.id} comment={comment} />
         ));
     }
 

@@ -10,17 +10,18 @@ export async function searchAll(query, path) {
     compositions.type = 'compositions';
     const publishers = await searchPublishers(query);
     publishers.type = 'publishers';
+    const blogs = await searchBlogs(query);
+    blogs.type = 'blogs';
 
     // Filtering the results
     let results = [];
     results.push(composers);
     results.push(compositions);
     results.push(publishers);
+    results.push(blogs);
 
     // Sorting the results
-    results.sort((a, b) => {
-        a.count - b.count;
-    });
+    results.sort(sortResults);
 
     // Putting thwe results in the right order
     path = path.split('/')[1];
@@ -46,6 +47,10 @@ export async function searchAll(query, path) {
     return results;
 }
 
+function sortResults(a, b) {
+    return b.count - a.count;
+}
+
 async function searchComposers(query) {
     const response = await fetch(
         `http://localhost:8000/api/search-composers/${query}`
@@ -69,6 +74,16 @@ async function searchCompositions(query) {
 async function searchPublishers(query) {
     const response = await fetch(
         `http://localhost:8000/api/search-publishers/${query}`
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+    return response.json();
+}
+
+async function searchBlogs(query) {
+    const response = await fetch(
+        `http://localhost:8000/api/search-blogs/${query}`
     );
     if (!response.ok) {
         throw new Error(response.status);
