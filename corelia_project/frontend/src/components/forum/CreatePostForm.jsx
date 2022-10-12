@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
 import { createPost } from "../../api/forum";
 import { useAuthState } from "../../context";
@@ -64,6 +65,21 @@ const CreatePostForm = () => {
             </p>
         );
     } else {
+        let submitButton;
+        if (isLoading) {
+            submitButton = (
+                <ScaleLoader color={stylingConstants.colours.blue1} />
+            );
+        } else {
+            submitButton = (
+                <SubmitInput
+                    width="40%"
+                    height="3em"
+                    type="submit"
+                    value="Submit"
+                />
+            );
+        }
         content = (
             <>
                 <RoundedImage
@@ -79,12 +95,7 @@ const CreatePostForm = () => {
                         value={postContent}
                         onChange={(e) => setPostContent(e.target.value)}
                     />
-                    <SubmitInput
-                        width="40%"
-                        height="3em"
-                        type="submit"
-                        value="Submit"
-                    />
+                    {submitButton}
                 </FormItemsFlexContainer>
                 <AttachImageButton>+</AttachImageButton>
             </>
