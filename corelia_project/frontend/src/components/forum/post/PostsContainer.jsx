@@ -21,6 +21,11 @@ const PostsContainer = () => {
         setData({ ...data, results: [...data.results, newPost] });
     }
 
+    function deletePostFrontend(postId) {
+        const newResults = data.results.filter((post) => post.id !== postId);
+        setData({ ...data, count: data.count - 1, results: newResults });
+    }
+
     return (
         <FlexContainer>
             <CreatePostForm addNewPost={addNewPost} />
@@ -31,6 +36,7 @@ const PostsContainer = () => {
                 setData={setData}
                 setIsLoading={setIsLoading}
                 setError={setError}
+                deletePostFrontend={deletePostFrontend}
             />
         </FlexContainer>
     );

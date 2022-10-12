@@ -15,7 +15,15 @@ const FlexContainer = styled.div`
     align-items: center;
 `;
 
-const Posts = ({ data, isLoading, error, setData, setIsLoading, setError }) => {
+const Posts = ({
+    data,
+    isLoading,
+    error,
+    setData,
+    setIsLoading,
+    setError,
+    deletePostFrontend,
+}) => {
     let nextPageApiEndpoint = "";
 
     function handleLoadMore() {
@@ -52,7 +60,12 @@ const Posts = ({ data, isLoading, error, setData, setIsLoading, setError }) => {
             );
         }
         content = data.results.map((post) => (
-            <Post key={post.id} post={post} postContainerWidth="100%" />
+            <Post
+                key={post.id}
+                post={post}
+                postContainerWidth="100%"
+                deletePostFrontend={deletePostFrontend}
+            />
         ));
     }
 
