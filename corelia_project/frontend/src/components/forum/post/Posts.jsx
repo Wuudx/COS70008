@@ -3,7 +3,6 @@ import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
 import fetchNextPage from "../../../api/fetch-next-page";
 import { getForumPosts } from "../../../api/forum";
-import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
 import stylingConstants from "../../../utils/styling";
 import LoadMoreButton from "../../buttons/LoadMoreButton";
 import Post from "./Post";
@@ -16,10 +15,7 @@ const FlexContainer = styled.div`
     align-items: center;
 `;
 
-const Posts = () => {
-    const [data, isLoading, error, setData, setIsLoading, setError] =
-        useFetchOnPageLoad(getForumPosts);
-
+const Posts = ({ data, isLoading, error, setData, setIsLoading, setError }) => {
     let nextPageApiEndpoint = "";
 
     function handleLoadMore() {

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
-import { createPost } from "../../api/forum";
-import { useAuthState } from "../../context";
-import RoundedImage from "../../shared-styled-components/RoundedImage";
-import SubmitInput from "../../shared-styled-components/SubmitInput";
-import stylingConstants from "../../utils/styling";
+import { createPost } from "../../../api/forum";
+import { useAuthState } from "../../../context";
+import RoundedImage from "../../../shared-styled-components/RoundedImage";
+import SubmitInput from "../../../shared-styled-components/SubmitInput";
+import stylingConstants from "../../../utils/styling";
 
 // Having both of these elements with vertica align of bottom centers them.
 const Form = styled.form`
@@ -49,7 +49,7 @@ const TextArea = styled.textarea`
 `;
 
 // TODO: Update posts on frontend after getting from backend.
-const CreatePostForm = () => {
+const CreatePostForm = ({ addNewPost }) => {
     const user = useAuthState();
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
@@ -113,6 +113,8 @@ const CreatePostForm = () => {
         };
         try {
             await createPost(newPost);
+            addNewPost(newPost);
+            setPostContent("");
         } catch (error) {
             setError(error);
         } finally {
