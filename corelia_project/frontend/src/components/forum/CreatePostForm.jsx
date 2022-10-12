@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { createPost } from "../../api/forum";
 import { useAuthState } from "../../context";
 import RoundedImage from "../../shared-styled-components/RoundedImage";
 import SubmitInput from "../../shared-styled-components/SubmitInput";
@@ -49,7 +50,12 @@ const TextArea = styled.textarea`
 // TODO: Add submit button (not sure where, guidelines are confusing)
 const CreatePostForm = () => {
     const user = useAuthState();
+    const [error, setError] = useState();
+    const [isLoading, setIsLoading] = useState(false);
+    const [postContent, setPostContent] = useState("");
+
     let content;
+
     if (!user.user) {
         content = (
             <p>
@@ -70,6 +76,8 @@ const CreatePostForm = () => {
                     <TextArea
                         type="text"
                         placeholder={`Create post as ${user.user.username}`}
+                        value={postContent}
+                        onChange={(e) => setPostContent(e.target.value)}
                     />
                     <SubmitInput
                         width="40%"
@@ -83,6 +91,24 @@ const CreatePostForm = () => {
         );
     }
 
-    return <Form>{content}</Form>;
+    async function handleSubmitPost(e) {
+        e.preventDefault();
+        setIsLoading(true);
+        const newPost = {
+            user: user.user.id,
+            content: postContent,
+            date_posted: new Date().toString(),
+            author_name: user.user.username,
+        };
+        try {
+            await createPost(newPost);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    return <Form onSubmit={handleSubmitPost}>{content}</Form>;
 };
 export default CreatePostForm;

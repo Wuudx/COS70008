@@ -31,3 +31,17 @@ export async function getCommentsOnPost(postId) {
     const json = await response.json();
     return json;
 }
+
+export async function createPost(newPost) {
+    const response = await fetch(`http://localhost:8000/api/forums`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `${localStorage.getItem("auth_token")}`,
+        },
+        body: JSON.stringify(newPost),
+    });
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+}
