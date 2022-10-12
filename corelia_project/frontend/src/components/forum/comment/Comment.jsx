@@ -9,7 +9,9 @@ const Container = styled.div`
     padding: 1em;
     width: 50%;
     border-radius: ${stylingConstants.sizes.containerBorderRadius};
-    margin-bottom: ${stylingConstants.sizes.gapFromFooterToEndOfContent};
+    &:last-child {
+        margin-bottom: ${stylingConstants.sizes.gapFromFooterToEndOfContent};
+    }
 `;
 
 const Comment = ({ comment }) => {

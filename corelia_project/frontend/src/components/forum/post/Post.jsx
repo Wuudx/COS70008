@@ -1,13 +1,13 @@
+import React from "react";
+import PostContainer from "../../../shared-styled-components/PostContainer";
+import { getTimeElapsedFromCreation } from "../../../utils/date-time";
 import AttachedImage from "../AttachedImage";
 import CommentAndShare from "../CommentAndShare";
 import CommentForm from "../CommentForm";
 import PostContent from "./PostContent";
 import PostUserAndTime from "./PostUserAndTime";
-import React from "react";
-import { getTimeElapsedFromCreation } from "../../../utils/date-time";
-import PostContainer from "../../../shared-styled-components/PostContainer";
 
-const Post = ({ post, postContainerWidth }) => {
+const Post = ({ post, postContainerWidth, addComment }) => {
     const timeFromPost = getTimeElapsedFromCreation(post.date_posted);
 
     return (
@@ -20,7 +20,11 @@ const Post = ({ post, postContainerWidth }) => {
             <PostContent content={post.content} />
             <AttachedImage />
             <CommentAndShare numComments={4} postId={post.id} />
-            <CommentForm profilePicture={post.profilePicture} />
+            <CommentForm
+                postId={post.id}
+                profilePicture={post.profilePicture}
+                addComment={addComment}
+            />
         </PostContainer>
     );
 };

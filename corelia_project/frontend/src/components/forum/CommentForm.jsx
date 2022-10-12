@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
+import { createComment } from "../../api/forum";
 import { useAuthState } from "../../context";
 import RoundedImage from "../../shared-styled-components/RoundedImage";
 import SubmitInput from "../../shared-styled-components/SubmitInput";
@@ -30,8 +32,33 @@ const TextArea = styled.textarea`
     font-family: lato-regular;
 `;
 
-const CommentForm = ({ profilePicture }) => {
+const CommentForm = ({ postId, profilePicture, addComment }) => {
     const user = useAuthState();
+    const [error, setError] = useState();
+    const [isLoading, setIsLoading] = useState(false);
+    const [commentContent, setCommentContent] = useState("");
+
+    async function handleCreateComment(e) {
+        e.preventDefault();
+        setIsLoading(true);
+        const newComment = {
+            user: user.user.id,
+            content: commentContent,
+            date_posted: new Date().toString(),
+            author_name: user.user.username,
+            post: postId,
+        };
+        try {
+            await createComment(newComment);
+            addComment(newComment);
+        } catch (error) {
+            setError(error);
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     let content;
     if (!user.user) {
         content = (
@@ -41,6 +68,21 @@ const CommentForm = ({ profilePicture }) => {
             </p>
         );
     } else {
+        let submitButton;
+        if (isLoading) {
+            submitButton = (
+                <ScaleLoader color={stylingConstants.colours.blue1} />
+            );
+        } else {
+            submitButton = (
+                <SubmitInput
+                    type="submit"
+                    width="20%"
+                    height="1.8em"
+                    value="Comment"
+                />
+            );
+        }
         content = (
             <>
                 <RoundedImage
@@ -49,11 +91,13 @@ const CommentForm = ({ profilePicture }) => {
                     src={profilePicture}
                     alt="Profile Picture"
                 />
-                <Form>
+                <Form onSubmit={handleCreateComment}>
                     <TextArea
                         placeholder={`comment as ${user.user.username}`}
+                        value={commentContent}
+                        onChange={(e) => setCommentContent(e.target.value)}
                     />
-                    <SubmitInput width="20%" height="1.8em" value="Comment" />
+                    {submitButton}
                 </Form>
             </>
         );

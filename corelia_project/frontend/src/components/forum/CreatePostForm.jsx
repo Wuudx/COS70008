@@ -48,7 +48,7 @@ const TextArea = styled.textarea`
     font-family: lato-regular;
 `;
 
-// TODO: Add submit button (not sure where, guidelines are confusing)
+// TODO: Update posts on frontend after getting from backend.
 const CreatePostForm = () => {
     const user = useAuthState();
     const [error, setError] = useState();
