@@ -34,7 +34,7 @@ const Post = ({ post, postContainerWidth, addComment, deletePostFrontend }) => {
             />
             <PostContent content={post.content} />
             <AttachedImage />
-            <CommentAndShare numComments={4} postId={post.id} />
+            <CommentAndShare numComments={post.num_comments} postId={post.id} />
             <CommentForm
                 postId={post.id}
                 profilePicture={post.profilePicture}
