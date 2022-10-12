@@ -3,11 +3,11 @@ import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
-import { createComment } from "../../api/forum";
-import { useAuthState } from "../../context";
-import RoundedImage from "../../shared-styled-components/RoundedImage";
-import SubmitInput from "../../shared-styled-components/SubmitInput";
-import stylingConstants from "../../utils/styling";
+import { createComment } from "../../../api/forum";
+import { useAuthState } from "../../../context";
+import RoundedImage from "../../../shared-styled-components/RoundedImage";
+import SubmitInput from "../../../shared-styled-components/SubmitInput";
+import stylingConstants from "../../../utils/styling";
 
 const FlexContainer = styled.div`
     margin-top: 0.5em;

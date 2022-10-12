@@ -2,8 +2,8 @@ import React from "react";
 import { FaCommentAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import stylingConstants from "../../utils/styling";
-import ShareButton from "./post/ShareButton";
+import stylingConstants from "../../../utils/styling";
+import ShareButton from "./ShareButton";
 
 const StyledLink = styled(Link)`
     color: ${stylingConstants.colours.blue2Percent100};
