@@ -7,7 +7,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 1rem 3rem 1rem;
 `;
 
 const About = () => {
