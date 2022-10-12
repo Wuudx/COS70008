@@ -53,7 +53,6 @@ const ResultContents = styled.div`
 `;
 
 const SearchResult = ({ result, searchQuery }) => {
-    console.log(result);
     const navigate = useNavigate();
 
     let heading;
