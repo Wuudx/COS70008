@@ -6,6 +6,7 @@ import PublisherResult from './PublisherResult';
 import { BiChevronRight } from 'react-icons/bi';
 import stylingConstants from '../../utils/styling';
 import { useNavigate } from 'react-router-dom';
+import BlogResult from './BlogResult';
 
 const ResultContainer = styled.div`
     display: flex;
@@ -53,7 +54,6 @@ const ResultContents = styled.div`
 `;
 
 const SearchResult = ({ result, searchQuery }) => {
-    console.log(result);
     const navigate = useNavigate();
 
     let heading;
@@ -85,6 +85,12 @@ const SearchResult = ({ result, searchQuery }) => {
                 .map((publisher, index) => (
                     <PublisherResult key={index} publisher={publisher} />
                 ));
+        } else if (result.type === 'blogs') {
+            heading = 'Featured Blogs';
+            headingNavigatePath = '';
+            content = result.results
+                .slice(0, 3)
+                .map((blog, index) => <BlogResult key={index} blog={blog} />);
         } else {
             heading = null;
             content = null;
