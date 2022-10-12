@@ -90,24 +90,58 @@ class Command(BaseCommand):
                         instruments = re.split(r'[\()]', row['Instrumentation'])
                         ensemble_type = instruments[0] # ENSEMBLE TYPE DOES NOT EXIST IN DATABASE, CONSIDER ADDING IT
 
-                        # Split the rest by commas or ands
-                        instruments = re.split(r', | and ', instruments[1])
+                        # Split the rest by commas or and/with
+                        instruments = re.split(r', | and | with ', instruments[1])
                     else:
-                        # If there isn't any brackets then just split by commas or ands
-                        instruments = re.split(r', | and ', row['Instrumentation'])
+                        # If there isn't any brackets then just split by commas or and/with
+                        instruments = re.split(r', | and | with ', row['Instrumentation'])
 
                     # Next determine the quantities of instruments
                     for instrument in instruments:
-                        if any(char.isdigit() for char in instrument):
-                            # Split the number from the name and store them both
-                            instrument = re.findall(r'[A-Za-z]+|\d+', instrument)
+                        # Start by assuming a singular instrument, and remove the words 'solo' or 'an' and strip trailing or leading whitespace
+                        instrument = [1, re.sub(r'\bsolo|\ban', '', instrument.lower())]
 
-                            # Depluralise name (very basic, but would need to install an extra package for something better)
-                            if instrument[1].endswith('s'):
+                        # Is there are any numbers in the name, split the number out and cast it to in and store as quantity
+                        if any(char.isdigit() for char in instrument[1]):
+                            instrument[1] = instrument[1].split(' ', 1)
+                            instrument = [int(instrument[1][0]), instrument[1][1]]
+
+                            # A very basic/inaccurate depluralization. Would need additonal package (e.g. pattern) for something better
+                            if instrument[1].endswith('s') and not instrument[1].endswith('ss'):
                                 instrument[1] = instrument[1][:-1]
 
-                            # Convert the quantity to an int
-                            instrument[0] = int(instrument[0])
-                        else:
-                            # Just store the name with a quantity of 1
-                            instrument = [1, instrument]
+                        # As a inal touch of formattting, strip any leading/trailing spaces and capitalise the first letter.
+                        instrument[1] = instrument[1].strip().capitalize()
+
+                        # !!!
+                        # BAD PART
+                        # This is the part where I give up on complete accuracy and just start dumping data I don't like to squeeze a little more accuracy out.
+                        # Anything below this would need to be changed for a final version. These are all all lazy band-aid solutions to bigger problems.
+                        # !!!
+
+                        # Remove square brackets.
+                        # As far as I can tell they are only used in a single row, which is already pretty broken.
+                        # This will help at least SOME of its data be accurate.
+                        instrument[1] = re.sub(r'[\[\]]', '', instrument[1])
+
+                        # Remove anything after a '/'
+                        # This is usually used for alternative instrumentation, which the database doesn't not currently support.
+                        # Due to time constraints, this script will just discard alternative instrumentation for now.
+                        instrument[1] = instrument.split('/')[0]
+
+                        # !!!
+                        # END BAD PART
+                        # Everything beyond this is fine to use.
+                        # !!!
+
+                        # Create the instrument in the Instruments table if it doesn't already exist.
+                        if (Instrument.objects.filter(name = instrument[1]).count() == 0):
+                            models = Instrument(name = instrument[1])
+                            models.save()
+
+                        # Finally, add the instrument to the composition via the CompositionInstrument lookup table.
+                        composition_id = Composition.objects.get(row['Nameofpiece'], year = row['Year']).id
+                        instrument_id = Instrument.objects.get(name = instrument[1]).id
+
+                        models = CompositionInstrument(instrument = instrument_id, composition_id = composition_id)
+                        models.save()
