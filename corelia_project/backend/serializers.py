@@ -69,7 +69,7 @@ class FeaturedComposerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Composer
-        fields = ['firstName', 'lastName', 'birth',
+        fields = ['id','firstName', 'lastName', 'birth',
                   'death', 'nationality_detail', 'image']
 
 
