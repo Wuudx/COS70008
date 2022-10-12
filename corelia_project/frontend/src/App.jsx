@@ -1,4 +1,5 @@
 import React from "react";
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import styled from "styled-components";
 import About from "./components/about/About";
@@ -87,6 +88,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                     </Routes>
                     <Footer />
+                    <Toaster />
                 </AppDiv>
             </Router>
         </AuthProvider>

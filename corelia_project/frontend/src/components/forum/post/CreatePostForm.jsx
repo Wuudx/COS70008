@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
@@ -115,6 +116,7 @@ const CreatePostForm = ({ addNewPost }) => {
             await createPost(newPost);
             addNewPost(newPost);
             setPostContent("");
+            toast("Success");
         } catch (error) {
             setError(error);
         } finally {
