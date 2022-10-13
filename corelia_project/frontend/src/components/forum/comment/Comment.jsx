@@ -19,7 +19,7 @@ const Comment = ({ comment }) => {
     return (
         <Container>
             <PostUserAndTime
-                profilePicture={comment.profilePicture}
+                profilePicture={comment.user_image}
                 username={comment.author_name}
                 timeFromPost={timeFromComment}
             />

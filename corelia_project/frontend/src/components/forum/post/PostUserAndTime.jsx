@@ -15,7 +15,7 @@ const UsernameAndTimeFlexContainer = styled.div`
 const PostUserAndTime = ({ profilePicture, username, timeFromPost }) => {
     return (
         <FlexContainer>
-            <RoundedImage src={profilePicture} width="30px" height="30px" />
+            <RoundedImage src={`/${profilePicture}`} width="30px" height="30px" />
             <UsernameAndTimeFlexContainer>
                 <span>{username}</span>
                 <span>{timeFromPost}</span>

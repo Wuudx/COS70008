@@ -34,7 +34,7 @@ const Post = ({ post, postContainerWidth, addComment, deletePostFrontend }) => {
         commentForm = (
             <CommentForm
                 postId={post.id}
-                profilePicture={post.profilePicture}
+                profilePicture={post.user_image}
                 addComment={addComment}
             />
         );
@@ -43,7 +43,7 @@ const Post = ({ post, postContainerWidth, addComment, deletePostFrontend }) => {
     return (
         <PostContainer postContainerWidth={postContainerWidth}>
             <PostUserAndTime
-                profilePicture={post.profilePicture}
+                profilePicture={post.user_image}
                 username={post.author_name}
                 timeFromPost={timeFromPost}
             />

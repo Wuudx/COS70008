@@ -79,7 +79,7 @@ class ForumPost(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     date_posted = models.DateTimeField(auto_now_add=True)
     content = models.TextField(blank = True, null = True)
-    image = models.ImageField(upload_to='forum_images', blank=True, null=True)
+    image = models.ImageField(upload_to='../static/forums/images', blank=True, null=True)
 
     def __str__(self):
         return self.content

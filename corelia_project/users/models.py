@@ -23,6 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(null = True, default=False)
     authenticated = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    image = models.ImageField(upload_to='../static/users/images', blank=True, default = '../static/users/images/Default_profile_pic.png')
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
