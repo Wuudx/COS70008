@@ -11,14 +11,15 @@ const Container = styled.div`
     padding: 0 1rem 3rem 1rem;
 `;
 
-const About = () => {
+const Profile = () => {
     const user = useAuthState();
 
     return (
         <Container>
             <h1>Welcome {`${user.user.username}`}!</h1>
+            
         </Container>
     );
 };
 
-export default About;
+export default Profile;
