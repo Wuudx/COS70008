@@ -16,6 +16,8 @@ class Command(BaseCommand):
         Composer.objects.all().delete()
         ComposerNationality.objects.all().delete()
         Composition.objects.all().delete()
+        Instrument.objects.all().delete()
+        CompositionInstrument.objects.all().delete()
 
         df = pd.read_csv('Database information1.csv', delimiter=',', na_values= None)
         df = df.replace("?", "")
@@ -81,67 +83,78 @@ class Command(BaseCommand):
 
                     # Instrumentation - The Nightmare Begins
 
-                    instruments = None
-                    ensemble_type = None
+                    # Only format instrumentation exists (not null)
+                    if row['Instrumentation']:
+                        instruments = None
+                        ensemble_type = None
 
-                    # First determine if there is bracketed conent, which is often used to denote an enseble type
-                    if '(' in row['Instrumentation']:
-                        # Split the ensemble_type from the bracketed content and store it
-                        instruments = re.split(r'[\()]', row['Instrumentation'])
-                        ensemble_type = instruments[0] # ENSEMBLE TYPE DOES NOT EXIST IN DATABASE, CONSIDER ADDING IT
+                        # First determine if there is bracketed conent, which is often used to denote an enseble type
+                        if '(' in row['Instrumentation']:
+                            # Split the ensemble_type from the bracketed content and store it
+                            instruments = re.split(r'[\()]', row['Instrumentation'])
+                            ensemble_type = instruments[0] # This is currently unused. Might be useful in a future version.
 
-                        # Split the rest by commas or and/with
-                        instruments = re.split(r', | and | with ', instruments[1])
-                    else:
-                        # If there isn't any brackets then just split by commas or and/with
-                        instruments = re.split(r', | and | with ', row['Instrumentation'])
+                            # Split the rest by commas or and/with
+                            instruments = re.split(r', | and | with ', instruments[1])
+                        else:
+                            # If there isn't any brackets then just split by commas or and/with
+                            instruments = re.split(r', | and | with ', row['Instrumentation'])
 
-                    # Next determine the quantities of instruments
-                    for instrument in instruments:
-                        # Start by assuming a singular instrument, and remove the words 'solo' or 'an' and strip trailing or leading whitespace
-                        instrument = [1, re.sub(r'\bsolo|\ban', '', instrument.lower())]
+                        # Next determine the quantities of instruments
+                        for instrument in instruments:
+                            # Start by assuming a singular instrument, and remove the words 'solo' or 'an' and strip trailing or leading whitespace
+                            instrument = [1, re.sub(r'\bsolo|\ban', '', instrument.lower())]
+                            
+                            # !!!
+                            # LAZY PART
+                            # This is the part where I give up on complete accuracy and just start dumping data I don't like to squeeze a little more accuracy out.
+                            # Anything in this section would need to be changed for a final version. These are all all lazy band-aid solutions to bigger problems.
+                            # !!!
 
-                        # Is there are any numbers in the name, split the number out and cast it to in and store as quantity
-                        if any(char.isdigit() for char in instrument[1]):
-                            instrument[1] = instrument[1].split(' ', 1)
-                            instrument = [int(instrument[1][0]), instrument[1][1]]
+                            # Remove square brackets.
+                            # As far as I can tell they are only used in a single row, which is already pretty broken.
+                            # This will help at least SOME of its data be accurate.
+                            instrument[1] = re.sub(r'[\[\]]', '', instrument[1])
 
-                            # A very basic/inaccurate depluralization. Would need additonal package (e.g. pattern) for something better
-                            if instrument[1].endswith('s') and not instrument[1].endswith('ss'):
-                                instrument[1] = instrument[1][:-1]
+                            # Remove anything after a '/'
+                            # This is usually used for alternative instrumentation, which the database doesn't not currently support.
+                            # Due to time constraints, this script will just discard alternative instrumentation for now.
+                            instrument[1] = instrument[1].split('/')[0]
+                            # Do the same for 'or' for the same reason. Not worth combinging with the above.
+                            #instrument[1] = instrument[1].split(' or ')[0]
+                            instrument[1] = re.split(r'or\b', instrument[1])
+                            # Remove any empty cells, probably a lazy approach but that's what this section is for!
+                            instrument[1] = [x for x in instrument[1] if x][0]
 
-                        # As a inal touch of formattting, strip any leading/trailing spaces and capitalise the first letter.
-                        instrument[1] = instrument[1].strip().capitalize()
+                            # Remove question marks
+                            # There is only a single row that contains one in the given dataset and it's pointless for now
+                            instrument[1] = instrument[1].replace('?', '')
 
-                        # !!!
-                        # BAD PART
-                        # This is the part where I give up on complete accuracy and just start dumping data I don't like to squeeze a little more accuracy out.
-                        # Anything below this would need to be changed for a final version. These are all all lazy band-aid solutions to bigger problems.
-                        # !!!
+                            # !!!
+                            # END LAZY PART
+                            # Everything beyond this is fine to use.
+                            # !!!
 
-                        # Remove square brackets.
-                        # As far as I can tell they are only used in a single row, which is already pretty broken.
-                        # This will help at least SOME of its data be accurate.
-                        instrument[1] = re.sub(r'[\[\]]', '', instrument[1])
+                            # If the first 'word' of the name is a number, split it out and store it as the quantity
+                            int_check = instrument[1].split(' ', 1)
 
-                        # Remove anything after a '/'
-                        # This is usually used for alternative instrumentation, which the database doesn't not currently support.
-                        # Due to time constraints, this script will just discard alternative instrumentation for now.
-                        instrument[1] = instrument.split('/')[0]
+                            if int_check[0].isdigit():
+                                instrument = [int(int_check[0]), int_check[1]]
 
-                        # !!!
-                        # END BAD PART
-                        # Everything beyond this is fine to use.
-                        # !!!
+                                if instrument[1].endswith('s') and not instrument[1].endswith('ss'):
+                                    instrument[1] = instrument[1][:-1]
 
-                        # Create the instrument in the Instruments table if it doesn't already exist.
-                        if (Instrument.objects.filter(name = instrument[1]).count() == 0):
-                            models = Instrument(name = instrument[1])
+                            # As a final touch of formattting, strip any leading/trailing spaces and capitalise the first letter.
+                            instrument[1] = instrument[1].strip().capitalize()
+
+                            # Create the instrument in the Instruments table if it doesn't already exist.
+                            if (Instrument.objects.filter(name = instrument[1]).count() == 0):
+                                models = Instrument(name = instrument[1])
+                                models.save()
+
+                            # Finally, add the instrument to the composition via the CompositionInstrument lookup table.
+                            composition_id = Composition.objects.get(name = row['Nameofpiece'], year = row['Year']).id
+                            instrument_id = Instrument.objects.get(name = instrument[1]).id
+
+                            models = CompositionInstrument(instrument = instrument_id, composition_id = composition_id)
                             models.save()
-
-                        # Finally, add the instrument to the composition via the CompositionInstrument lookup table.
-                        composition_id = Composition.objects.get(row['Nameofpiece'], year = row['Year']).id
-                        instrument_id = Instrument.objects.get(name = instrument[1]).id
-
-                        models = CompositionInstrument(instrument = instrument_id, composition_id = composition_id)
-                        models.save()
