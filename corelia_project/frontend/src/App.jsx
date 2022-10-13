@@ -19,6 +19,7 @@ import Navbar from './components/navbar/Navbar';
 import CompositionInformation from './components/repertoire-library/composition/CompositionInformation';
 import RepertoireLibrary from './components/repertoire-library/RepertoireLibrary';
 import SearchBar from './components/searchbar/SearchBar';
+import Profile from './components/profile/Profile';
 import { AuthProvider } from './context/context';
 
 // Important so that footer sticks to bottom of page!
@@ -91,6 +92,7 @@ function App() {
                         <Route path='/contact-us' element={<ContactUsForm />} />
                         <Route path='/join-corelia' element={<JoinCorelia />} />
                         <Route path='/login' element={<Login />} />
+                        <Route path='/profile' element={<Profile />} />
                     </Routes>
                     <Footer />
                     <Toaster position='bottom-center' />

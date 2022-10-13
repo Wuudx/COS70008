@@ -145,8 +145,8 @@ class BlogPostView(ListAPIView):
     serializer_class = BlogPostsSerializer
 
     def get_queryset(self):
-        user_id = self.kwargs['post_id']
-        return BlogPost.objects.all().filter(author=user_id)
+        post_id = self.kwargs['post_id']
+        return BlogPost.objects.all().filter(id=post_id)
 
 
 class GetBlogPostsByUser(ListAPIView):
