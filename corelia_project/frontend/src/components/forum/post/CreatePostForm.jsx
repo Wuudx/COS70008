@@ -60,7 +60,7 @@ const CreatePostForm = ({ addNewPost }) => {
     if (!user.user) {
         content = (
             <p>
-                Want to contribute? Press <Link to="/join-corelia">here</Link>{" "}
+                Want to contribute? Press <Link to="/login">here</Link>{" "}
                 to post!
             </p>
         );
