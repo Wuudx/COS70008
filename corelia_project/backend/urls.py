@@ -34,6 +34,7 @@ urlpatterns = [
     path('forums/comments/<post_id>', ForumCommentView.as_view()),
     path('forums/<int:pk>/modify', ModifyForumPost.as_view()),
     path('forums/comments/<int:pk>/modify', ModifyForumComment.as_view()),
+    path('forums/<int:year>/<int:month>/posts', ForumPostByMonthAndYear.as_view()),
 
     # Admin Dash
     path('dash/users/<int:count>', GetUsersByJoinDate.as_view()),

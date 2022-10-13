@@ -230,7 +230,16 @@ class ModifyForumComment(RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
+    
+class ForumPostByMonthAndYear(ListAPIView):
+    serializer_class = ForumPostsSerializer
+    pagination_class = LimitOffsetPagination
 
+    def get_queryset(self):
+        month = self.kwargs['month']
+        year = self.kwargs['year']
+        return ForumPost.objects.filter(date_posted__month=month, date_posted__year=year)
+    
 
 class GetPopularBlogPosts(ListAPIView):
     pagination_class = PopularBlogPagination
@@ -245,6 +254,7 @@ class GetBlogPostsByMonth(ListAPIView):
     def get_queryset(self):
         month = self.kwargs['month']
         return BlogPost.objects.filter(date_posted__month = month)
+
 
 # Admin Dashboard
 
