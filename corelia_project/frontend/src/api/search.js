@@ -3,6 +3,8 @@ export async function searchAll(query, path) {
         return [];
     }
 
+    query = sanitise(query);
+
     // Getting the results
     const composers = await searchComposers(query);
     composers.type = 'composers';
@@ -89,4 +91,17 @@ async function searchBlogs(query) {
         throw new Error(response.status);
     }
     return response.json();
+}
+
+function sanitise(string) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        '/': '&#x2F;',
+    };
+    const reg = /[&<>"'/]/gi;
+    return string.replace(reg, (match) => map[match]);
 }
