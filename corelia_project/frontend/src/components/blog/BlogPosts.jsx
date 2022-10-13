@@ -16,11 +16,10 @@ const BlogPostsContainer = styled.div`
 `;
 
 const BlogPosts = ({ blogPosts }) => {
-    console.log(blogPosts);
     return (
         <BlogPostsContainer>
-            {blogPosts.map((blogPost) => (
-                <BlogPost key={blogPost.id} blogPost={blogPost} />
+            {blogPosts.map((blogPost, index) => (
+                <BlogPost key={index} blogPost={blogPost} />
             ))}
         </BlogPostsContainer>
     );

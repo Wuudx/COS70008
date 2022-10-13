@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import stylingConstants from '../../utils/styling';
+import { useNavigate } from 'react-router-dom';
 
 const BlogPostContainer = styled.div`
     display: flex;
@@ -13,6 +14,11 @@ const BlogPostContainer = styled.div`
     border-radius: 20px;
     background: #ffffff;
     box-shadow: 10px 10px 20px #d9d9d9, -10px -10px 20px #ffffff;
+    cursor: pointer;
+
+    &:hover {
+        background: #f2f2f2;
+    }
 `;
 
 const BlogPostHeading = styled.div`
@@ -54,14 +60,19 @@ const BlogPostContent = styled.p`
 `;
 
 const BlogPost = ({ blogPost }) => {
+    const navigate = useNavigate();
     const date = new Date(blogPost.date_posted);
     const day = date.getDate();
     const month = date.toLocaleString('default', { month: 'long' });
     const year = date.getFullYear();
     const formattedDate = `${month} ${day}, ${year}`;
 
+    const handleBlogPostClick = (blogPostId) => {
+        navigate(`/blog/${blogPostId}`);
+    };
+
     return (
-        <BlogPostContainer>
+        <BlogPostContainer onClick={() => handleBlogPostClick(blogPost.id)}>
             <BlogPostHeading>
                 <BlogPostTitleAuthor>
                     <BlogPostTitle>{blogPost.title}</BlogPostTitle>
