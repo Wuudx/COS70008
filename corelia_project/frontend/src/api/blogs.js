@@ -5,3 +5,11 @@ export async function getBlogPosts() {
     }
     return response.json();
 }
+
+export async function getBlogPost(id) {
+    const response = await fetch(`http://localhost:8000/api/blogs/${id}`);
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+    return response.json();
+}

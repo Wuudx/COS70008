@@ -80,10 +80,7 @@ function App() {
                             element={<CompositionInformation />}
                         />
                         <Route path='/blog' element={<Blog />} />
-                        <Route
-                            path='/blog/:blogPostId'
-                            element={<BlogPage />}
-                        />
+                        <Route path='/blog/:blogId' element={<BlogPage />} />
                         <Route path='/forum' element={<Forum />} />
                         <Route
                             path='/forum/post/:postId/comments'
