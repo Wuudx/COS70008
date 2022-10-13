@@ -1,8 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import PopularBlogPost from "./PopularBlogPost";
-import React from "react";
 import HomeContainer from "../../../shared-styled-components/HomeContainer";
+import PopularBlogPost from "./PopularBlogPost";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -34,7 +33,7 @@ const PopularBlogPosts = () => {
 
     return (
         <HomeContainer>
-            <h3>Popular Blog Posts</h3>
+            <h2>Popular Blog Posts</h2>
             <FlexContainer>
                 {popularBlogPosts.map((popularBlogPost) => (
                     <PopularBlogPost

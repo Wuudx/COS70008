@@ -2,7 +2,6 @@ import styled from "styled-components";
 import stylingConstants from "../utils/styling";
 
 const HomeContainer = styled.div`
-    border: 1px solid black;
     padding: 1em;
     margin-top: 2%;
     margin-left: ${stylingConstants.sizes.leftRightMargin};
@@ -10,6 +9,8 @@ const HomeContainer = styled.div`
     h3 {
         font-family: lato-bold;
     }
+    background: white;
+    border-radius: ${stylingConstants.sizes.containerBorderRadius};
 `;
 
 export default HomeContainer;

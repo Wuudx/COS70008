@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import FeaturedComposer from "./FeaturedComposer";
 import React from "react";
-import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
+import styled from "styled-components";
 import getFeaturedComposers from "../../../api/featured-composers";
+import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
 import HomeContainer from "../../../shared-styled-components/HomeContainer";
+import FeaturedComposer from "./FeaturedComposer";
 
 // This is assigns a div to a reusuable component called "FeaturedComposersContainer" which has the styles defined
 // below.
@@ -29,7 +29,7 @@ const FeaturedComposers = () => {
 
     return (
         <HomeContainer>
-            <h3>Featured Composers</h3>
+            <h2>Featured Composers</h2>
             <FlexContainer>{featuredComposers}</FlexContainer>
         </HomeContainer>
     );
