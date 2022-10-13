@@ -1,8 +1,11 @@
 import React from "React";
+import { toast } from "react-hot-toast";
+import { ScaleLoader } from "react-spinners";
+import styled from "styled-components";
 import { getCompositionsByComposerId } from "../../api/compositions";
 import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
+import stylingConstants from "../../utils/styling";
 import Composition from "./Composition";
-import styled from "styled-components";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -17,10 +20,10 @@ const Compositions = ({ composerId }) => {
 
     let content;
     if (isLoading) {
-        content = <FlexContainer>Loading...</FlexContainer>;
+        content = <ScaleLoader color={stylingConstants.colours.blue1} />;
     } else if (error) {
-        content = <FlexContainer>{error.message}</FlexContainer>;
-    } else if (data.count && data.count > 0) {
+        toast.error("Could not fetch compositions! Please try again later");
+    } else if ("count" in data && data.count > 0) {
         content = (
             <FlexContainer>
                 {data.results.map((composition) => (
@@ -31,6 +34,8 @@ const Compositions = ({ composerId }) => {
                 ))}
             </FlexContainer>
         );
+    } else if ("count" in data && data.count === 0) {
+        content = <p>There are no compositions available.</p>;
     }
 
     return content;

@@ -1,13 +1,12 @@
 import React from "react";
-import styled from "styled-components";
-import stylingConstants from "../../utils/styling";
-import FeaturedMusicTrack from "./FeaturedMusicTrack";
-import ComposerInformation from "./ComposerInformation";
 import { useParams } from "react-router-dom";
-import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
-import { getComposerById } from "../../api/composers";
 import ScaleLoader from "react-spinners/ScaleLoader";
-import { getCompositionsByComposerId } from "../../api/compositions";
+import styled from "styled-components";
+import { getComposerById } from "../../api/composers";
+import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
+import stylingConstants from "../../utils/styling";
+import ComposerInformation from "./ComposerInformation";
+import FeaturedMusicTrack from "./FeaturedMusicTrack";
 
 const Container = styled.div`
     margin-left: ${stylingConstants.sizes.leftRightMargin};
@@ -30,6 +29,7 @@ const ComposerProfile = () => {
         getComposerById(composerId)
     );
     const composer = data[0] || {};
+    console.log(composer);
 
     const composerName = `${composer.firstName} ${composer.lastName}`;
 
