@@ -98,7 +98,7 @@ function App() {
                             element={<ForgotPassword />}
                         />
                         <Route path='/profile' element={<Profile />} />
-                        <Route path='/admin' element={<AdminDash />} />
+                        <Route path='/admin-dashboard' element={<AdminDash />} />
                     </Routes>
                     <Footer />
                     <Toaster position='bottom-center' />

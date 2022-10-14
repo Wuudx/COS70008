@@ -56,7 +56,7 @@ const AccountDropdown = ({ isOpen }) => {
                     Logout
                 </DropdownItem>
                 {user.user.is_staff ? (
-                    <DropdownItem onClick={() => (window.location.href = '/admin')}>
+                    <DropdownItem onClick={() => (window.location.href = '/admin-dashboard')}>
                         <GiClarinet size='1.5em' style={{ marginRight: '0.5em' }} />
                         Admin
                     </DropdownItem>
