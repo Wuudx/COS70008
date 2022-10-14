@@ -87,7 +87,7 @@ const SearchResult = ({ result, searchQuery }) => {
                 ));
         } else if (result.type === 'blogs') {
             heading = 'Featured Blogs';
-            headingNavigatePath = '';
+            headingNavigatePath = '/blog';
             content = result.results
                 .slice(0, 3)
                 .map((blog, index) => <BlogResult key={index} blog={blog} />);

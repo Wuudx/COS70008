@@ -33,15 +33,17 @@ const SearchResults = ({ results, isLoading, searchQuery }) => {
     } else if (results.length > 0) {
         return (
             <ResultsContainer>
-                {results.map((result, index) =>
-                    result.count !== 0 ? (
-                        <SearchResult
-                            key={index}
-                            result={result}
-                            searchQuery={searchQuery}
-                        />
-                    ) : null
-                )}
+                {results
+                    .slice(0, 3)
+                    .map((result, index) =>
+                        result.count !== 0 ? (
+                            <SearchResult
+                                key={index}
+                                result={result}
+                                searchQuery={searchQuery}
+                            />
+                        ) : null
+                    )}
             </ResultsContainer>
         );
     } else {
