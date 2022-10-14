@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.pagination import LimitOffsetPagination
 
-from users.serializers import UserAnalyticsSerializer
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment, User
 from .serializers import *
 from .paginations import CustomPagination, PopularBlogPagination
@@ -300,7 +299,7 @@ class GetForumPostsFromThisWeek(ListAPIView):
 # Admin Dashboard - Analytics
 
 class GetUsersByJoinDate(ListAPIView):
-    serializer_class = UserAnalyticsSerializer
+    serializer_class = UserSerializer
     #pagination_class = ?
 
     def get_queryset(self):
@@ -325,65 +324,3 @@ class GetForumPostsByVotes(ListAPIView):
         # Currently limits results by count argument. Could be by date? Use pagination instead?
         count = self.kwargs['count']
         return ForumPost.objects.all().order_by('-votes')[:count]
-
-<<<<<<< HEAD
-class GetAllInstrumentsByCompositionFrequency(ListAPIView):
-    serializer_class = CompositionInstrumentFrequencySerializer
-    #pagination_class = ?
-
-    # def get_quertset(self):
-    #     return CompositionInstrument.objects.all().order_by('-intrument_frequency')
-
-    queryset = CompositionInstrument.objects.all().order_by('-intrument_frequency')
-
-class GetAllNationalitiesByComposerFrequency(ListAPIBView):
-    serializer_class = ComposerNationalityFrequencySerializer
-    #pagination_class = ?
-
-    queryset = ComposerNationality.objects.all().order_by('-nationality_frequency')
-
-# Admin Dashboard - Database
-
-# Not sure if we need to get the column names for these. If so try ListCreateAPIView
-
-# TODO: How to implement ComposerNationality to this?
-class AddComposer(CreateAPIView):
-    serializer_class = ComposerSerializer # Is this ideal? Should views be tailored to specific uses?
-    #pagination_class = ?
-    queryset = Composer.objects.all()
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-class AddNationality(CreateAPIView):
-    serializer_class = NationalitySerializer
-    #pagination_class = ?
-
-    queryset = Nationality.objects.all()
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-# TODO: How to implement CompositionInstrument to this?
-class AddComposition(CreateAPIView):
-    serializer_class = CompositionSerializer # Is this ideal? Should views be tailored to specific uses?
-    #pagination_class = ?
-
-    queryset = Composition.objects.all()
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-class AddInstrument(CreateAPIView):
-    serializer_class = InstrumentSerializer
-    #pagination_class = ?
-    
-    queryset = Instrument.objects.all()
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-# TODO: Find out about pagination for Admin Dash views.
-=======
-
->>>>>>> 08dd2f55d1b7601266bbaa3afab52ade8e4a6156

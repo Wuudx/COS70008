@@ -36,13 +36,3 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Invalid Username or Password")
-
-class UserAnalyticsSerializer(serializers.ModelSerializer):
-    #tier_name = serializers.SerializerMethodField()
-
-    #def get_tier_name (self, obj):
-    #    return obj.tier.name
-
-    class Meta:
-        model = User
-        fields = '__all__'
