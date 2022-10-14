@@ -1,8 +1,8 @@
+import React from "react";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
-import MonthFilters from "./MonthFilters";
+import Filters from "./Filters";
 import PostsContainer from "./post/PostsContainer";
-import React from "react";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -19,7 +19,7 @@ const InvisibleFlexItem = styled.div`
 const Forum = () => {
     return (
         <FlexContainer>
-            <MonthFilters />
+            <Filters />
             <PostsContainer />
             <InvisibleFlexItem />
         </FlexContainer>

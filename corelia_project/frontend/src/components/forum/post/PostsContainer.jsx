@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { getForumPosts } from "../../../api/forum";
+import { getForumPosts, getForumPostsByMonthAndYear } from "../../../api/forum";
 import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
+import useFetchOnParamsChange from "../../../hooks/useFetchOnParamsChange";
+import useSearchQuery from "../../../hooks/useSearchQuery";
 import CreatePostForm from "./CreatePostForm";
 import Posts from "./Posts";
 
@@ -14,8 +16,19 @@ const FlexContainer = styled.div`
 `;
 
 const PostsContainer = () => {
+    const monthFilter = useSearchQuery("month");
+    const yearFilter = useSearchQuery("year");
+
     const [data, isLoading, error, setData, setIsLoading, setError] =
         useFetchOnPageLoad(getForumPosts);
+
+    useFetchOnParamsChange(
+        () => getForumPostsByMonthAndYear(monthFilter, yearFilter),
+        [monthFilter, yearFilter],
+        setData,
+        setIsLoading,
+        setError
+    );
 
     function addNewPost(newPost) {
         setData({ ...data, results: [...data.results, newPost] });
