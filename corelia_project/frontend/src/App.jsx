@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import About from './components/about/About';
 import Login from './components/account/Login';
+import SignUp from './components/account/SignUp';
+import ForgotPassword from './components/account/ForgotPassword';
 import BackToTopButton from './components/back-to-top-button/BackToTopButton';
 import Blog from './components/blog/Blog';
 import BlogPage from './components/blog/blog-page/BlogPage';
@@ -89,6 +91,11 @@ function App() {
                         <Route path='/contact-us' element={<ContactUsForm />} />
                         <Route path='/join-corelia' element={<JoinCorelia />} />
                         <Route path='/login' element={<Login />} />
+                        <Route path='/signup' element={<SignUp />} />
+                        <Route
+                            path='/forgot-password'
+                            element={<ForgotPassword />}
+                        />
                         <Route path='/profile' element={<Profile />} />
                     </Routes>
                     <Footer />

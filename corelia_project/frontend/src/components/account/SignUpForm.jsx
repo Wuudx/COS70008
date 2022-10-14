@@ -57,17 +57,18 @@ const P = styled.p`
     font-size: 0.8rem;
 `;
 
-const Span = styled.span`
+const AccountLink = styled(Link)`
     color: ${stylingConstants.colours.blue1Percent100};
     cursor: pointer;
     user-select: none;
+    text-decoration: none;
 
     &:hover {
         color: ${stylingConstants.colours.blue2Percent100};
     }
 `;
 
-const SignUpForm = ({ handleChangeView }) => {
+const SignUpForm = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -76,7 +77,6 @@ const SignUpForm = ({ handleChangeView }) => {
     const dispatch = useAuthDispatch();
 
     const navigate = useNavigate();
-    const { loading, error } = useAuthState();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -133,9 +133,7 @@ const SignUpForm = ({ handleChangeView }) => {
             </Form>
             <P>
                 Ready to log in?{' '}
-                <Span onClick={() => handleChangeView('login')}>
-                    Login Now!
-                </Span>
+                <AccountLink to='/login'>Login Now!</AccountLink>
             </P>
         </SignUpFormContainer>
     );

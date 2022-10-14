@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
-import LoginForm from './LoginForm';
+import ForgotPasswordForm from './ForgotPasswordForm';
 
-const LoginDiv = styled.div`
+const ForgotPasswordDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -11,7 +11,7 @@ const LoginDiv = styled.div`
     width: 100%;
 `;
 
-const LoginBox = styled.div`
+const ForgotPasswordBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,13 +26,13 @@ const LoginBox = styled.div`
     box-shadow: 35px 35px 70px #ababab, -35px -35px 70px #ffffff;
 `;
 
-const Login = () => {
+const ForgotPassword = () => {
     return (
-        <LoginDiv>
-            <LoginBox>
-                <LoginForm />
-            </LoginBox>
-        </LoginDiv>
+        <ForgotPasswordDiv>
+            <ForgotPasswordBox>
+                <ForgotPasswordForm />
+            </ForgotPasswordBox>
+        </ForgotPasswordDiv>
     );
 };
-export default Login;
+export default ForgotPassword;
