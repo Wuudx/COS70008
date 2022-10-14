@@ -54,6 +54,7 @@ const CreatePostForm = ({ addNewPost }) => {
     const user = useAuthState();
     const [isLoading, setIsLoading] = useState(false);
     const [postContent, setPostContent] = useState("");
+    const profileImage = '../../../../static/users/images/Default_profile_pic.png' 
 
     let content;
 
@@ -85,7 +86,7 @@ const CreatePostForm = ({ addNewPost }) => {
                 <RoundedImage
                     width="30px"
                     height="30px"
-                    src="https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg"
+                    src= {profileImage}
                     alt="Profile Picture"
                 />
                 <FormItemsFlexContainer>

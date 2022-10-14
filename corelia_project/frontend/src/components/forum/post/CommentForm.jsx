@@ -35,6 +35,7 @@ const TextArea = styled.textarea`
 
 const CommentForm = ({ postId, profilePicture, addComment }) => {
     const user = useAuthState();
+    const profileImage = '../../../../static/users/images/Default_profile_pic.png' 
     const [isLoading, setIsLoading] = useState(false);
     const [commentContent, setCommentContent] = useState("");
 
@@ -88,7 +89,7 @@ const CommentForm = ({ postId, profilePicture, addComment }) => {
                 <RoundedImage
                     width="30px"
                     height="30px"
-                    src={profilePicture}
+                    src={profileImage}
                     alt="Profile Picture"
                 />
                 <Form onSubmit={handleCreateComment}>

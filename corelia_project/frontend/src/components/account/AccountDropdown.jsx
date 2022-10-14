@@ -4,6 +4,7 @@ import stylingConstants from '../../utils/styling';
 import { useAuthDispatch, logout, useAuth, useAuthState } from '../../context';
 import { FiLogOut } from 'react-icons/fi';
 import { CgProfile } from 'react-icons/cg';
+import { GiClarinet} from 'react-icons/gi';
 
 const DropdownContainer = styled.div`
     position: absolute;
@@ -41,6 +42,8 @@ const AccountDropdown = ({ isOpen }) => {
         window.location.href = '/profile';
     };
 
+    const user = useAuthState();
+
     if (isOpen) {
         return (
             <DropdownContainer>
@@ -52,6 +55,12 @@ const AccountDropdown = ({ isOpen }) => {
                     <FiLogOut size='1.5em' style={{ marginRight: '0.5em' }} />
                     Logout
                 </DropdownItem>
+                {user.user.is_staff ? (
+                    <DropdownItem onClick={() => (window.location.href = '/admin')}>
+                        <GiClarinet size='1.5em' style={{ marginRight: '0.5em' }} />
+                        Admin
+                    </DropdownItem>
+                ) : null}
             </DropdownContainer>
         );
     } else {

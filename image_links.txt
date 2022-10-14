@@ -1,0 +1,10 @@
+Ailis = https://corelias3.s3.ap-southeast-2.amazonaws.com/Ailis-Ni-Riain-.jpg
+Alice = https://corelias3.s3.ap-southeast-2.amazonaws.com/Alice_Mary_Smith.png
+ann cleare = https://corelias3.s3.ap-southeast-2.amazonaws.com/ann+cleare.jpg
+Brigid burke = https://corelias3.s3.ap-southeast-2.amazonaws.com/Brigid+Burke.jpg
+Elisabeth lutyens = https://corelias3.s3.ap-southeast-2.amazonaws.com/elisabeth+lutyens+-+Copy.jpg
+Judith Weir = https://corelias3.s3.ap-southeast-2.amazonaws.com/Judith+Weir.jpg
+mary kouyoumdi = https://corelias3.s3.ap-southeast-2.amazonaws.com/mary-kouyoumdjian.jpg
+Nicola Lefanu = https://corelias3.s3.ap-southeast-2.amazonaws.com/Nicola+LeFanu.jpg
+Rhian Samuel = https://corelias3.s3.ap-southeast-2.amazonaws.com/Rhian+Samuel.webp
+Thea musgrave = https://corelias3.s3.ap-southeast-2.amazonaws.com/thea+musgrave.jpg
