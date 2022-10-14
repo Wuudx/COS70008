@@ -145,6 +145,10 @@ class CompositionByLetterSerializer(serializers.ModelSerializer):
 
 class BlogPostsSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
+    user_image = serializers.SerializerMethodField()
+
+    def get_user_image(self, obj):
+        return obj.author.image.url
     
 
     def get_author_name(self, obj):
@@ -154,7 +158,7 @@ class BlogPostsSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlogPost
         fields = ['id', 'author', 'content', 'date_posted',
-                  'title', 'votes', 'author_name']
+                  'title', 'votes', 'author_name', 'user_image']
 
 
 class BlogPostCommentsSerializer(serializers.ModelSerializer):

@@ -240,6 +240,23 @@ class ForumPostByMonthAndYear(ListAPIView):
         month = self.kwargs['month']
         year = self.kwargs['year']
         return ForumPost.objects.filter(date_posted__month=month, date_posted__year=year)
+
+class ForumPostByYear(ListAPIView):
+    serializer_class = ForumPostsSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        year = self.kwargs['year']
+        return ForumPost.objects.filter(date_posted__year=year)
+
+class ForumPostByMonth(ListAPIView):
+    serializer_class = ForumPostsSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        month = self.kwargs['month']
+        return ForumPost.objects.filter(date_posted__month=month)
+
     
 
 class GetPopularBlogPosts(ListAPIView):

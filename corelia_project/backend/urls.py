@@ -35,6 +35,8 @@ urlpatterns = [
     path('forums/<int:pk>/modify', ModifyForumPost.as_view()),
     path('forums/comments/<int:pk>/modify', ModifyForumComment.as_view()),
     path('forums/<int:year>/<int:month>/posts', ForumPostByMonthAndYear.as_view()),
+    path('forums/year/<int:year>/posts', ForumPostByYear.as_view()),
+    path('forums/month/<int:month>/posts', ForumPostByMonth.as_view()),
 
     # Admin Dash
     path('dash/users/<int:count>', GetUsersByJoinDate.as_view()),
