@@ -49,6 +49,6 @@ h1 {
 }
 
 /* Default to these fonts unless otherwise specified. */
-span, p, a, div, h2, h3, h4 {
+span, p, a, div, h2, h3, h4, input {
   font-family: lato-regular;
 }
