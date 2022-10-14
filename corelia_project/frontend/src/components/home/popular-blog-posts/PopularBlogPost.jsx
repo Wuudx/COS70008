@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import RoundedImage from "../../../shared-styled-components/RoundedImage";
-import React from "react";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import RoundedImage from '../../../shared-styled-components/RoundedImage';
+import React from 'react';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -13,6 +13,7 @@ const FlexContainer = styled.div`
 const BLOG_PREVIEW_CHAR_LENGTH = 100;
 
 const PopularBlogPost = ({ popularBlogPost }) => {
+    console.log(popularBlogPost);
     const blogPreview = popularBlogPost.preview.slice(
         0,
         BLOG_PREVIEW_CHAR_LENGTH
@@ -28,7 +29,7 @@ const PopularBlogPost = ({ popularBlogPost }) => {
         <FlexContainer>
             <RoundedImage
                 src={popularBlogPost.profilePicture}
-                alt="Profile Picture"
+                alt='Profile Picture'
             />
             <Link to={`/blogs/${popularBlogPost.title}/`}>
                 {blogPreviewElement}

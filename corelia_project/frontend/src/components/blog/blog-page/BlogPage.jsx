@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import useFetchOnParamChange from '../../../hooks/useFetchOnParamChange';
+import useFetchOnPageLoad from '../../../hooks/useFetchOnPageLoad';
 import { getBlogPost } from '../../../api/blogs';
+import { getComposerById } from '../../../api/composers';
 import { ScaleLoader } from 'react-spinners';
 import stylingConstants from '../../../utils/styling';
+import { IoIosArrowBack } from 'react-icons/io';
 
 const Container = styled.div`
     display: flex;
@@ -27,6 +30,27 @@ const BlogPageContainer = styled.div`
     background-color: #f5f5f5;
     border-radius: 45px;
     padding: 20px;
+`;
+
+const BackButton = styled.div`
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    height: 40px;
+    width: 100px;
+
+    color: ${stylingConstants.colours.blue1};
+    border-radius: 5px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: ${stylingConstants.colours.blue1};
+        color: white;
+    }
 `;
 
 const BlogHeading = styled.div`
@@ -63,6 +87,7 @@ const BlogContent = styled.p`
 
 const BlogPage = () => {
     const { blogId } = useParams();
+    const navigate = useNavigate();
     const [blogPost, setBlogPost] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -84,6 +109,10 @@ const BlogPage = () => {
         setError
     );
 
+    const handleBackClick = () => {
+        navigate(-1);
+    };
+
     console.log(blog);
 
     let content;
@@ -94,6 +123,10 @@ const BlogPage = () => {
     } else if (blog) {
         content = (
             <BlogPageContainer>
+                <BackButton onClick={handleBackClick}>
+                    <IoIosArrowBack size='2em' />
+                    Back
+                </BackButton>
                 <BlogHeading>
                     <BlogTitle>{blog.title}</BlogTitle>
                     <BlogDate>{formattedDate}</BlogDate>

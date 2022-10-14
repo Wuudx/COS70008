@@ -71,6 +71,13 @@ const BlogPost = ({ blogPost }) => {
         navigate(`/blog/${blogPostId}`);
     };
 
+    let contentPreview;
+    if (blogPost.content.length > 200) {
+        contentPreview = blogPost.content.slice(0, 200) + '...';
+    } else {
+        contentPreview = blogPost.content;
+    }
+
     return (
         <BlogPostContainer onClick={() => handleBlogPostClick(blogPost.id)}>
             <BlogPostHeading>
@@ -80,7 +87,7 @@ const BlogPost = ({ blogPost }) => {
                 </BlogPostTitleAuthor>
                 <BlogPostDate>{formattedDate}</BlogPostDate>
             </BlogPostHeading>
-            <BlogPostContent>{blogPost.content}</BlogPostContent>
+            <BlogPostContent>{contentPreview}</BlogPostContent>
         </BlogPostContainer>
     );
 };
