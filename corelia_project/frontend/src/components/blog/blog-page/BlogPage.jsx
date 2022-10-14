@@ -90,13 +90,12 @@ const AuthorInformation = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    width: 100%;
     margin: 10px;
     padding: 0;
+    cursor: pointer;
 
     &:hover {
-        cursor: pointer;
-        background-color: black;
+        text-decoration: underline;
     }
 `;
 
@@ -151,6 +150,10 @@ const BlogPage = () => {
         navigate(-1);
     };
 
+    const handleAuthorClick = (authorId) => {
+        navigate(`/composers/${authorId}`);
+    };
+
     console.log(blog);
 
     let content;
@@ -174,7 +177,9 @@ const BlogPage = () => {
                         <BlogTitle>{blog.title}</BlogTitle>
                         <BlogDate>{formattedDate}</BlogDate>
                     </BlogInformation>
-                    <AuthorInformation>
+                    <AuthorInformation
+                        onClick={() => handleAuthorClick(blog.author)}
+                    >
                         <AuthorName>{blog.author_name}</AuthorName>
                         <AuthorImage src={profileImage} />
                     </AuthorInformation>
