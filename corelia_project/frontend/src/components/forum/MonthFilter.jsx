@@ -1,6 +1,7 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useSearchQuery from "../../hooks/useSearchQuery";
 import stylingConstants from "../../utils/styling";
 
 const Button = styled.button`
@@ -20,10 +21,12 @@ const Button = styled.button`
 
 const MonthFilter = ({ month, focusedMonth, setFocusedMonth }) => {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+    const yearFilter = useSearchQuery("year");
 
     function handleClick() {
         setFocusedMonth(month);
-        navigate(`?month=${month}`);
+        navigate(`${pathname}?month=${month}&year=${yearFilter}`);
     }
 
     const isFocused = focusedMonth === month;
