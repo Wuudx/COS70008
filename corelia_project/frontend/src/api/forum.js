@@ -42,10 +42,19 @@ export async function getForumPosts(optionalUrl) {
 }
 
 export async function getForumPostsByMonthAndYear(monthFilter, yearFilter) {
-    const monthNumber = convertMonthToNumber(monthFilter);
-    const response = await fetch(
-        `http://localhost:8000/api/forums/${yearFilter}/${monthNumber}/posts?limit=${constants.POSTS_LIMIT}`
-    );
+    let url;
+    // Note we have to check string equality here because if there is no month or year filter, the value is literally
+    // null due to the fact that it is passed from url.
+    if (monthFilter !== "null" && yearFilter !== "null") {
+        const monthNumber = convertMonthToNumber(monthFilter);
+        url = `http://localhost:8000/api/forums/${yearFilter}/${monthNumber}/posts?limit=${constants.POSTS_LIMIT}`;
+    } else if (monthFilter !== "null") {
+        const monthNumber = convertMonthToNumber(monthFilter);
+        url = `http://localhost:8000/api/forums/month/${monthNumber}/posts?limit=${constants.POSTS_LIMIT}`;
+    } else if (yearFilter !== "null") {
+        url = `http://localhost:8000/api/forums/year/${yearFilter}/posts?limit=${constants.POSTS_LIMIT}`;
+    }
+    const response = await fetch(url);
     if (!response.ok) {
         throw new Error(response.status);
     }

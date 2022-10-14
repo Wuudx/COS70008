@@ -14,10 +14,18 @@ const H1 = styled.h1`
     margin: 0px;
 `;
 
+const Img = styled.img`
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    align-self: center;
+    justify-self: center;
+`;
+
 const FeaturedMusicTrack = ({ composerImage, featuredSong, linkToScore }) => {
     return (
         <FlexContainer>
-            <img src={composerImage} alt='Composer Picture' />
+            <Img src={composerImage} alt='Composer Picture' />
             <h4>Featured Music Track</h4>
             <MusicPlayer linkToSong={featuredSong} />
             <LinkToScore linkToScore={linkToScore} />

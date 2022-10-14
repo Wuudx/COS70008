@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import About from './components/about/About';
 import Login from './components/account/Login';
+import SignUp from './components/account/SignUp';
+import ForgotPassword from './components/account/ForgotPassword';
 import BackToTopButton from './components/back-to-top-button/BackToTopButton';
 import Blog from './components/blog/Blog';
 import BlogPage from './components/blog/blog-page/BlogPage';
@@ -20,6 +22,7 @@ import CompositionInformation from './components/repertoire-library/composition/
 import RepertoireLibrary from './components/repertoire-library/RepertoireLibrary';
 import SearchBar from './components/searchbar/SearchBar';
 import Profile from './components/profile/Profile';
+import AdminDash from './components/admindash/AdminDash';
 import { AuthProvider } from './context/context';
 
 // Important so that footer sticks to bottom of page!
@@ -89,7 +92,13 @@ function App() {
                         <Route path='/contact-us' element={<ContactUsForm />} />
                         <Route path='/join-corelia' element={<JoinCorelia />} />
                         <Route path='/login' element={<Login />} />
+                        <Route path='/signup' element={<SignUp />} />
+                        <Route
+                            path='/forgot-password'
+                            element={<ForgotPassword />}
+                        />
                         <Route path='/profile' element={<Profile />} />
+                        <Route path='/admin-dashboard' element={<AdminDash />} />
                     </Routes>
                     <Footer />
                     <Toaster position='bottom-center' />

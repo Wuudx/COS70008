@@ -56,17 +56,18 @@ const P = styled.p`
     font-size: 0.8rem;
 `;
 
-const Span = styled.span`
+const AccountLink = styled(Link)`
     color: ${stylingConstants.colours.blue1Percent100};
     cursor: pointer;
     user-select: none;
+    text-decoration: none;
 
     &:hover {
         color: ${stylingConstants.colours.blue2Percent100};
     }
 `;
 
-const ForgotPasswordForm = ({ handleChangeView }) => {
+const ForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
 
     const handleSubmit = async (e) => {
@@ -89,13 +90,11 @@ const ForgotPasswordForm = ({ handleChangeView }) => {
             </Form>
             <P>
                 Don't have an account?{' '}
-                <Span onClick={() => handleChangeView('signup')}>Sign Up</Span>
+                <AccountLink to='/signup'>Sign Up</AccountLink>
             </P>
             <P>
                 Ready to log in?{' '}
-                <Span onClick={() => handleChangeView('login')}>
-                    Login Now!
-                </Span>
+                <AccountLink to='/login'>Login Now!</AccountLink>
             </P>
         </ForgotPasswordFormContainer>
     );

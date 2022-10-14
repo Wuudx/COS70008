@@ -13,7 +13,9 @@ from .serializers import *
 from .paginations import CustomPagination, PopularBlogPagination
 from rest_framework.permissions import IsAuthenticated
 from knox.auth import TokenAuthentication
+from users.serializers import UserSerializer
 import datetime
+from django.utils import timezone
 
 # Create your views here.
 
@@ -240,6 +242,23 @@ class ForumPostByMonthAndYear(ListAPIView):
         month = self.kwargs['month']
         year = self.kwargs['year']
         return ForumPost.objects.filter(date_posted__month=month, date_posted__year=year)
+
+class ForumPostByYear(ListAPIView):
+    serializer_class = ForumPostsSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        year = self.kwargs['year']
+        return ForumPost.objects.filter(date_posted__year=year)
+
+class ForumPostByMonth(ListAPIView):
+    serializer_class = ForumPostsSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        month = self.kwargs['month']
+        return ForumPost.objects.filter(date_posted__month=month)
+
     
 
 class GetPopularBlogPosts(ListAPIView):
@@ -255,6 +274,27 @@ class GetBlogPostsByMonth(ListAPIView):
     def get_queryset(self):
         month = self.kwargs['month']
         return BlogPost.objects.filter(date_posted__month = month)
+
+class GetNewUsersThisWeek(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = UserSerializer
+    
+    def get_queryset(self):
+        return User.objects.filter(date_joined__gte = datetime.date.today() - datetime.timedelta(days=7))
+
+class GetBlogPostsFromThisWeek(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = BlogPostsSerializer
+
+    def get_queryset(self):
+        return BlogPost.objects.filter(date_posted__gte = datetime.date.today() - datetime.timedelta(days=7))
+
+class GetForumPostsFromThisWeek(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = ForumPostsSerializer
+
+    def get_queryset(self):
+        return ForumPost.objects.filter(date_posted__gte = datetime.date.today() - datetime.timedelta(days=7))
 
 
 # Admin Dashboard - Analytics
@@ -286,6 +326,7 @@ class GetForumPostsByVotes(ListAPIView):
         count = self.kwargs['count']
         return ForumPost.objects.all().order_by('-votes')[:count]
 
+<<<<<<< HEAD
 class GetAllInstrumentsByCompositionFrequency(ListAPIView):
     serializer_class = CompositionInstrumentFrequencySerializer
     #pagination_class = ?
@@ -343,3 +384,6 @@ class AddInstrument(CreateAPIView):
         serializer.save()
 
 # TODO: Find out about pagination for Admin Dash views.
+=======
+
+>>>>>>> 08dd2f55d1b7601266bbaa3afab52ade8e4a6156

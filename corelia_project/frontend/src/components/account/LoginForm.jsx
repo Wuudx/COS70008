@@ -62,10 +62,11 @@ const P = styled.p`
     font-size: 0.8rem;
 `;
 
-const Span = styled.span`
+const AccountLink = styled(Link)`
     color: ${stylingConstants.colours.blue1Percent100};
     cursor: pointer;
     user-select: none;
+    text-decoration: none;
 
     &:hover {
         color: ${stylingConstants.colours.blue2Percent100};
@@ -77,7 +78,7 @@ const Error = styled.div`
     font-size: 0.8rem;
 `;
 
-const LoginForm = ({ handleChangeView }) => {
+const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -127,13 +128,11 @@ const LoginForm = ({ handleChangeView }) => {
             </Form>
             <P>
                 Forgot password?{' '}
-                <Span onClick={() => handleChangeView('forgotpassword')}>
-                    Click Here!
-                </Span>
+                <AccountLink to='/forgot-password'>Click Here</AccountLink>
             </P>
             <P>
                 Don't have an account?{' '}
-                <Span onClick={() => handleChangeView('signup')}>Sign Up</Span>
+                <AccountLink to='/signup'>Sign Up</AccountLink>
             </P>
         </LoginFormContainer>
     );

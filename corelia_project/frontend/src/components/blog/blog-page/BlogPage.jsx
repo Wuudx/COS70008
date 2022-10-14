@@ -55,10 +55,18 @@ const BackButton = styled.div`
 
 const BlogHeading = styled.div`
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+`;
+
+const BlogInformation = styled.div`
+    display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    width: 80%;
+    justify-content: center;
+    width: 100%;
 `;
 
 const BlogTitle = styled.h1`
@@ -75,6 +83,35 @@ const BlogDate = styled.h2`
     margin: 10px;
     padding: 0;
     align-self: flex-start;
+`;
+
+const AuthorInformation = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 10px;
+    padding: 0;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
+const AuthorName = styled.h2`
+    font-family: 'Lato-regular';
+    font-size: 1.2em;
+    margin: 10px;
+    padding: 0;
+    align-self: flex-start;
+`;
+
+const AuthorImage = styled.img`
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin: 10px;
 `;
 
 const BlogContent = styled.p`
@@ -113,6 +150,10 @@ const BlogPage = () => {
         navigate(-1);
     };
 
+    const handleAuthorClick = (authorId) => {
+        navigate(`/composers/${authorId}`);
+    };
+
     console.log(blog);
 
     let content;
@@ -121,6 +162,10 @@ const BlogPage = () => {
     } else if (error) {
         content = <p>There was an error loading the blog post.</p>;
     } else if (blog) {
+        const profileImage =
+            blog.user_image === 'static/users/images/Default_profile_pic.png'
+                ? '/' + blog.user_image
+                : blog.user_image;
         content = (
             <BlogPageContainer>
                 <BackButton onClick={handleBackClick}>
@@ -128,8 +173,16 @@ const BlogPage = () => {
                     Back
                 </BackButton>
                 <BlogHeading>
-                    <BlogTitle>{blog.title}</BlogTitle>
-                    <BlogDate>{formattedDate}</BlogDate>
+                    <BlogInformation>
+                        <BlogTitle>{blog.title}</BlogTitle>
+                        <BlogDate>{formattedDate}</BlogDate>
+                    </BlogInformation>
+                    <AuthorInformation
+                        onClick={() => handleAuthorClick(blog.author)}
+                    >
+                        <AuthorName>{blog.author_name}</AuthorName>
+                        <AuthorImage src={profileImage} />
+                    </AuthorInformation>
                 </BlogHeading>
                 <BlogContent>{blog.content}</BlogContent>
             </BlogPageContainer>
