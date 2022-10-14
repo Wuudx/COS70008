@@ -52,8 +52,6 @@ class Command(BaseCommand):
         for index, row in df.iterrows():
             if (Composer.objects.filter(firstName=row['FirstName'], lastName=row['LastName']).count() == 0):
                 models = Composer(firstName = row['FirstName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = error_nationality, biography = row['Biography'], bio_source = row['Bio_source'], composer_website = row['Composer_website'])
-                if row['FirstName'] == "Ailis" and row['LastName'] == "Ni Riain":
-                    models.Composer.image = "https://corelias3.s3.ap-southeast-2.amazonaws.com/Ailis-Ni-Riain-.jpg"
                 models.save()
 
                 nationalities = re.sub(r'[()/]', ' ', row['Nationality']).split()

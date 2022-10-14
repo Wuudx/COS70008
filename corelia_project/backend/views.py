@@ -13,7 +13,9 @@ from .serializers import *
 from .paginations import CustomPagination, PopularBlogPagination
 from rest_framework.permissions import IsAuthenticated
 from knox.auth import TokenAuthentication
+from users.serializers import UserSerializer
 import datetime
+from django.utils import timezone
 
 # Create your views here.
 
@@ -273,6 +275,27 @@ class GetBlogPostsByMonth(ListAPIView):
         month = self.kwargs['month']
         return BlogPost.objects.filter(date_posted__month = month)
 
+class GetNewUsersThisWeek(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = UserSerializer
+    
+    def get_queryset(self):
+        return User.objects.filter(date_joined__gte = datetime.date.today() - datetime.timedelta(days=7))
+
+class GetBlogPostsFromThisWeek(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = BlogPostsSerializer
+
+    def get_queryset(self):
+        return BlogPost.objects.filter(date_posted__gte = datetime.date.today() - datetime.timedelta(days=7))
+
+class GetForumPostsFromThisWeek(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = ForumPostsSerializer
+
+    def get_queryset(self):
+        return ForumPost.objects.filter(date_posted__gte = datetime.date.today() - datetime.timedelta(days=7))
+
 
 # Admin Dashboard
 
@@ -302,3 +325,5 @@ class GetForumPostsByVotes(ListAPIView):
         # Currently limits results by count argument. Could be by date?
         count = self.kwargs['count']
         return ForumPost.objects.all().order_by('-votes')[:count]
+
+

@@ -22,6 +22,7 @@ import CompositionInformation from './components/repertoire-library/composition/
 import RepertoireLibrary from './components/repertoire-library/RepertoireLibrary';
 import SearchBar from './components/searchbar/SearchBar';
 import Profile from './components/profile/Profile';
+import AdminDash from './components/admindash/AdminDash';
 import { AuthProvider } from './context/context';
 
 // Important so that footer sticks to bottom of page!
@@ -97,6 +98,7 @@ function App() {
                             element={<ForgotPassword />}
                         />
                         <Route path='/profile' element={<Profile />} />
+                        <Route path='/admin' element={<AdminDash />} />
                     </Routes>
                     <Footer />
                     <Toaster position='bottom-center' />
