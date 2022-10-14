@@ -1,22 +1,26 @@
 import React from 'react';
+import { Toaster } from 'react-hot-toast';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
+import About from './components/about/About';
 import Login from './components/account/Login';
 import BackToTopButton from './components/back-to-top-button/BackToTopButton';
+import Blog from './components/blog/Blog';
+import BlogPage from './components/blog/blog-page/BlogPage';
 import ComposerProfile from './components/composer-profile/ComposerProfile';
-import Composition from './components/composition/Composition';
 import ContactUsForm from './components/contact-corelia/ContactUsForm';
 import DiscoverComposers from './components/discover-composers/DiscoverComposers';
 import Footer from './components/footer/Footer';
+import Comments from './components/forum/comment/Comments';
 import Forum from './components/forum/Forum';
 import Home from './components/home/Home';
 import JoinCorelia from './components/join-corelia/JoinCorelia';
 import Navbar from './components/navbar/Navbar';
+import CompositionInformation from './components/repertoire-library/composition/CompositionInformation';
 import RepertoireLibrary from './components/repertoire-library/RepertoireLibrary';
 import SearchBar from './components/searchbar/SearchBar';
+import Profile from './components/profile/Profile';
 import { AuthProvider } from './context/context';
-import Comments from './components/forum/comment/Comments';
-import Blog from './components/blog/Blog';
 
 // Important so that footer sticks to bottom of page!
 const AppDiv = styled.div`
@@ -39,6 +43,7 @@ function App() {
                             path='/discover-composers'
                             element={<DiscoverComposers />}
                         />
+                        <Route path='/about' element={<About />} />
                         <Route
                             path='/discover-composers/:composerId/'
                             element={<ComposerProfile />}
@@ -72,8 +77,10 @@ function App() {
                         />
                         <Route
                             path='/repertoire-library/:compositionId/'
-                            element={<Composition />}
+                            element={<CompositionInformation />}
                         />
+                        <Route path='/blog' element={<Blog />} />
+                        <Route path='/blog/:blogId' element={<BlogPage />} />
                         <Route path='/forum' element={<Forum />} />
                         <Route
                             path='/forum/post/:postId/comments'
@@ -81,10 +88,11 @@ function App() {
                         />
                         <Route path='/contact-us' element={<ContactUsForm />} />
                         <Route path='/join-corelia' element={<JoinCorelia />} />
-                        <Route path='/blog' element={<Blog />} />
                         <Route path='/login' element={<Login />} />
+                        <Route path='/profile' element={<Profile />} />
                     </Routes>
                     <Footer />
+                    <Toaster position='bottom-center' />
                 </AppDiv>
             </Router>
         </AuthProvider>

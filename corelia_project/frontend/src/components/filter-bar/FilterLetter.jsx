@@ -1,8 +1,8 @@
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useSearchQuery from "../../hooks/useSearchQuery";
 import stylingConstants from "../../utils/styling";
-import React from "react";
 
 const Li = styled.li`
     &: hover {

@@ -1,17 +1,21 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
-import React from "react";
 
 const FlexContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 0.5em;
 `;
 
 const Span = styled.span`
     font-family: lato-light;
+    display: inline-block;
+    // Same width as image.
+    width: 200px;
 `;
 
 const Img = styled.img`

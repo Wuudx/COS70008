@@ -38,7 +38,7 @@ const AccountDropdown = ({ isOpen }) => {
     };
 
     const handleProfileClick = () => {
-        console.log('Profile clicked');
+        window.location.href = '/profile';
     };
 
     if (isOpen) {

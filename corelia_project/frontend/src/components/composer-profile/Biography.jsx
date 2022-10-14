@@ -6,7 +6,13 @@ const P = styled.p`
 `;
 
 const Biography = ({ biography }) => {
-    return <P>{biography}</P>;
+    let content;
+    if (!biography) {
+        content = "Information not available";
+    } else {
+        content = biography;
+    }
+    return <P>{content}</P>;
 };
 
 export default Biography;

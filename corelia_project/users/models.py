@@ -19,9 +19,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=30, unique=True)
     # should be NOT NULL, default=0? Testing
     tier = models.ForeignKey(
-        UserTier, on_delete=models.DO_NOTHING, null=True, blank=True)
+    UserTier, on_delete=models.DO_NOTHING, null=True, blank=True)
+    is_staff = models.BooleanField(null = True, default=False)
     authenticated = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    image = models.ImageField(upload_to='../static/users/images', blank=True, default = '../static/users/images/Default_profile_pic.png')
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []

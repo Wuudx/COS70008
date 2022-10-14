@@ -1,5 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import stylingConstants from "../../utils/styling";
 
 const FlexContainer = styled.div`
     background-color: white;
@@ -7,18 +9,42 @@ const FlexContainer = styled.div`
     padding: 1em;
     overflow: wrap;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
+    p {
+        margin: 0px;
+        font-family: lato-bold;
+    }
+    cursor: pointer;
+    transition: 0.8s;
+    &:hover {
+        background-color: ${stylingConstants.colours.blue2Percent50};
+    }
 `;
 
 const Composition = ({ composition }) => {
-    return (
-        <FlexContainer>
-            <p>{composition.name}</p>
+    const navigate = useNavigate();
+    let compositionRecordingLinkElement;
+    if (composition.recording_link) {
+        compositionRecordingLinkElement = (
             <a href={composition.recording_link} target="_blank">
                 {composition.recording_link}
             </a>
+        );
+    } else {
+        compositionRecordingLinkElement = <span>Not Available</span>;
+    }
+
+    function navigateToComposition() {
+        navigate(`/repertoire-library/${composition.id}`);
+    }
+
+    return (
+        <FlexContainer onClick={navigateToComposition}>
+            <p>{composition.name}</p>
+            <span>Recording Link: {compositionRecordingLinkElement}</span>
         </FlexContainer>
     );
 };

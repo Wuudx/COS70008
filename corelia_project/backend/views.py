@@ -1,6 +1,6 @@
 from time import strftime
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, ListCreateAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -22,6 +22,10 @@ class AllComposersView(ListAPIView):
     pagination_class = LimitOffsetPagination
     queryset = Composer.objects.all()
     serializer_class = AllComposersSerializer
+
+class ComposerUpdateView(RetrieveUpdateDestroyAPIView):
+    queryset = Composer.objects.all()
+    serializer_class = ComposerSerializer
 
 
 class ComposerView(ListAPIView):
@@ -74,7 +78,8 @@ class SearchBarGetComposer(ListAPIView):
 
     def get_queryset(self):
         query = self.kwargs['query']
-        return Composer.objects.all().filter(firstName__icontains=query)
+        
+        return Composer.objects.all().filter(firstName__icontains=query) | Composer.objects.all().filter(lastName__icontains=query)
 
 
 class SearchBarGetComposition(ListAPIView):
@@ -94,6 +99,13 @@ class SearchBarGetPublisher(ListAPIView):
         query = self.kwargs['query']
         return Publisher.objects.all().filter(name__icontains=query)
 
+class SearchBarGetBlogPosts(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = SearchBarBlogPostsSerializer
+
+    def get_queryset(self):
+        query = self.kwargs['query']
+        return BlogPost.objects.filter(title__icontains=query)
 
 class GetCompositionsByComposer(ListAPIView):
     pagination_class = CustomPagination
@@ -118,14 +130,24 @@ class AllBlogPosts(ListCreateAPIView):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostsSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+class ModifyBlogPost(RetrieveUpdateDestroyAPIView):
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostsSerializer
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class BlogPostView(ListAPIView):
     pagination_class = LimitOffsetPagination
     serializer_class = BlogPostsSerializer
 
     def get_queryset(self):
-        user_id = self.kwargs['post_id']
-        return BlogPost.objects.all().filter(author=user_id)
+        post_id = self.kwargs['post_id']
+        return BlogPost.objects.all().filter(id=post_id)
 
 
 class GetBlogPostsByUser(ListAPIView):
@@ -142,6 +164,9 @@ class AllBlogComments(ListCreateAPIView):
     queryset = BlogComment.objects.all()
     serializer_class = BlogPostCommentsSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
 
 class BlogCommentView(ListAPIView):
     pagination_class = LimitOffsetPagination
@@ -151,12 +176,28 @@ class BlogCommentView(ListAPIView):
         post_id = self.kwargs['post_id']
         return BlogComment.objects.all().filter(post=post_id)
 
+class ModifyBlogComment(RetrieveUpdateDestroyAPIView):
+    queryset = BlogComment.objects.all()
+    serializer_class = BlogPostCommentsSerializer
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class AllForumPosts(ListCreateAPIView):
     pagination_class = LimitOffsetPagination
+    queryset = ForumPost.objects.all().order_by('-date_posted')
+    serializer_class = ForumPostsSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class ModifyForumPost(RetrieveUpdateDestroyAPIView):
     queryset = ForumPost.objects.all()
     serializer_class = ForumPostsSerializer
 
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
 
 class ForumPostView(ListAPIView):
     pagination_class = LimitOffsetPagination
@@ -172,6 +213,9 @@ class AllForumComments(ListCreateAPIView):
     queryset = ForumComment.objects.all()
     serializer_class = ForumPostCommentsSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class ForumCommentView(ListAPIView):
     serializer_class = ForumPostCommentsSerializer
@@ -181,6 +225,22 @@ class ForumCommentView(ListAPIView):
         post_id = self.kwargs['post_id']
         return ForumComment.objects.all().filter(post=post_id)
 
+class ModifyForumComment(RetrieveUpdateDestroyAPIView):
+    queryset = ForumComment.objects.all()
+    serializer_class = ForumPostCommentsSerializer
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+    
+class ForumPostByMonthAndYear(ListAPIView):
+    serializer_class = ForumPostsSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+        month = self.kwargs['month']
+        year = self.kwargs['year']
+        return ForumPost.objects.filter(date_posted__month=month, date_posted__year=year)
+    
 
 class GetPopularBlogPosts(ListAPIView):
     pagination_class = PopularBlogPagination
@@ -195,6 +255,7 @@ class GetBlogPostsByMonth(ListAPIView):
     def get_queryset(self):
         month = self.kwargs['month']
         return BlogPost.objects.filter(date_posted__month = month)
+
 
 # Admin Dashboard
 

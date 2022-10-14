@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment
 
+from django.contrib.postgres.aggregates import StringAgg
 
 class AllComposersSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,11 +11,14 @@ class AllComposersSerializer(serializers.ModelSerializer):
 
 
 class ComposerSerializer(serializers.ModelSerializer):
-    nationality_name = serializers.SerializerMethodField()
+    #nationality_name = serializers.SerializerMethodField()
+    nationality_names = serializers.SerializerMethodField()
 
-    def get_nationality_name (self, obj):
-        return obj.nationality.name
-
+    #def get_nationality_name (self, obj):
+        #return obj.nationality.name
+    def get_nationality_names (self, obj):
+        return ComposerNationality.objects.filter(composer=obj).aggregate(names=StringAgg('nationality__name', delimiter='/', ordering='id'))['names']
+        
     class Meta:
         model = Composer
         fields = '__all__'
@@ -60,11 +64,12 @@ class FeaturedComposerSerializer(serializers.ModelSerializer):
     nationality_detail = serializers.SerializerMethodField()
 
     def get_nationality_detail(self, obj):
-        return obj.nationality.name
+    #    return obj.nationality.name
+        return ComposerNationality.objects.filter(composer=obj).aggregate(names=StringAgg('nationality__name', delimiter='/', ordering='id'))['names']
 
     class Meta:
         model = Composer
-        fields = ['firstName', 'lastName', 'birth',
+        fields = ['id','firstName', 'lastName', 'birth',
                   'death', 'nationality_detail', 'image']
 
 
@@ -98,6 +103,17 @@ class SearchBarPublisherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publisher
         fields = ['id', 'name']
+
+class SearchBarBlogPostsSerializer(serializers.ModelSerializer):
+    author_name = serializers.SerializerMethodField()
+    
+    def get_author_name(self, obj):
+        return obj.author.username
+
+    class Meta:
+        model = BlogPost
+        fields = ['id', 'author', 'content', 'date_posted',
+                  'title', 'votes', 'author_name']
 
 
 class CompositionsByComposerSerializer(serializers.ModelSerializer):
@@ -149,26 +165,38 @@ class BlogPostCommentsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BlogComment
-        fields = ['id', 'author', 'content', 'date_posted', 'author_name']
+        fields = ['id', 'author', 'content', 'date_posted', 'author_name', 'post']
 
 
 class ForumPostsSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
+    num_comments = serializers.SerializerMethodField()
+    user_image = serializers.SerializerMethodField()
 
     def get_author_name(self, obj):
         return obj.user.username
 
+    def get_num_comments(self, obj):
+        return ForumComment.objects.filter(post=obj).count()
+    
+    def get_user_image(self, obj):
+        return obj.user.image.url
+
     class Meta:
         model = ForumPost
-        fields = ['id', 'user', 'content', 'date_posted', 'votes', 'author_name']
+        fields = ['id', 'user', 'content', 'date_posted', 'author_name', 'image', 'num_comments', 'user_image']
 
 
 class ForumPostCommentsSerializer(serializers.ModelSerializer):
     author_name = serializers.SerializerMethodField()
+    user_image = serializers.SerializerMethodField()
 
     def get_author_name(self, obj):
         return obj.user.username
+    
+    def get_user_image(self, obj):
+        return obj.user.image.url
 
     class Meta:
         model = ForumComment
-        fields = ['id', 'user', 'content', 'date_posted', 'author_name', 'post']
+        fields = ['id', 'user', 'content', 'date_posted', 'author_name', 'post', 'user_image']
