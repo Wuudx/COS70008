@@ -1,47 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
+import { toast } from "react-hot-toast";
+import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
+import { getPopularBlogPosts } from "../../../api/popular-blogs";
+import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
 import HomeContainer from "../../../shared-styled-components/HomeContainer";
+import stylingConstants from "../../../utils/styling";
 import PopularBlogPost from "./PopularBlogPost";
 
 const FlexContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    flex-shrink: 0;
 `;
 
 const PopularBlogPosts = () => {
-    // This is just mock data. Real data will be loaded from api.
-    const [popularBlogPosts, setPopularBlogPosts] = useState([
-        {
-            id: 1,
-            title: "Blog Title 1",
-            preview:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            profilePicture:
-                "https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg",
-        },
-        {
-            id: 2,
-            title: "Blog Title 2",
-            preview:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-            profilePicture:
-                "https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg",
-        },
-    ]);
+    const [data, isLoading, error] = useFetchOnPageLoad(getPopularBlogPosts);
+
+    let content;
+    if (isLoading) {
+        content = <ScaleLoader color={stylingConstants.colours.blue1} />;
+    } else if (error) {
+        toast.error("Failed to load popular blog posts!");
+    } else if ("count" in data && data.results) {
+        content = data.results.map((popularBlogPost) => (
+            <PopularBlogPost
+                key={popularBlogPost.id}
+                popularBlogPost={popularBlogPost}
+            />
+        ));
+    }
 
     return (
         <HomeContainer>
             <h2>Popular Blog Posts</h2>
-            <FlexContainer>
-                {popularBlogPosts.map((popularBlogPost) => (
-                    <PopularBlogPost
-                        key={popularBlogPost.id}
-                        popularBlogPost={popularBlogPost}
-                    />
-                ))}
-            </FlexContainer>
+            <FlexContainer>{content}</FlexContainer>
         </HomeContainer>
     );
 };
