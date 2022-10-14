@@ -6,7 +6,7 @@ const YearFilter = () => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
     const currentMonthFilter = useSearchQuery("month");
-    const [yearFilter, setYearFilter] = useState("2022");
+    const [yearFilter, setYearFilter] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     // Only allow years from 2022 to 2099.
@@ -16,6 +16,10 @@ const YearFilter = () => {
     }
 
     useEffect(() => {
+        // Do nothing if year filter is empty.
+        if (!yearFilter) {
+            return;
+        }
         const isYearValid = checkYearValid();
         if (!isYearValid) {
             setErrorMessage("Please enter a year between 2022 and 2099.");

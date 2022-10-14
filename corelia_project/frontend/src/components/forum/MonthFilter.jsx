@@ -1,7 +1,7 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
-import React from "react";
 
 const Button = styled.button`
     width: 100%;
