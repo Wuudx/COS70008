@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -18,8 +19,14 @@ const BlogName = styled.div`
 `;
 
 const BlogResult = ({ blog }) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate(`/blog/${blog.id}`);
+    };
+
     return (
-        <Container>
+        <Container onClick={handleClick}>
             <BlogName>{blog.title}</BlogName>
         </Container>
     );
