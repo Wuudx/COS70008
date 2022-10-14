@@ -1,8 +1,10 @@
 import React from "react";
+import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
 import getFeaturedComposers from "../../../api/featured-composers";
 import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
 import HomeContainer from "../../../shared-styled-components/HomeContainer";
+import stylingConstants from "../../../utils/styling";
 import FeaturedComposer from "./FeaturedComposer";
 
 // This is assigns a div to a reusuable component called "FeaturedComposersContainer" which has the styles defined
@@ -18,7 +20,9 @@ const FeaturedComposers = () => {
 
     let featuredComposers;
     if (isLoading) {
-        featuredComposers = <div>Loading...</div>;
+        featuredComposers = (
+            <ScaleLoader color={stylingConstants.colours.blue1} />
+        );
     } else if (error) {
         featuredComposers = <div>{error.message}</div>;
     } else {
