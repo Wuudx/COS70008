@@ -257,14 +257,14 @@ class GetBlogPostsByMonth(ListAPIView):
         return BlogPost.objects.filter(date_posted__month = month)
 
 
-# Admin Dashboard
+# Admin Dashboard - Analytics
 
 class GetUsersByJoinDate(ListAPIView):
     serializer_class = UserAnalyticsSerializer
     #pagination_class = ?
 
     def get_queryset(self):
-        # Currently limits results by count argument. Could be by date?
+        # Currently limits results by count argument. Could be by date? Use pagination instead?
         count = self.kwargs['count']
         return User.objects.all().order_by('-date_joined')[:count]
 
@@ -273,7 +273,7 @@ class GetBlogPostsByVotes(ListAPIView):
     #pagination_class = ?
 
     def get_queryset(self):
-        # Currently limits results by count argument. Could be by date?
+        # Currently limits results by count argument. Could be by date? Use pagination instead?
         count = self.kwargs['count']
         return BlogPost.objects.all().order_by('-votes')[:count]
 
@@ -282,6 +282,21 @@ class GetForumPostsByVotes(ListAPIView):
     #pagination_class = ?
 
     def get_queryset(self):
-        # Currently limits results by count argument. Could be by date?
+        # Currently limits results by count argument. Could be by date? Use pagination instead?
         count = self.kwargs['count']
         return ForumPost.objects.all().order_by('-votes')[:count]
+
+class GetAllInstrumentsByCompositionFrequency(ListAPIView):
+    serializer_class = CompositionInstrumentFrequencySerializer
+    #pagination_class = ?
+
+    # def get_quertset(self):
+    #     return CompositionInstrument.objects.all().order_by('-intrument_frequency')
+
+    queryset = CompositionInstrument.objects.all().order_by('-intrument_frequency')
+
+class GetAllNationalitiesByComposerFrequency(ListAPIBView):
+    serializer_class = ComposerNationalityFrequencySerializer
+    #pagination_class = ?
+
+    queryset = ComposerNationality.objects.all().order_by('-nationality_frequency')

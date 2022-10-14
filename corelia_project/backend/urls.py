@@ -40,4 +40,6 @@ urlpatterns = [
     path('dash/users/<int:count>', GetUsersByJoinDate.as_view()),
     path('dash/blogs/<int:count>', GetBlogPostsByVotes.as_view()),
     path('dash/forums/<int:count>', GetForumPostsByVotes.as_view()),
+    path('dash/frequency/instruments', GetAllInstrumentsByCompositionFrequency.as_view()),
+    path('dash/frequency/nationality', GetAllNationalitiesByComposerFrequency.as_view()),
 ]

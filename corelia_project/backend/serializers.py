@@ -200,3 +200,31 @@ class ForumPostCommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ForumComment
         fields = ['id', 'user', 'content', 'date_posted', 'author_name', 'post', 'user_image']
+
+class CompositionInstrumentFrequencySerializer(serializers.ModelSerializer):
+    instrument_name = serializers.SerializerMethodField()
+    instrument_frequency = serializers.SerializerMethodField()
+
+    def get_instrument_name(self, obj):
+        return obj.instrument.name
+
+    def get_instrument_frequency(self, obj):
+        return obj.CompositionInstrument.objects.values('instrument').annotate(Count('instrument'))
+
+    class Meta:
+        model = CompositionInstrument
+        fields = ['instrument_name', 'intrument_frequency']
+
+class ComposerNationalityFrequencySerializer(serializers.ModelSerializer):
+    nationality_name = serializers.SerializerMethodField()
+    nationality_frequency = serializers.SerializerMethodField()
+
+    def get_nationality_name(self, obj):
+        return obj.nationality.name
+
+    def get_nationality_frequency(self, obj):
+        return obj.ComposerNationality.objects.values('nationality').annotate(Count('nationality'))
+
+    class Meta:
+        model = ComposerNationality
+        fields = ['nationality_name', 'nationality_frequency']
