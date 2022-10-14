@@ -9,9 +9,7 @@ function useFetchOnParamsChange(
     setError
 ) {
     useEffect(() => {
-        if (params.includes(null)) {
-            // Do not fetch unless both month and year defined. TODO: Change this once endpoints for filtering
-            // by only month and year are added.
+        if (!params[0] && !params[1]) {
             return;
         }
         async function getData() {

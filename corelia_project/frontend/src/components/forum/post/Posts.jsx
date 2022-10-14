@@ -24,7 +24,6 @@ const Posts = ({
     setError,
     deletePostFrontend,
 }) => {
-    console.log(data);
     let nextPageApiEndpoint = "";
 
     function handleLoadMore() {
@@ -50,7 +49,6 @@ const Posts = ({
             ));
         }
     } else if (error) {
-        console.log(error);
         loadMoreButton = <div>{error.message}</div>;
     } else if (isDataLoaded) {
         nextPageApiEndpoint = data.next;
