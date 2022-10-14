@@ -21,3 +21,11 @@ export async function getWeeklyForumPosts() {
     }
     return response.json();
 }
+
+export async function getContactMessages() {
+    const response = await fetch('http://localhost:8000/api/dash/contact/messages');
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+    return response.json();
+}
