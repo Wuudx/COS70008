@@ -1,20 +1,31 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import useSearchQuery from "../../hooks/useSearchQuery";
 import stylingConstants from "../../utils/styling";
 import MonthFilter from "./MonthFilter";
-import React from "react";
+import YearFilter from "./YearFilter";
 
 // TODO: Maybe add margin left and margin right (from invisible flex item) to parent flex container. This should have the
 // same effect.
 const FlexContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 20%;
-    margin-left: ${stylingConstants.sizes.leftRightMargin};
+    width: 100%;
     background: white;
     border-radius: ${stylingConstants.sizes.containerBorderRadius};
     height: fit-content;
+`;
+
+const OuterFlexContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    align-items: center;
+    gap: 1em;
+    margin-left: ${stylingConstants.sizes.leftRightMargin};
+    h2 {
+        margin: 0px;
+    }
 `;
 
 const MONTHS = [
@@ -32,21 +43,25 @@ const MONTHS = [
     "December",
 ];
 
-const MonthFilters = () => {
+const Filters = () => {
     const currentMonthFilter = useSearchQuery("month");
     const [focusedMonth, setFocusedMonth] = useState(currentMonthFilter || "");
 
     return (
-        <FlexContainer>
-            {MONTHS.map((month) => (
-                <MonthFilter
-                    key={month}
-                    month={month}
-                    focusedMonth={focusedMonth}
-                    setFocusedMonth={setFocusedMonth}
-                />
-            ))}
-        </FlexContainer>
+        <OuterFlexContainer>
+            <h2>Filter By: </h2>
+            <YearFilter />
+            <FlexContainer>
+                {MONTHS.map((month) => (
+                    <MonthFilter
+                        key={month}
+                        month={month}
+                        focusedMonth={focusedMonth}
+                        setFocusedMonth={setFocusedMonth}
+                    />
+                ))}
+            </FlexContainer>
+        </OuterFlexContainer>
     );
 };
-export default MonthFilters;
+export default Filters;
