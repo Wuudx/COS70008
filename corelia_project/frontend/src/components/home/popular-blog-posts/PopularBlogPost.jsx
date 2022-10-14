@@ -38,7 +38,7 @@ const PopularBlogPost = ({ popularBlogPost }) => {
                     width="175px"
                     height="175px"
                 />
-                <Link to={`/blogs/${popularBlogPost.title}/`}>
+                <Link to={`/blog/${popularBlogPost.id}/`}>
                     {blogPreviewElement}
                 </Link>
             </FlexContainer>
