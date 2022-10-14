@@ -300,3 +300,46 @@ class GetAllNationalitiesByComposerFrequency(ListAPIBView):
     #pagination_class = ?
 
     queryset = ComposerNationality.objects.all().order_by('-nationality_frequency')
+
+# Admin Dashboard - Database
+
+# Not sure if we need to get the column names for these. If so try ListCreateAPIView
+
+# TODO: How to implement ComposerNationality to this?
+class AddComposer(CreateAPIView):
+    serializer_class = ComposerSerializer # Is this ideal? Should views be tailored to specific uses?
+    #pagination_class = ?
+    queryset = Composer.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class AddNationality(CreateAPIView):
+    serializer_class = NationalitySerializer
+    #pagination_class = ?
+
+    queryset = Nationality.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+# TODO: How to implement CompositionInstrument to this?
+class AddComposition(CreateAPIView):
+    serializer_class = CompositionSerializer # Is this ideal? Should views be tailored to specific uses?
+    #pagination_class = ?
+
+    queryset = Composition.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class AddInstrument(CreateAPIView):
+    serializer_class = InstrumentSerializer
+    #pagination_class = ?
+    
+    queryset = Instrument.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+# TODO: Find out about pagination for Admin Dash views.

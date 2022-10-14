@@ -201,6 +201,8 @@ class ForumPostCommentsSerializer(serializers.ModelSerializer):
         model = ForumComment
         fields = ['id', 'user', 'content', 'date_posted', 'author_name', 'post', 'user_image']
 
+# Admin Dash - Analytics
+
 class CompositionInstrumentFrequencySerializer(serializers.ModelSerializer):
     instrument_name = serializers.SerializerMethodField()
     instrument_frequency = serializers.SerializerMethodField()
@@ -228,3 +230,15 @@ class ComposerNationalityFrequencySerializer(serializers.ModelSerializer):
     class Meta:
         model = ComposerNationality
         fields = ['nationality_name', 'nationality_frequency']
+
+# Admin Dashboard - Database
+
+class NationalitySerializer(serializers.ModelSerializer):
+    class Meta:
+            model = Nationality
+            fields = '__all__'
+
+class InstrumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Instrument
+        fields = '__all__'
