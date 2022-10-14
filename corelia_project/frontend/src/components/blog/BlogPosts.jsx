@@ -15,13 +15,26 @@ const BlogPostsContainer = styled.div`
     background: transparent;
 `;
 
+const NoPostsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: ${stylingConstants.sizes.containerBorderRadius};
+    padding: 20px;
+`;
+
 const BlogPosts = ({ blogPosts }) => {
-    return (
-        <BlogPostsContainer>
-            {blogPosts.map((blogPost, index) => (
-                <BlogPost key={index} blogPost={blogPost} />
-            ))}
-        </BlogPostsContainer>
-    );
+    let content;
+    if (blogPosts.length === 0) {
+        content = <NoPostsContainer>No blog posts found.</NoPostsContainer>;
+    } else {
+        content = blogPosts.map((blogPost, index) => (
+            <BlogPost key={index} blogPost={blogPost} />
+        ));
+    }
+
+    return <BlogPostsContainer>{content}</BlogPostsContainer>;
 };
 export default BlogPosts;
