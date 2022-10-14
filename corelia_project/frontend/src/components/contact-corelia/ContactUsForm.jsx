@@ -1,6 +1,9 @@
+import React, { useState } from "react";
+import { toast } from "react-hot-toast";
+import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
+import { contactUs } from "../../api/contact-us";
 import stylingConstants from "../../utils/styling";
-import React from "react";
 
 const FlexContainer = styled.div`
     display: flex;
@@ -51,10 +54,44 @@ const SubmitInput = styled.input.attrs({ type: "submit" })`
     }
 `;
 
-// TODO: FORM VALIDATION (maybe use react-hook-form?)
 const ContactUsForm = () => {
-    function handleSubmit(e) {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [subject, setSubject] = useState("");
+    const [message, setMessage] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+
+    async function handleSubmit(e) {
         e.preventDefault();
+        setIsLoading(true);
+        const data = {
+            name: name,
+            email: email,
+            subject: subject,
+            message: message,
+        };
+        try {
+            await contactUs(data);
+            toast.success("Succesfully contacted!");
+        } catch (error) {
+            toast.error("Failed to contact! Please try again later.");
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    let submitButton;
+    if (isLoading) {
+        submitButton = <ScaleLoader color={stylingConstants.colours.blue1} />;
+    } else {
+        submitButton = (
+            <SubmitInput
+                width="40%"
+                height="3em"
+                type="submit"
+                value="Send Message"
+            />
+        );
     }
 
     return (
@@ -63,30 +100,46 @@ const ContactUsForm = () => {
                 <p>
                     <label htmlFor="name">YOUR NAME (required)</label>
                     <br />
-                    <Input type="text" id="name" required />
+                    <Input
+                        type="text"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                    />
                 </p>
                 <p>
                     <label htmlFor="email">YOUR EMAIL (required)</label>
                     <br />
-                    <Input type="text" id="email" required />
+                    <Input
+                        type="text"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
                 </p>
                 <p>
                     <label htmlFor="subject">SUBJECT</label>
                     <br />
-                    <Input type="text" id="subject" required />
+                    <Input
+                        type="text"
+                        id="subject"
+                        value={subject}
+                        onChange={(e) => setSubject(e.target.value)}
+                        required
+                    />
                 </p>
                 <p>
                     <label htmlFor="message">MESSAGE</label>
                     <br />
-                    <TextArea id="message" />
+                    <TextArea
+                        id="message"
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                    />
                 </p>
-                <SubmitInput
-                    width="40%"
-                    height="3em"
-                    type="submit"
-                    value="Send Message"
-                    required
-                />
+                {submitButton}
             </Form>
         </FlexContainer>
     );

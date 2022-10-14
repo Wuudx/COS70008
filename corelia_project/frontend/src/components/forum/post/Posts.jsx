@@ -5,6 +5,7 @@ import fetchNextPage from "../../../api/fetch-next-page";
 import { getForumPosts } from "../../../api/forum";
 import stylingConstants from "../../../utils/styling";
 import LoadMoreButton from "../../buttons/LoadMoreButton";
+import NoPostsFound from "./NoPostsFound";
 import Post from "./Post";
 
 const FlexContainer = styled.div`
@@ -67,6 +68,8 @@ const Posts = ({
                 deletePostFrontend={deletePostFrontend}
             />
         ));
+    } else if ("count" in data && data.count === 0) {
+        content = <NoPostsFound />;
     }
 
     return (

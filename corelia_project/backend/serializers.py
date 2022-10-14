@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment
+from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment, ContactUs
 
 from django.contrib.postgres.aggregates import StringAgg
 
@@ -204,3 +204,8 @@ class ForumPostCommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ForumComment
         fields = ['id', 'user', 'content', 'date_posted', 'author_name', 'post', 'user_image']
+
+class ContactUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactUs
+        fields = ['id', 'name', 'email', 'subject', 'message']

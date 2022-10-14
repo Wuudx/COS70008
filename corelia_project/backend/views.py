@@ -295,6 +295,13 @@ class GetForumPostsFromThisWeek(ListAPIView):
     def get_queryset(self):
         return ForumPost.objects.filter(date_posted__gte = datetime.date.today() - datetime.timedelta(days=7))
 
+class GetContactMessages(ListAPIView):
+    pagination_class = CustomPagination
+    serializer_class = ContactUsSerializer
+
+    def get_queryset(self):
+        return ContactUs.objects.all()
+
 
 # Admin Dashboard - Analytics
 
@@ -324,3 +331,10 @@ class GetForumPostsByVotes(ListAPIView):
         # Currently limits results by count argument. Could be by date? Use pagination instead?
         count = self.kwargs['count']
         return ForumPost.objects.all().order_by('-votes')[:count]
+
+
+class ContactUsView(ListCreateAPIView):
+    queryset = ContactUs.objects.all()
+    serializer_class = ContactUsSerializer
+
+

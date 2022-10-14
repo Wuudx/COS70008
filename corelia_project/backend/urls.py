@@ -45,4 +45,7 @@ urlpatterns = [
     path('dash/users/week/count', GetNewUsersThisWeek.as_view()),
     path('dash/blogs/week/count', GetBlogPostsFromThisWeek.as_view()),
     path('dash/forums/week/count', GetForumPostsFromThisWeek.as_view()),
+    path('dash/contact/messages', GetNewUsersThisWeek.as_view()),
+
+    path('contact/form/submission', ContactUsView.as_view()),
 ]

@@ -1,40 +1,48 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import RoundedImage from '../../../shared-styled-components/RoundedImage';
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import RoundedImage from "../../../shared-styled-components/RoundedImage";
+
+const Container = styled.div`
+    display: flex;
+    gap: 1em;
+`;
 
 const FlexContainer = styled.div`
     display: flex;
     gap: 1em;
     width: 30%;
-    flex-shrink: 0;
 `;
 
 const BLOG_PREVIEW_CHAR_LENGTH = 100;
 
 const PopularBlogPost = ({ popularBlogPost }) => {
     console.log(popularBlogPost);
-    const blogPreview = popularBlogPost.preview.slice(
+    const blogPreview = popularBlogPost.content.slice(
         0,
         BLOG_PREVIEW_CHAR_LENGTH
     );
     let blogPreviewElement;
-    if (popularBlogPost.preview.length > BLOG_PREVIEW_CHAR_LENGTH) {
+    if (popularBlogPost.content.length > BLOG_PREVIEW_CHAR_LENGTH) {
         blogPreviewElement = <p>{blogPreview}...</p>;
     } else {
         blogPreviewElement = <p>{blogPreview}</p>;
     }
 
     return (
-        <FlexContainer>
-            <RoundedImage
-                src={popularBlogPost.profilePicture}
-                alt='Profile Picture'
-            />
-            <Link to={`/blogs/${popularBlogPost.title}/`}>
-                {blogPreviewElement}
-            </Link>
-        </FlexContainer>
+        <Container>
+            <FlexContainer>
+                <RoundedImage
+                    src={popularBlogPost.user_image}
+                    alt="Profile Picture"
+                    width="175px"
+                    height="175px"
+                />
+                <Link to={`/blog/${popularBlogPost.id}/`}>
+                    {blogPreviewElement}
+                </Link>
+            </FlexContainer>
+        </Container>
     );
 };
 

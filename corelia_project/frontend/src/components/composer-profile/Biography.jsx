@@ -6,11 +6,15 @@ const P = styled.p`
 `;
 
 const Biography = ({ biography }) => {
+    function createMarkup() {
+        return { __html: biography };
+    }
+
     let content;
     if (!biography) {
-        content = "Information not available";
+        content = <P>Information not available</P>;
     } else {
-        content = biography;
+        content = <P dangerouslySetInnerHTML={createMarkup()}></P>;
     }
     return <P>{content}</P>;
 };

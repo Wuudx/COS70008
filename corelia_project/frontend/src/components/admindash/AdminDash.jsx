@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useAuthState } from '../../context';
 import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
-import { getWeeklyNewUsers, getWeeklyBlogPosts, getWeeklyForumPosts } from "../../api/admin-dash";
+import { getWeeklyNewUsers, getWeeklyBlogPosts, getWeeklyForumPosts, getContactMessages } from "../../api/admin-dash";
 
 const Container = styled.div`
     display: flex;
@@ -27,10 +27,12 @@ const AdminDash = () => {
     const [weeklyUserData, isLoadingUser, errorUser] = useFetchOnPageLoad(getWeeklyNewUsers);
     const [weeklyBlogData, isLoadingBlog, errorBlog] = useFetchOnPageLoad(getWeeklyBlogPosts);
     const [weeklyForumData, isLoadingForum, errorForum] = useFetchOnPageLoad(getWeeklyForumPosts);
+    const [contactMessageData, isLoadingContact, errorContact] = useFetchOnPageLoad(getContactMessages);
 
     let weeklyNewUsers
     let weeklyNewBlogPosts
     let weeklyNewForumPosts
+    let contactMessages
 
     if (isLoadingUser) {
         weeklyNewUsers = <div>Loading...</div>;
@@ -55,6 +57,14 @@ const AdminDash = () => {
     } else {
         weeklyNewForumPosts = weeklyForumData.count;
     }
+
+    if (isLoadingContact) {
+        contactMessages = <div>Loading...</div>;
+    } else if (errorContact) {
+        contactMessages = <div>{errorContact.message}</div>;
+    } else {
+        contactMessages = contactMessageData.count;
+    }
     
     return (
         <Container>
@@ -71,6 +81,11 @@ const AdminDash = () => {
                 <h2>Weekly New Forum Posts</h2>
                 <h3>{weeklyNewForumPosts}</h3>
             </InformationContainer>
+            <InformationContainer>
+                <h2>Contact Messages</h2>
+                <h3>{contactMessages}</h3>
+            </InformationContainer>
+
         </Container>
         
 

@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Biography from "./Biography";
 import { useLocation } from "react-router-dom";
-import Navbar from "./Navbar";
+import styled from "styled-components";
+import stylingConstants from "../../utils/styling";
 import About from "./About";
+import Biography from "./Biography";
 import Compositions from "./Compositions";
+import Navbar from "./Navbar";
 
 const FlexContainer = styled.div`
     display flex;
     flex-direction: column;
     width: 50%;
+    background: white;
+    padding: 1em;
+    border-radius: ${stylingConstants.sizes.containerBorderRadius}
 `;
 
 const H1 = styled.h1`
@@ -40,7 +44,6 @@ const ComposerInformation = ({ composerId, biography, aboutInformation }) => {
             {" "}
             {/* This will be a flag next to composer name instead of nationality in text */}
             <H1>{`${aboutInformation.name} ${aboutInformation.nationality}`}</H1>
-            <div>Clarinet, Piano</div>
             <Navbar />
             {composerInformationElement}
         </FlexContainer>
