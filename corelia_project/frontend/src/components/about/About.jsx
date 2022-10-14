@@ -1,5 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import stylingConstants from "../../utils/styling";
 
 const Container = styled.div`
     display: flex;
@@ -10,22 +11,25 @@ const Container = styled.div`
     width: 70%;
     height: 100%;
     align-self: center;
+    background: white;
+    border-radius: ${stylingConstants.sizes.containerBorderRadius};
+    margin-bottom: ${stylingConstants.sizes.gapFromFooterToEndOfContent};
 `;
 
 const H1 = styled.h1`
-    font-family: 'Lato-Bold';
+    font-family: "Lato-Bold";
     font-size: 2em;
     margin-bottom: 1rem;
 `;
 
 const H2 = styled.h2`
-    font-family: 'Lato-Bold';
+    font-family: "Lato-Bold";
     font-size: 1.5em;
     margin-bottom: 1rem;
 `;
 
 const P = styled.p`
-    font-family: 'Lato-Regular';
+    font-family: "Lato-Regular";
     font-size: 1em;
     margin-bottom: 1rem;
     align-self: flex-start;
