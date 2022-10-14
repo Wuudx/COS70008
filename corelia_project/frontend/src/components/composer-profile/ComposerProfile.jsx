@@ -15,6 +15,7 @@ const Container = styled.div`
 
 const OuterFlexContainer = styled.div`
     display: flex;
+    gap: 2em;
 `;
 
 const LoaderFlexContainer = styled.div`

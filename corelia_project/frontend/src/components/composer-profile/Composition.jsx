@@ -4,7 +4,7 @@ import styled from "styled-components";
 import stylingConstants from "../../utils/styling";
 
 const FlexContainer = styled.div`
-    background-color: white;
+    background-color: #f5f5f5;
     border-radius: 0.5em;
     padding: 1em;
     overflow: wrap;
