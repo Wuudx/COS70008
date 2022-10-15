@@ -20,7 +20,7 @@ const Img = styled.img`
     justify-self: center;
 `;
 
-const FeaturedMusicTrack = ({ composerImage, featuredSong, linkToScore }) => {
+const FeaturedMusicTrack = ({ composerImage }) => {
     return (
         <FlexContainer>
             <Img src={composerImage} alt="Composer Picture" />
