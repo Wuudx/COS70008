@@ -30,12 +30,17 @@ const Navbar = () => {
                 <StyledLink
                     className={setClassName("biography")}
                     to="biography/"
+                    borderBottom={`0.3em solid ${stylingConstants.colours.blue2Percent30}`}
                 >
                     Biography
                 </StyledLink>
             </li>
             <li>
-                <StyledLink className={setClassName("about")} to="about/">
+                <StyledLink
+                    className={setClassName("about")}
+                    to="about/"
+                    borderBottom={`0.3em solid ${stylingConstants.colours.blue2Percent30}`}
+                >
                     About
                 </StyledLink>
             </li>
@@ -43,6 +48,7 @@ const Navbar = () => {
                 <StyledLink
                     className={setClassName("compositions")}
                     to="compositions/"
+                    borderBottom={`0.3em solid ${stylingConstants.colours.blue2Percent30}`}
                 >
                     Compositions
                 </StyledLink>
