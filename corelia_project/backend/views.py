@@ -1,5 +1,6 @@
 from time import strftime
 from django.shortcuts import render
+from numpy import quantile
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -331,6 +332,40 @@ class GetForumPostsByVotes(ListAPIView):
         # Currently limits results by count argument. Could be by date? Use pagination instead?
         count = self.kwargs['count']
         return ForumPost.objects.all().order_by('-votes')[:count]
+
+# Admin Dashboard - Database
+
+class CreateNationality(CreateAPIView):
+    serializer_class = NationalitySerializer
+    #pagination_class = ?
+    queryset = Nationality.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+# class CreateComposer(CreateAPIView):
+#     serializer_class = ComposerSerializer
+#     #pagination_class = ?
+#     queryset = Composer.objects.all()
+
+#     def perform_create(self, serializer):
+#         serializer.save()
+
+class CreateInstrument(CreateAPIView):
+    serializer_class = InstrumentSerializer
+    #pagination_class = ?
+    queryset = Instrument.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+# class CreateComposition(CreateAPIView):
+#     serializer_class = CompositionSerializer
+#     #pagination_class = ?
+#     queryset = Composition.objects.all()
+
+#     def perform_create(self, serializer):
+#         serializer.save()
 
 
 class ContactUsView(ListCreateAPIView):

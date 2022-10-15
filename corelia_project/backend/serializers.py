@@ -209,3 +209,13 @@ class ContactUsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContactUs
         fields = ['id', 'name', 'email', 'subject', 'message']
+
+class NationalitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Nationality
+        fields = '__all__'
+
+class InstrumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Instrument
+        fields = '__all__'
