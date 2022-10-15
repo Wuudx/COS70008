@@ -24,6 +24,7 @@ const FlexContainer = styled.div`
     }
 `;
 
+// TODO: Figure out why whenever there is a link tag for recording link, it is not responsive!!
 const Composition = ({ composition }) => {
     const navigate = useNavigate();
     let compositionRecordingLinkElement;
