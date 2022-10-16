@@ -32,8 +32,20 @@ const YearFilter = () => {
 
     // Only allow years from 2022 to 2099.
     function checkYearValid() {
-        const regex = /(20)[2-9]{1}[0-9]{1}/;
-        return regex.test(yearFilter);
+        // TODO: Fix fact that this does not amtch empty string!
+        const isIntegerOrEmptyRegex = /^$|[0-9]+/;
+        const isIntegerOrEmpty = isIntegerOrEmptyRegex.test(yearFilter);
+        if (isIntegerOrEmpty) {
+            if (yearFilter === "") {
+                return true;
+            } else {
+                const year = parseInt(yearFilter);
+                if (year >= 2022 && year <= 2099) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     useEffect(() => {

@@ -1,11 +1,10 @@
-import styled from "styled-components";
 import React from "react";
+import styled from "styled-components";
 import Composer from "./Composer";
 
 const GridContainer = styled.div`
     margin-top: 1em;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
     gap: 2em;
     @media (min-width: 320px) {
         grid-template-columns: repeat(1, 1fr);

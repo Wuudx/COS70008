@@ -21,6 +21,17 @@ const InnerFlexContainer = styled.div`
 `;
 
 const About = ({ aboutInformation }) => {
+    let websiteElement;
+    if (aboutInformation.website) {
+        websiteElement = (
+            <a href={aboutInformation.website} target="_blank">
+                {aboutInformation.website}
+            </a>
+        );
+    } else {
+        websiteElement = <span>Information not available</span>;
+    }
+
     return (
         <FlexContainer>
             <InnerFlexContainer>
@@ -41,9 +52,7 @@ const About = ({ aboutInformation }) => {
             </InnerFlexContainer>{" "}
             <InnerFlexContainer>
                 <h3>Website</h3>
-                <a href={aboutInformation.website} target="_blank">
-                    {aboutInformation.website || "Information not available"}
-                </a>
+                {websiteElement}
             </InnerFlexContainer>
         </FlexContainer>
     );

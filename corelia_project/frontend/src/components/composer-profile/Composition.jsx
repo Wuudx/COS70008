@@ -24,6 +24,7 @@ const FlexContainer = styled.div`
     }
 `;
 
+// TODO: Figure out why whenever there is a link tag for recording link, it is not responsive!!
 const Composition = ({ composition }) => {
     const navigate = useNavigate();
     let compositionRecordingLinkElement;
@@ -37,8 +38,11 @@ const Composition = ({ composition }) => {
         compositionRecordingLinkElement = <span>Not Available</span>;
     }
 
-    function navigateToComposition() {
-        navigate(`/repertoire-library/${composition.id}`);
+    function navigateToComposition(e) {
+        if (e.target.tagName.toLowerCase() !== "a") {
+            // This is the case where composition was pressed but not the link.
+            navigate(`/repertoire-library/${composition.id}`);
+        }
     }
 
     return (

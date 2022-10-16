@@ -53,6 +53,8 @@ export async function getForumPostsByMonthAndYear(monthFilter, yearFilter) {
         url = `http://localhost:8000/api/forums/month/${monthNumber}/posts?limit=${constants.POSTS_LIMIT}`;
     } else if (yearFilter !== "null") {
         url = `http://localhost:8000/api/forums/year/${yearFilter}/posts?limit=${constants.POSTS_LIMIT}`;
+    } else if (monthFilter === "null" && yearFilter === "null") {
+        url = `http://localhost:8000/api/forums?limit=${constants.POSTS_LIMIT}`;
     }
     const response = await fetch(url);
     if (!response.ok) {
