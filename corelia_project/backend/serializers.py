@@ -210,12 +210,29 @@ class ContactUsSerializer(serializers.ModelSerializer):
         model = ContactUs
         fields = ['id', 'name', 'email', 'subject', 'message']
 
-class NationalitySerializer(serializers.ModelSerializer):
+class CreateNationalitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Nationality
-        fields = '__all__'
+        fields = ['name']
 
-class InstrumentSerializer(serializers.ModelSerializer):
+class CreateComposerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Composer
+        fields = ['firstName', 'lastName', 'birth', 'death', 'biography', 'bio_source', 'featured', 'composer_website', 'image']
+
+    def create(self, validated_data):
+        nationality_name = self.initial_data['nationality'] # I'm not sure this is the best way to get this, but it's the only way that I could figure out to get what I need
+
+        dummy_nationality = Nationality.objects.get(id = -1) # TODO: REMOVE THIS ONCE WE DUMP THE NATIONALITY COLUMN FROM DATABSE
+
+        composer_instance = Composer.objects.create(nationality = dummy_nationality, **validated_data)
+        nationality_instance = Nationality.objects.get_or_create(name = nationality_name)[0]
+
+        ComposerNationality.objects.create(composer = composer_instance, nationality = nationality_instance)
+
+        return composer_instance
+
+class CreateInstrumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instrument
-        fields = '__all__'
+        fields = ['name']

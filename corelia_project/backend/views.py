@@ -336,23 +336,23 @@ class GetForumPostsByVotes(ListAPIView):
 # Admin Dashboard - Database
 
 class CreateNationality(CreateAPIView):
-    serializer_class = NationalitySerializer
+    serializer_class = CreateNationalitySerializer
     #pagination_class = ?
     queryset = Nationality.objects.all()
 
     def perform_create(self, serializer):
         serializer.save()
 
-# class CreateComposer(CreateAPIView):
-#     serializer_class = ComposerSerializer
-#     #pagination_class = ?
-#     queryset = Composer.objects.all()
+class CreateComposer(CreateAPIView):
+    serializer_class = CreateComposerSerializer
+    #pagination_class = ?
+    queryset = Composer.objects.all()
 
-#     def perform_create(self, serializer):
-#         serializer.save()
+    def perform_create(self, serializer):
+       serializer.save()
 
 class CreateInstrument(CreateAPIView):
-    serializer_class = InstrumentSerializer
+    serializer_class = CreateInstrumentSerializer
     #pagination_class = ?
     queryset = Instrument.objects.all()
 
@@ -360,7 +360,7 @@ class CreateInstrument(CreateAPIView):
         serializer.save()
 
 # class CreateComposition(CreateAPIView):
-#     serializer_class = CompositionSerializer
+#     #serializer_class = CompositionSerializer
 #     #pagination_class = ?
 #     queryset = Composition.objects.all()
 
