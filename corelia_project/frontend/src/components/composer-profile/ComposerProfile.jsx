@@ -56,8 +56,7 @@ const ComposerProfile = () => {
                 <OuterFlexContainer>
                     <FeaturedMusicTrack
                         composerImage={composer.image}
-                        featuredSong="https://www2.cs.uic.edu/~i101/SoundFiles/Fanfare60.wav"
-                        linkToScore="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                        aboutInformation={aboutInformation}
                     />
                     <ComposerInformation
                         composerId={composerId}
