@@ -236,3 +236,26 @@ class CreateInstrumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instrument
         fields = ['name']
+
+#class CreatePublisherSerializer
+
+class CreateCompositionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Composition
+        #fields = ['name', 'composer', 'year', 'duration', 'publisher', 'recording_link', 'score_link']
+        fields = ['name', 'year', 'duration', 'recording_link', 'score_link']
+
+    def create(self, validated_data):
+        composer_name = self.initial_data['composer'].split(' ')
+        instrument_name = self.initial_data['instrument'] # I'm not sure this is the best way to get this, but it's the only way that I could figure out to get what I need
+        #instrument_quantity doesn't exist for some reason...
+        publisher_name = self.initial_data['publisher']
+
+        composer_instance = Composer.objects.get(firstName = composer_name[0], lastName = composer_name[1])
+        instrument_instance = Instrument.objects.get_or_create(name = instrument_name)[0]
+        publisher_instance = Publisher.objects.get_or_create(name = publisher_name)[0]
+        composition_instance = Composition.objects.create(composer = composer_instance, publisher = publisher_instance, **validated_data)
+
+        CompositionInstrument.objects.create(composition = composition_instance, instrument = instrument_instance)
+
+        return composition_instance

@@ -359,13 +359,13 @@ class CreateInstrument(CreateAPIView):
     def perform_create(self, serializer):
         serializer.save()
 
-# class CreateComposition(CreateAPIView):
-#     #serializer_class = CompositionSerializer
-#     #pagination_class = ?
-#     queryset = Composition.objects.all()
+class CreateComposition(CreateAPIView):
+    serializer_class = CreateCompositionSerializer
+    #pagination_class = ?
+    queryset = Composition.objects.all()
 
-#     def perform_create(self, serializer):
-#         serializer.save()
+    def perform_create(self, serializer):
+        serializer.save()
 
 
 class ContactUsView(ListCreateAPIView):
