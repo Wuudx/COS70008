@@ -367,7 +367,7 @@ class CreatePublisher(CreateAPIView):
     def peform_create(self, serializer):
         serializer.save()
 
-class CreateComposition(CreateAPIView):
+class CreateComposition(RetrieveUpdateDestroyAPIView):
     serializer_class = CreateCompositionSerializer
     #pagination_class = ?
     queryset = Composition.objects.all()
@@ -375,6 +375,8 @@ class CreateComposition(CreateAPIView):
     def perform_create(self, serializer):
         serializer.save()
 
+    def perform_update(self, serializer):
+        serializer.update()
 
 class ContactUsView(ListCreateAPIView):
     queryset = ContactUs.objects.all()

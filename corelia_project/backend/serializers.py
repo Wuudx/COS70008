@@ -1,3 +1,4 @@
+from requests import delete
 from rest_framework import serializers
 
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment, ContactUs
@@ -249,8 +250,8 @@ class CreateCompositionSerializer(serializers.ModelSerializer):
         fields = ['name', 'year', 'duration', 'recording_link', 'score_link']
 
     def create(self, validated_data):
-        composer_name = self.initial_data['composer'].split(' ')
-        instrument_name = self.initial_data['instrument'] # I'm not sure this is the best way to get this, but it's the only way that I could figure out to get what I need
+        composer_name = self.initial_data['composer'].split(' ') # I'm not sure this is the best way to get this, but it's the only way that I could figure out to get what I need
+        instrument_name = self.initial_data['instrument']
         #instrument_quantity doesn't exist for some reason...
         publisher_name = self.initial_data['publisher']
 
@@ -262,3 +263,25 @@ class CreateCompositionSerializer(serializers.ModelSerializer):
         CompositionInstrument.objects.create(composition = composition_instance, instrument = instrument_instance)
 
         return composition_instance
+
+    def update(self, instance, validated_data):
+        composer_name = self.initial_data['composer'].split(' ') # I'm not sure this is the best way to get this, but it's the only way that I could figure out to get what I need
+        instrument_name = self.initial_data['instrument']
+        #instrument_quantity doesn't exist for some reason...
+        publisher_name = self.initial_data['publisher']
+        
+        composer_instance = instance.composer
+        instrument_instance = Instrument.objects.get_or_create(name = instrument_name)[0]
+        publisher_instance = instance.publisher
+
+        current_instrument_instance = CompositionInstrument.objects.filter(composition = instance)[0].instrument # Currently does not support multiple instruments
+        CompositionInstrument.objects.filter(composition = instance, instrument = current_instrument_instance).update(instrument = instrument_instance)
+
+        instance.name = validated_data.get('name', instance.name)
+        instance.year = validated_data.get('year', instance.year)
+        instance.duration = validated_data.get('duration', instance.duration)
+        instance.recording_link = validated_data.get('recording_link', instance.recording_link)
+        instance.score_link = validated_data.get('score_link', instance.score_link)
+        instance.save()
+
+        return instance
