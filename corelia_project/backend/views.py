@@ -359,6 +359,14 @@ class CreateInstrument(CreateAPIView):
     def perform_create(self, serializer):
         serializer.save()
 
+class CreatePublisher(CreateAPIView):
+    serializer_class = CreatePublisherSerializer
+    #pagination_class = ?
+    queryset = Publisher.objects.all()
+
+    def peform_create(self, serializer):
+        serializer.save()
+
 class CreateComposition(CreateAPIView):
     serializer_class = CreateCompositionSerializer
     #pagination_class = ?

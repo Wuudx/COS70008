@@ -49,6 +49,7 @@ urlpatterns = [
     path('dash/database/add/nationality', CreateNationality.as_view()),
     path('dash/database/add/composer', CreateComposer.as_view()),
     path('dash/database/add/instrument', CreateInstrument.as_view()),
+    path('dash/database/add/publisher', CreatePublisher.as_view()),
     path('dash/database/add/composition', CreateComposition.as_view()),
 
     path('contact/form/submission', ContactUsView.as_view()),

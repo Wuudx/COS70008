@@ -237,7 +237,10 @@ class CreateInstrumentSerializer(serializers.ModelSerializer):
         model = Instrument
         fields = ['name']
 
-#class CreatePublisherSerializer
+class CreatePublisherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Publisher
+        fields = ['name']
 
 class CreateCompositionSerializer(serializers.ModelSerializer):
     class Meta:
