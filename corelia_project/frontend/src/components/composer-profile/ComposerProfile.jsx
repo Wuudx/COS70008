@@ -30,7 +30,6 @@ const ComposerProfile = () => {
         getComposerById(composerId)
     );
     const composer = data[0] || {};
-    console.log(composer);
 
     const composerName = `${composer.firstName} ${composer.lastName}`;
 

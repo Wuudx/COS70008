@@ -38,8 +38,11 @@ const Composition = ({ composition }) => {
         compositionRecordingLinkElement = <span>Not Available</span>;
     }
 
-    function navigateToComposition() {
-        navigate(`/repertoire-library/${composition.id}`);
+    function navigateToComposition(e) {
+        if (e.target.tagName.toLowerCase() !== "a") {
+            // This is the case where composition was pressed but not the link.
+            navigate(`/repertoire-library/${composition.id}`);
+        }
     }
 
     return (
