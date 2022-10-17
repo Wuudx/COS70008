@@ -3,6 +3,8 @@ from rest_framework import serializers
 from .models import Composer, Composition, Instrument, Nationality, ComposerNationality, CompositionInstrument, Publisher, BlogPost, BlogComment, ForumPost, ForumComment, ContactUs
 
 from django.contrib.postgres.aggregates import StringAgg
+from django.db.models.functions import Concat
+from django.db.models import CharField, Value
 
 class AllComposersSerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,6 +48,7 @@ class AllCompositionsSerializer(serializers.ModelSerializer):
 class CompositionSerializer(serializers.ModelSerializer):
     composer_name = serializers.SerializerMethodField()
     publisher_name = serializers.SerializerMethodField()
+    instrument_detail = serializers.SerializerMethodField()
 
     def get_composer_name(self, obj):
         firstName = obj.composer.firstName
@@ -54,6 +57,9 @@ class CompositionSerializer(serializers.ModelSerializer):
 
     def get_publisher_name(self, obj):
         return obj.publisher.name
+
+    def get_instrument_detail(self, obj):
+        return CompositionInstrument.objects.filter(composition=obj).aggregate(instruments=StringAgg(Concat('quantity', Value(' '), 'instrument__name', output_field=CharField()), delimiter=', ', ordering='id'))['instruments']
 
     class Meta:
         model = Composition
