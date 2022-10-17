@@ -14,14 +14,10 @@ class UserTier(models.Model):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    # id (Primary Key)?
     email = models.EmailField(_('email address'), unique=True)
     username = models.CharField(max_length=30, unique=True)
-    # should be NOT NULL, default=0? Testing
-    tier = models.ForeignKey(
-    UserTier, on_delete=models.DO_NOTHING, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(null = True, default=False)
-    authenticated = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
     image = models.ImageField(upload_to='../static/users/images', blank=True, default = '../static/users/images/Default_profile_pic.png')
 
