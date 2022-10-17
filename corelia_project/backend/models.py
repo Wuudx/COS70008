@@ -67,8 +67,8 @@ class Instrument(models.Model):
 
 class CompositionInstrument(models.Model):
     composition = models.ForeignKey(Composition, on_delete=models.CASCADE)
-    instrument = models.CharField(max_length=100 , blank=True, null=True)
-    
+    instrument = models.ForeignKey(Instrument, on_delete=models.CASCADE)
+    quantity = models.IntegerField(blank=True, default=1)
 
     def __str__(self):
         return self.instrument

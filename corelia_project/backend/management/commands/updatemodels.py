@@ -156,5 +156,5 @@ class Command(BaseCommand):
                             composition_id = Composition.objects.get(name = row['Nameofpiece'], year = row['Year']).id
                             instrument_id = Instrument.objects.get(name = instrument[1]).id
 
-                            models = CompositionInstrument(instrument = instrument_id, composition_id = composition_id)
+                            models = CompositionInstrument(instrument_id = instrument_id, composition_id = composition_id, quantity = instrument[0])
                             models.save()
