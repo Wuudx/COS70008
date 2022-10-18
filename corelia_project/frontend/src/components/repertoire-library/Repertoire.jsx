@@ -51,7 +51,7 @@ const Repertoire = ({ composition }) => {
     };
 
     const handleClick = () => {
-        navigate(`/repertoire-library/${composition.id}`);
+        navigate(`/watch-listen/${composition.id}`);
     };
 
     return (

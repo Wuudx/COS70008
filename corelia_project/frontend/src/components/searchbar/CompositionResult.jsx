@@ -27,7 +27,7 @@ const CompositionAuthor = styled.div`
 const CompositionResult = ({ composition }) => {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate(`/repertoire-library/${composition.id}`);
+        navigate(`/watch-listen/${composition.id}`);
     };
 
     return (
