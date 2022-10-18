@@ -73,10 +73,11 @@ export async function getForumPostById(id) {
     return json;
 }
 
-export async function getCommentsOnPost(postId) {
-    const response = await fetch(
-        `http://localhost:8000/api/forums/comments/${postId}`
-    );
+export async function getCommentsOnPost(postId, optionalUrl) {
+    const url =
+        optionalUrl ||
+        `http://localhost:8000/api/forums/comments/${postId}?limit=${constants.COMMENTS_LIMIT}`;
+    const response = await fetch(url);
     if (!response.ok) {
         throw new Error(response.status);
     }

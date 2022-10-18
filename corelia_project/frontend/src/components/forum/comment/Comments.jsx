@@ -2,9 +2,12 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import styled from "styled-components";
+import fetchNextPage from "../../../api/fetch-next-page";
 import { getCommentsOnPost, getForumPostById } from "../../../api/forum";
 import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
 import stylingConstants from "../../../utils/styling";
+import LoadMoreButton from "../../buttons/LoadMoreButton";
+import NoPostsFound from "../post/NoPostsFound";
 import Post from "../post/Post";
 import Comment from "./Comment";
 
@@ -19,23 +22,33 @@ const FlexContainer = styled.div`
 
 // TODO: Add message if there are no comments on a post.
 const Comments = () => {
+    let nextPageApiEndpoint = "";
     const { postId } = useParams();
     const [post, postIsLoading, postError] = useFetchOnPageLoad(() =>
         getForumPostById(postId)
     );
 
-    const [comments, commentsIsLoading, commentsError, setComments] =
-        useFetchOnPageLoad(() => getCommentsOnPost(postId));
+    const [
+        comments,
+        commentsIsLoading,
+        commentsError,
+        setComments,
+        setCommentsLoading,
+        setCommentsError,
+    ] = useFetchOnPageLoad(() => getCommentsOnPost(postId));
 
     function addComment(newComment) {
-        setComments([...comments, newComment]);
+        setComments({
+            ...comments,
+            results: [...comments.results, newComment],
+        });
     }
 
     function deleteCommentFrontend(commentId) {
-        const newResults = comments.filter(
+        const newResults = comments.results.filter(
             (comment) => comment.id !== commentId
         );
-        setComments(newResults);
+        setComments({ ...data, count: data.count - 1, results: newResults });
     }
 
     let postElement;
@@ -58,27 +71,49 @@ const Comments = () => {
         );
     }
 
-    let commentsElement;
-    if (commentsIsLoading) {
-        commentsElement = (
-            <ScaleLoader color={stylingConstants.colours.blue1} />
+    async function handleLoadMore() {
+        fetchNextPage(
+            nextPageApiEndpoint,
+            () => getCommentsOnPost(postId, nextPageApiEndpoint),
+            comments,
+            setComments,
+            setCommentsLoading,
+            setCommentsError
         );
+    }
+
+    let commentsElement;
+    let loadMoreButton;
+    const isDataLoaded = "count" in comments && comments.count > 0;
+    if (commentsIsLoading) {
+        loadMoreButton = <ScaleLoader color={stylingConstants.colours.blue1} />;
     } else if (commentsError) {
-        commentsElement = <div>{commentsError.message}</div>;
-    } else if (comments.length > 0) {
-        commentsElement = comments.map((comment) => (
+        loadMoreButton = <div>{commentsError.message}</div>;
+    } else if (isDataLoaded) {
+        nextPageApiEndpoint = comments.next;
+        if (!nextPageApiEndpoint) {
+            loadMoreButton = "";
+        } else {
+            loadMoreButton = (
+                <LoadMoreButton width="30%" onClick={handleLoadMore} />
+            );
+        }
+        commentsElement = comments.results.map((comment) => (
             <Comment
                 key={comment.id}
                 comment={comment}
                 deleteCommentFrontend={deleteCommentFrontend}
             />
         ));
+    } else if ("count" in comments && comments.count === 0) {
+        commentsElement = <NoPostsFound />;
     }
 
     return (
         <FlexContainer>
             {postElement}
             {commentsElement}
+            {loadMoreButton}
         </FlexContainer>
     );
 };
