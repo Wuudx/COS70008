@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-hot-toast";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
 import fetchNextPage from "../../../api/fetch-next-page";
@@ -51,7 +52,14 @@ const Posts = ({
             ));
         }
     } else if (error) {
-        loadMoreButton = <div>{error.message}</div>;
+        if (
+            error.message ===
+            `Unexpected token '<', "<!DOCTYPE "... is not valid JSON`
+        ) {
+            content = <NoContentFound message="No posts found" />;
+        } else {
+            toast.error(error.message);
+        }
     } else if (isDataLoaded) {
         nextPageApiEndpoint = data.next;
         if (!nextPageApiEndpoint) {
