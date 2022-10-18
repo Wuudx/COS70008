@@ -20,7 +20,6 @@ const FlexContainer = styled.div`
     gap: 0.5em;
 `;
 
-// TODO: Add message if there are no comments on a post.
 const Comments = () => {
     let nextPageApiEndpoint = "";
     const { postId } = useParams();

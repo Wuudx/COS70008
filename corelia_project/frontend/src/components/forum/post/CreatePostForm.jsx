@@ -28,7 +28,6 @@ const FormItemsFlexContainer = styled.div`
     gap: 1em;
 `;
 
-// TODO: Fix issue where button looks squeezed!
 const AttachImageButton = styled.div`
     width: 40px;
     height: 40px;
@@ -43,7 +42,6 @@ const AttachImageButton = styled.div`
     font-weight: bold;
 `;
 
-// TODO: Update posts on frontend after getting from backend.
 const CreatePostForm = ({ addNewPost }) => {
     const user = useAuthState();
     const [isLoading, setIsLoading] = useState(false);
