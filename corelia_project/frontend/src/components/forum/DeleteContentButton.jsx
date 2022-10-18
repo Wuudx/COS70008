@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiFillDelete } from "react-icons/ai";
+import { useParams } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import stylingConstants from "../../utils/styling";
 
@@ -10,6 +11,13 @@ const DeleteContentButton = ({
     frontendDeleteContent,
 }) => {
     const [isLoading, setIsLoading] = useState(false);
+    const params = useParams();
+    let isViewingComments;
+    if ("postId" in params) {
+        isViewingComments = true;
+    } else {
+        isViewingComments = false;
+    }
 
     const deleteButtonStyle = {
         position: "absolute",
@@ -32,7 +40,9 @@ const DeleteContentButton = ({
         setIsLoading(true);
         try {
             await apiDeleteContent(contentId);
-            frontendDeleteContent(contentId);
+            if (!isViewingComments) {
+                frontendDeleteContent(contentId);
+            }
             toast.success("Succesfully deleted!");
         } catch (error) {
             toast.error(`Error ${error.message}`);

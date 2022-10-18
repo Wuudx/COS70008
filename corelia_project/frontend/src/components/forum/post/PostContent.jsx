@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useParams } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
 import { editPost } from "../../../api/forum";
@@ -22,7 +23,20 @@ const PostContent = ({
     editPostFrontend,
 }) => {
     const [newContent, setNewContent] = useState(content);
+
+    // If the user edits a post while viewing the comments, we do not have access to editPostFrontend. Thus, we will instead
+    // temporarily render the new content if the api request was succesfull until the user refreshes the page and the
+    // state is updated.
+    const [contentAfterEditing, setContentAfterEditing] = useState(content);
+
     const [isLoading, setIsLoading] = useState(false);
+    const params = useParams();
+    let isViewingComments;
+    if ("postId" in params) {
+        isViewingComments = true;
+    } else {
+        isViewingComments = false;
+    }
 
     async function handleEdit(e) {
         e.preventDefault();
@@ -33,7 +47,11 @@ const PostContent = ({
         setIsLoading(true);
         try {
             await editPost(postId, newContent);
-            editPostFrontend(postId, newContent);
+            if (isViewingComments) {
+                setContentAfterEditing(newContent);
+            } else {
+                editPostFrontend(postId, newContent);
+            }
             toggleIsEditing();
             toast.success("Succesfully edited post!");
         } catch (error) {
@@ -62,7 +80,7 @@ const PostContent = ({
             </Form>
         );
     } else {
-        renderContent = <p>{content}</p>;
+        renderContent = <p>{contentAfterEditing}</p>;
     }
 
     return renderContent;
