@@ -1,8 +1,8 @@
 import React from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import styled from "styled-components";
 import NavButton from "../../shared-styled-components/NavButton";
 import stylingConstants from "../../utils/styling";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const Button = styled(NavButton)`
     font-family: lato-bold;
@@ -17,20 +17,26 @@ const ToggleDropdownButton = ({
     toggleDropdownFunction,
     isDropdownVisible,
 }) => {
+    const arrowStyling = {
+        // This ensures that arrow is inline with text.
+        verticalAlign: "bottom",
+        position: "absolute",
+        top: "auto",
+        right: "auto",
+    };
+
     return (
         <Button type="button" onClick={toggleDropdownFunction}>
             {buttonText}
             {isDropdownVisible ? (
                 <IoIosArrowUp
                     color={stylingConstants.colours.blue2Percent30}
-                    // This ensures that arrow is inline with text.
-                    style={{ verticalAlign: "bottom" }}
+                    style={arrowStyling}
                 />
             ) : (
                 <IoIosArrowDown
                     color={stylingConstants.colours.blue2Percent30}
-                    // This ensures that arrow is inline with text.
-                    style={{ verticalAlign: "bottom" }}
+                    style={arrowStyling}
                 />
             )}
         </Button>

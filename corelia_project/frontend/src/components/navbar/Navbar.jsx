@@ -1,18 +1,15 @@
-import { useRef } from "react";
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NavLogo from "../../../../frontend/static/images/nav-logo.png";
-import NavButton from "../../shared-styled-components/NavButton";
-import Ul from "../../shared-styled-components/NavUl";
-import stylingConstants from "../../utils/styling";
-import Dropdown from "./Dropdown";
 import { useDetectOutsideClick } from "../../hooks/useDetectOutsideClick";
-import React from "react";
-import Account from "../account/Account";
+import useHandleWindowResize from "../../hooks/useHandleWindowResize";
+import Ul from "../../shared-styled-components/NavUl";
 import StyledLink from "../../shared-styled-components/StyledLink";
 import { getScreenType, screenTypes } from "../../utils/get-screen-type";
-import useHandleWindowResize from "../../hooks/useHandleWindowResize";
+import stylingConstants from "../../utils/styling";
+import Account from "../account/Account";
+import Dropdown from "./Dropdown";
 import ToggleDropdownButton from "./ToggleDropdownButton";
 
 const Img = styled.img`
@@ -82,7 +79,7 @@ const Navbar = () => {
         <Container>
             {logo}
             <Nav>
-                <Ul gap="3em">
+                <Ul gap="4em">
                     <li>
                         <StyledLink to="/about">About</StyledLink>
                     </li>
