@@ -18,12 +18,12 @@ import Forum from './components/forum/Forum';
 import Home from './components/home/Home';
 import JoinCorelia from './components/join-corelia/JoinCorelia';
 import Navbar from './components/navbar/Navbar';
-import CompositionInformation from './components/repertoire-library/composition/CompositionInformation';
 import RepertoireLibrary from './components/repertoire-library/RepertoireLibrary';
 import SearchBar from './components/searchbar/SearchBar';
 import Profile from './components/profile/Profile';
 import AdminDash from './components/admindash/AdminDash';
 import { AuthProvider } from './context/context';
+import WatchListen from './components/watch-listen/WatchListen';
 
 // Important so that footer sticks to bottom of page!
 const AppDiv = styled.div`
@@ -79,8 +79,8 @@ function App() {
                             element={<RepertoireLibrary />}
                         />
                         <Route
-                            path='/repertoire-library/:compositionId/'
-                            element={<CompositionInformation />}
+                            path='/watch-listen/:compositionId'
+                            element={<WatchListen />}
                         />
                         <Route path='/blog' element={<Blog />} />
                         <Route path='/blog/:blogId' element={<BlogPage />} />

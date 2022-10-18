@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import {
     filterComposersByLetter,
     getComposers,
     searchComposers,
-} from "../../api/composers";
-import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
-import useFetchOnParamChange from "../../hooks/useFetchOnParamChange";
-import useSearchQuery from "../../hooks/useSearchQuery";
-import constants from "../../utils/constants";
-import stylingConstants from "../../utils/styling";
-import LoadMoreButton from "../buttons/LoadMoreButton";
-import FilterBar from "../filter-bar/FilterBar";
-import SearchResultsContainer from "./SearchResultsContainer";
-import ScaleLoader from "react-spinners/ScaleLoader";
-import fetchNextPage from "../../api/fetch-next-page";
+} from '../../api/composers';
+import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
+import useFetchOnParamChange from '../../hooks/useFetchOnParamChange';
+import useSearchQuery from '../../hooks/useSearchQuery';
+import constants from '../../utils/constants';
+import stylingConstants from '../../utils/styling';
+import LoadMoreButton from '../buttons/LoadMoreButton';
+import FilterBar from '../filter-bar/FilterBar';
+import SearchResultsContainer from './SearchResultsContainer';
+import ScaleLoader from 'react-spinners/ScaleLoader';
+import fetchNextPage from '../../api/fetch-next-page';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -27,11 +27,11 @@ const INITIAL_URL = `http://localhost:8000/api/composers?limit=${constants.DISCO
 
 // TODO: ALLOW USER TO FILTER BY LETTER AND SEARCH QUERY.
 const DiscoverComposers = () => {
-    const searchQuery = useSearchQuery("q");
-    const filterLetter = useSearchQuery("letter");
+    const searchQuery = useSearchQuery('q');
+    const filterLetter = useSearchQuery('letter');
     const [data, isLoading, error, setData, setIsLoading, setError] =
         useFetchOnPageLoad(() => getComposers(INITIAL_URL));
-    let nextPageApiEndpoint = "";
+    let nextPageApiEndpoint = '';
     useFetchOnParamChange(
         () => filterComposersByLetter(filterLetter),
         filterLetter,
@@ -77,10 +77,10 @@ const DiscoverComposers = () => {
         }
     }, [searchQuery, filterLetter]);
 
-    const isDataLoaded = "count" in data && data.count >= 0;
+    const isDataLoaded = 'count' in data && data.count >= 0;
 
-    let composers = "";
-    let loadMoreButton = "";
+    let composers = '';
+    let loadMoreButton = '';
     if (isLoading) {
         loadMoreButton = <ScaleLoader color={stylingConstants.colours.blue1} />;
         if (isDataLoaded) {
@@ -92,7 +92,7 @@ const DiscoverComposers = () => {
     } else if (isDataLoaded) {
         nextPageApiEndpoint = data.next;
         if (!nextPageApiEndpoint) {
-            loadMoreButton = "";
+            loadMoreButton = '';
         } else {
             loadMoreButton = <LoadMoreButton onClick={handleLoadMore} />;
         }
@@ -101,7 +101,7 @@ const DiscoverComposers = () => {
 
     return (
         <FlexContainer>
-            <FilterBar initialSearchType={"A-Z"} />
+            <FilterBar initialSearchType={'A-Z'} />
             {composers}
             {loadMoreButton}
         </FlexContainer>
