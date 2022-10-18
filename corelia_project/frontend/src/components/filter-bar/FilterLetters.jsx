@@ -1,6 +1,6 @@
+import React from "react";
 import styled from "styled-components";
 import FilterLetter from "./FilterLetter";
-import React from "react";
 
 // TODO: If implementnig responsive design for mobile, just get rid of this and use a dropdown instead.
 
@@ -18,6 +18,7 @@ const Ul = styled.ul`
     height: 100%;
     flex-wrap: wrap;
     padding: 0px;
+    margin: 0px;
 `;
 
 const FilterLetters = () => {
