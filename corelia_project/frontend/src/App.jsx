@@ -24,6 +24,7 @@ import Profile from './components/profile/Profile';
 import AdminDash from './components/admindash/AdminDash';
 import { AuthProvider } from './context/context';
 import WatchListen from './components/watch-listen/WatchListen';
+import Signup from './components/account/SignUp';
 
 // Important so that footer sticks to bottom of page!
 const AppDiv = styled.div`
@@ -94,7 +95,7 @@ function App() {
                             element={<Comments />}
                         />
                         <Route path='/contact-us' element={<ContactUsForm />} />
-                        <Route path='/join-corelia' element={<JoinCorelia />} />
+                        <Route path='/join-corelia' element={<Signup />} />
                         <Route path='/login' element={<Login />} />
                         <Route path='/signup' element={<SignUp />} />
                         <Route
