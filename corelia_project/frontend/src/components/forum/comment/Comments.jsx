@@ -7,7 +7,7 @@ import { getCommentsOnPost, getForumPostById } from "../../../api/forum";
 import useFetchOnPageLoad from "../../../hooks/useFetchOnPageLoad";
 import stylingConstants from "../../../utils/styling";
 import LoadMoreButton from "../../buttons/LoadMoreButton";
-import NoPostsFound from "../post/NoPostsFound";
+import NoContentFound from "../NoContentFound";
 import Post from "../post/Post";
 import Comment from "./Comment";
 
@@ -106,7 +106,7 @@ const Comments = () => {
             />
         ));
     } else if ("count" in comments && comments.count === 0) {
-        commentsElement = <NoPostsFound />;
+        commentsElement = <NoContentFound message="No comments found" />;
     }
 
     return (

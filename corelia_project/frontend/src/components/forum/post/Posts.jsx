@@ -5,7 +5,7 @@ import fetchNextPage from "../../../api/fetch-next-page";
 import { getForumPosts } from "../../../api/forum";
 import stylingConstants from "../../../utils/styling";
 import LoadMoreButton from "../../buttons/LoadMoreButton";
-import NoPostsFound from "./NoPostsFound";
+import NoContentFound from "../NoContentFound";
 import Post from "./Post";
 
 const FlexContainer = styled.div`
@@ -71,7 +71,7 @@ const Posts = ({
             />
         ));
     } else if ("count" in data && data.count === 0) {
-        content = <NoPostsFound />;
+        content = <NoContentFound message="No posts found" />;
     }
 
     return (
