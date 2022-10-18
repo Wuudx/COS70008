@@ -13,9 +13,6 @@ const FlexContainer = styled.div`
 
 const Span = styled.span`
     font-family: lato-light;
-    display: inline-block;
-    // Same width as image.
-    width: 200px;
 `;
 
 const Img = styled.img`
