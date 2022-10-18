@@ -330,7 +330,7 @@ class GetBlogPostsFromThisWeek(ListAPIView):
 class GetForumPostsFromThisWeek(ListAPIView):
     pagination_class = CustomPagination
     serializer_class = ForumPostsSerializer
-    permission_classes = (IsAuthenticated, IsAdminUser,) 
+    permission_classes = (IsAdminUser,) 
 
     def get_queryset(self):
         return ForumPost.objects.filter(date_posted__gte=datetime.date.today() - datetime.timedelta(days=7))
