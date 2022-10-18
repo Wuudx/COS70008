@@ -62,7 +62,7 @@ const CompositionInstrument = styled.div`
     margin: 10px;
     padding: 0;
     align-self: flex-start;
-    `;
+`;
 
 const ScoreContainer = styled.div`
     display: flex;
@@ -88,7 +88,7 @@ const CompositionDetail = styled.div`
     justify-content: space-between;
     margin: 10px;
     padding: 0;
-    width: 50%;
+    width: 100%;
 `;
 
 const BlueButton = styled.a`
@@ -129,11 +129,42 @@ const WatchListen = () => {
             </CompositionContainer>
         );
     } else {
-        const year = composition.year !== 0 ? <CompositionYear>- {composition.year}</CompositionYear> : '';
-        const instruments = composition.instrument_detail !== '' ? <CompositionInstrument>Consisting of: {composition.instrument_detail}</CompositionInstrument> : '';
-        const recording = composition.recording_link !== '' ? <CompositionDetail>Watch / Listen to the recording: <BlueButton href={composition.recording_link}>HERE</BlueButton></CompositionDetail> : '';
-        const publisher = composition.publisher_name !== '' ? <CompositionDetail><Publisher>Published by: {composition.publisher_name}</Publisher><BlueButton href={composition.score_link}>SCORE</BlueButton></CompositionDetail> : '';
-
+        const year =
+            composition.year !== 0 ? (
+                <CompositionYear>- {composition.year}</CompositionYear>
+            ) : (
+                ''
+            );
+        const instruments =
+            composition.instrument_detail !== '' ? (
+                <CompositionInstrument>
+                    Consisting of: {composition.instrument_detail}
+                </CompositionInstrument>
+            ) : (
+                ''
+            );
+        const recording =
+            composition.recording_link !== '' ? (
+                <CompositionDetail>
+                    Watch / Listen to the recording:{' '}
+                    <BlueButton href={composition.recording_link}>
+                        HERE
+                    </BlueButton>
+                </CompositionDetail>
+            ) : (
+                ''
+            );
+        const publisher =
+            composition.publisher_name !== '' ? (
+                <CompositionDetail>
+                    <Publisher>
+                        Published by: {composition.publisher_name}
+                    </Publisher>
+                    <BlueButton href={composition.score_link}>SCORE</BlueButton>
+                </CompositionDetail>
+            ) : (
+                ''
+            );
 
         content = (
             <CompositionContainer>

@@ -20,6 +20,7 @@ const ForgotPasswordBox = styled.div`
     padding: 2rem;
     min-height: 350px;
     // max-height: 350px;
+    margin: 2rem;
     min-width: 300px;
     max-width: 300px;
     border-radius: 20px;
