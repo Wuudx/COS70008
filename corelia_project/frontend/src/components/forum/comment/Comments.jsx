@@ -48,7 +48,11 @@ const Comments = () => {
         const newResults = comments.results.filter(
             (comment) => comment.id !== commentId
         );
-        setComments({ ...data, count: data.count - 1, results: newResults });
+        setComments({
+            ...comments,
+            count: comments.count - 1,
+            results: newResults,
+        });
     }
 
     let postElement;

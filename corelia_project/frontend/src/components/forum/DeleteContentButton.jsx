@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiFillDelete } from "react-icons/ai";
 import { ScaleLoader } from "react-spinners";
-import { deleteComment } from "../../../api/forum";
-import stylingConstants from "../../../utils/styling";
+import stylingConstants from "../../utils/styling";
 
-const DeleteButton = ({ commentId, deleteCommentFrontend }) => {
+const DeleteContentButton = ({
+    contentId,
+    apiDeleteContent,
+    frontendDeleteContent,
+}) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const deleteButtonStyle = {
@@ -21,19 +24,16 @@ const DeleteButton = ({ commentId, deleteCommentFrontend }) => {
         right: "1em",
     };
 
-    async function handleDeleteComment() {
-        console.log(commentId);
-        const wantDelete = confirm(
-            "Are you sure you want to delete this post?"
-        );
+    async function handleDeleteContent(contentId) {
+        const wantDelete = confirm("Are you sure you want to delete?");
         if (!wantDelete) {
             return;
         }
         setIsLoading(true);
         try {
-            await deleteComment(commentId);
-            deleteCommentFrontend(commentId);
-            toast.success("Succesfully deleted comment!");
+            await apiDeleteContent(contentId);
+            frontendDeleteContent(contentId);
+            toast.success("Succesfully deleted!");
         } catch (error) {
             toast.error(`Error ${error.message}`);
         } finally {
@@ -52,7 +52,7 @@ const DeleteButton = ({ commentId, deleteCommentFrontend }) => {
     } else {
         deleteButton = (
             <AiFillDelete
-                onClick={handleDeleteComment}
+                onClick={() => handleDeleteContent(contentId)}
                 style={deleteButtonStyle}
             />
         );
@@ -60,5 +60,4 @@ const DeleteButton = ({ commentId, deleteCommentFrontend }) => {
 
     return deleteButton;
 };
-
-export default DeleteButton;
+export default DeleteContentButton;

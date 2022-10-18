@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { deletePost } from "../../../api/forum";
 import { useAuthState } from "../../../context";
 import PostContainer from "../../../shared-styled-components/PostContainer";
 import { getTimeElapsedFromCreation } from "../../../utils/date-time";
+import DeleteContentButton from "../DeleteContentButton";
 import AttachedImage from "./AttachedImage";
 import CommentAndShare from "./CommentAndShare";
 import CommentForm from "./CommentForm";
-import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 import PostContent from "./PostContent";
 import PostUserAndTime from "./PostUserAndTime";
@@ -33,9 +34,10 @@ const Post = ({
     let editButton;
     if (user.user && user.user.id === post.user) {
         deleteButton = (
-            <DeleteButton
-                postId={post.id}
-                deletePostFrontend={deletePostFrontend}
+            <DeleteContentButton
+                contentId={post.id}
+                apiDeleteContent={deletePost}
+                frontendDeleteContent={deletePostFrontend}
             />
         );
         editButton = <EditButton toggleIsEditing={toggleIsEditing} />;

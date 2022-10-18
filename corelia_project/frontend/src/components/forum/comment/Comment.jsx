@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { deleteComment } from "../../../api/forum";
 import { useAuthState } from "../../../context";
 import { getTimeElapsedFromCreation } from "../../../utils/date-time";
 import stylingConstants from "../../../utils/styling";
+import DeleteContentButton from "../DeleteContentButton";
 import PostUserAndTime from "../post/PostUserAndTime";
-import DeleteButton from "./DeleteButton";
 
 const Container = styled.div`
     background: white;
@@ -24,9 +25,10 @@ const Comment = ({ comment, deleteCommentFrontend }) => {
     let deleteButton = "";
     if (user.user && user.user.id === comment.user) {
         deleteButton = (
-            <DeleteButton
-                commentId={comment.id}
-                deleteCommentFrontend={deleteCommentFrontend}
+            <DeleteContentButton
+                contentId={comment.id}
+                apiDeleteContent={deleteComment}
+                frontendDeleteContent={deleteCommentFrontend}
             />
         );
     }
