@@ -7,6 +7,7 @@ import { createPost } from "../../../api/forum";
 import { useAuthState } from "../../../context";
 import RoundedImage from "../../../shared-styled-components/RoundedImage";
 import SubmitInput from "../../../shared-styled-components/SubmitInput";
+import TextArea from "../../../shared-styled-components/TextArea";
 import stylingConstants from "../../../utils/styling";
 
 // Having both of these elements with vertica align of bottom centers them.
@@ -42,27 +43,20 @@ const AttachImageButton = styled.div`
     font-weight: bold;
 `;
 
-const TextArea = styled.textarea`
-    border-radius: 1em;
-    padding: 1em;
-    background: ${stylingConstants.colours.blue2Percent10};
-    font-family: lato-regular;
-`;
-
 // TODO: Update posts on frontend after getting from backend.
 const CreatePostForm = ({ addNewPost }) => {
     const user = useAuthState();
     const [isLoading, setIsLoading] = useState(false);
     const [postContent, setPostContent] = useState("");
-    const profileImage = '../../../../static/users/images/Default_profile_pic.png' 
+    const profileImage =
+        "../../../../static/users/images/Default_profile_pic.png";
 
     let content;
 
     if (!user.user) {
         content = (
             <p>
-                Want to contribute? Press <Link to="/login">here</Link>{" "}
-                to post!
+                Want to contribute? Press <Link to="/login">here</Link> to post!
             </p>
         );
     } else {
@@ -86,11 +80,12 @@ const CreatePostForm = ({ addNewPost }) => {
                 <RoundedImage
                     width="30px"
                     height="30px"
-                    src= {profileImage}
+                    src={profileImage}
                     alt="Profile Picture"
                 />
                 <FormItemsFlexContainer>
                     <TextArea
+                        required
                         type="text"
                         placeholder={`Create post as ${user.user.username}`}
                         value={postContent}

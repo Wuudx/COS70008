@@ -24,6 +24,7 @@ const Posts = ({
     setIsLoading,
     setError,
     deletePostFrontend,
+    editPostFrontend,
 }) => {
     let nextPageApiEndpoint = "";
 
@@ -66,6 +67,7 @@ const Posts = ({
                 post={post}
                 postContainerWidth="100%"
                 deletePostFrontend={deletePostFrontend}
+                editPostFrontend={editPostFrontend}
             />
         ));
     } else if ("count" in data && data.count === 0) {

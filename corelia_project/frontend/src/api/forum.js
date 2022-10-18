@@ -98,6 +98,23 @@ export async function createPost(newPost) {
     }
 }
 
+export async function editPost(postId, newContent) {
+    const response = await fetch(
+        `http://localhost:8000/api/forums/${postId}/modify`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `${localStorage.getItem("auth_token")}`,
+            },
+            body: JSON.stringify({ content: newContent }),
+        }
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+}
+
 export async function createComment(newComment) {
     const response = await fetch(
         `http://localhost:8000/api/forums/comments/all`,

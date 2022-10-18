@@ -22,13 +22,13 @@ const DeleteButton = ({ postId, deletePostFrontend }) => {
     };
 
     async function handleDeletePost(postId) {
-        setIsLoading(true);
         const wantDelete = confirm(
             "Are you sure you want to delete this post?"
         );
         if (!wantDelete) {
             return;
         }
+        setIsLoading(true);
         try {
             await deletePost(postId);
             deletePostFrontend(postId);
