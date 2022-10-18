@@ -146,3 +146,18 @@ export async function deletePost(postId) {
         throw new Error(response.status);
     }
 }
+
+export async function deleteComment(commentId) {
+    const response = await fetch(
+        `http://localhost:8000/api/forums/comments/${commentId}/modify`,
+        {
+            method: "DELETE",
+            headers: {
+                Authorization: `${localStorage.getItem("auth_token")}`,
+            },
+        }
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+}

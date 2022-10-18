@@ -11,6 +11,8 @@ import EditButton from "./EditButton";
 import PostContent from "./PostContent";
 import PostUserAndTime from "./PostUserAndTime";
 
+// TODO: Add check to see if user is deleting or editing post while viewing comments. If so, perform edit or delete on backend
+// but don't update frontend.
 const Post = ({
     post,
     postContainerWidth,

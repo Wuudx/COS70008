@@ -31,6 +31,13 @@ const Comments = () => {
         setComments([...comments, newComment]);
     }
 
+    function deleteCommentFrontend(commentId) {
+        const newResults = comments.filter(
+            (comment) => comment.id !== commentId
+        );
+        setComments(newResults);
+    }
+
     let postElement;
     if (postIsLoading) {
         postElement = <ScaleLoader color={stylingConstants.colours.blue1} />;
@@ -60,7 +67,11 @@ const Comments = () => {
         commentsElement = <div>{commentsError.message}</div>;
     } else if (comments.length > 0) {
         commentsElement = comments.map((comment) => (
-            <Comment key={comment.id} comment={comment} />
+            <Comment
+                key={comment.id}
+                comment={comment}
+                deleteCommentFrontend={deleteCommentFrontend}
+            />
         ));
     }
 
