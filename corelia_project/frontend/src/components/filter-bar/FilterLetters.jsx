@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import FilterLetter from "./FilterLetter";
 
-// TODO: If implementnig responsive design for mobile, just get rid of this and use a dropdown instead.
-
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 const Nav = styled.nav`

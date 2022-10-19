@@ -90,7 +90,7 @@ const CompositionDetail = styled.div`
     justify-content: space-between;
     margin: 10px;
     padding: 0;
-    width: 50%;
+    width: 100%;
 `;
 
 const BlueButton = styled.a`

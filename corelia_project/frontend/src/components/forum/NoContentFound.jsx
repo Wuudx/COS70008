@@ -1,11 +1,11 @@
 import React from "react";
 import { BiSad } from "react-icons/bi";
 
-const NoPostsFound = () => {
+const NoContentFound = ({ message }) => {
     return (
         <div>
-            <BiSad /> No posts found
+            <BiSad /> {message}
         </div>
     );
 };
-export default NoPostsFound;
+export default NoContentFound;

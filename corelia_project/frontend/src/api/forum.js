@@ -73,10 +73,11 @@ export async function getForumPostById(id) {
     return json;
 }
 
-export async function getCommentsOnPost(postId) {
-    const response = await fetch(
-        `http://localhost:8000/api/forums/comments/${postId}`
-    );
+export async function getCommentsOnPost(postId, optionalUrl) {
+    const url =
+        optionalUrl ||
+        `http://localhost:8000/api/forums/comments/${postId}?limit=${constants.COMMENTS_LIMIT}`;
+    const response = await fetch(url);
     if (!response.ok) {
         throw new Error(response.status);
     }
@@ -93,6 +94,23 @@ export async function createPost(newPost) {
         },
         body: JSON.stringify(newPost),
     });
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+}
+
+export async function editPost(postId, newContent) {
+    const response = await fetch(
+        `http://localhost:8000/api/forums/${postId}/modify`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `${localStorage.getItem("auth_token")}`,
+            },
+            body: JSON.stringify({ content: newContent }),
+        }
+    );
     if (!response.ok) {
         throw new Error(response.status);
     }
@@ -118,6 +136,21 @@ export async function createComment(newComment) {
 export async function deletePost(postId) {
     const response = await fetch(
         `http://localhost:8000/api/forums/${postId}/modify`,
+        {
+            method: "DELETE",
+            headers: {
+                Authorization: `${localStorage.getItem("auth_token")}`,
+            },
+        }
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+}
+
+export async function deleteComment(commentId) {
+    const response = await fetch(
+        `http://localhost:8000/api/forums/comments/${commentId}/modify`,
         {
             method: "DELETE",
             headers: {

@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { deleteComment } from "../../../api/forum";
+import { useAuthState } from "../../../context";
 import { getTimeElapsedFromCreation } from "../../../utils/date-time";
 import stylingConstants from "../../../utils/styling";
+import DeleteContentButton from "../DeleteContentButton";
 import PostUserAndTime from "../post/PostUserAndTime";
 
 const Container = styled.div`
@@ -12,10 +15,24 @@ const Container = styled.div`
     &:last-child {
         margin-bottom: ${stylingConstants.sizes.gapFromFooterToEndOfContent};
     }
+    position: relative;
 `;
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, deleteCommentFrontend }) => {
     const timeFromComment = getTimeElapsedFromCreation(comment.date_posted);
+    const user = useAuthState();
+
+    let deleteButton = "";
+    if (user.user && user.user.id === comment.user) {
+        deleteButton = (
+            <DeleteContentButton
+                contentId={comment.id}
+                apiDeleteContent={deleteComment}
+                frontendDeleteContent={deleteCommentFrontend}
+            />
+        );
+    }
+
     return (
         <Container>
             <PostUserAndTime
@@ -24,6 +41,7 @@ const Comment = ({ comment }) => {
                 timeFromPost={timeFromComment}
             />
             <p>{comment.content}</p>
+            {deleteButton}
         </Container>
     );
 };

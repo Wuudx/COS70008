@@ -55,3 +55,20 @@ export async function getComposerCompositions(id) {
     }
     return response.json();
 }
+
+export async function addComposer(composer) {
+    const response = await fetch(
+        `http://localhost:8000/api/dash/database/add/composer`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `${localStorage.getItem("auth_token")}`,
+            },
+            body: JSON.stringify(composer),
+        }
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+}

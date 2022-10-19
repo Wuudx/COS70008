@@ -17,6 +17,7 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from users.serializers import UserSerializer
+from rest_framework.permissions import IsAdminUser
 
 from .models import (BlogComment, BlogPost, Composer, ComposerNationality,
                      Composition, CompositionInstrument, ForumComment,
@@ -33,6 +34,10 @@ def set_permission_classes(obj):
     else:
         obj.permission_classes = [permissions.AllowAny]
 
+class AllNationalitiesView(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = Nationality.objects.all()
+    serializer_class = AllNationalitiesSerializer
 
 class AllComposersView(ListAPIView):
     pagination_class = LimitOffsetPagination
@@ -51,6 +56,15 @@ class ComposerView(ListAPIView):
     def get_queryset(self):
         return Composer.objects.filter(id=self.kwargs['pk'])
 
+class AllPublishersView(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    serializer_class = AllPublishersSerializer
+    queryset = Publisher.objects.all()
+
+class AllInstrumentsView(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    serializer_class = AllInstrumentsSerializer
+    queryset = Instrument.objects.all()
 
 class AllCompositionsView(ListAPIView):
     pagination_class = LimitOffsetPagination
@@ -145,11 +159,11 @@ class GetCompositionByLetter(ListAPIView):
 
 
 class AllBlogPosts(ListCreateAPIView):
-
     pagination_class = LimitOffsetPagination
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostsSerializer
 
+    @permission_classes([IsAuthenticated, IsAdminUser ])
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
@@ -158,6 +172,7 @@ class ModifyBlogPost(RetrieveUpdateDestroyAPIView):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostsSerializer
 
+    @permission_classes([IsAuthenticated, IsAdminUser])
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -184,7 +199,8 @@ class AllBlogComments(ListCreateAPIView):
     pagination_class = LimitOffsetPagination
     queryset = BlogComment.objects.all()
     serializer_class = BlogPostCommentsSerializer
-
+    
+    @permission_classes([IsAuthenticated, ])
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
@@ -202,6 +218,7 @@ class ModifyBlogComment(RetrieveUpdateDestroyAPIView):
     queryset = BlogComment.objects.all()
     serializer_class = BlogPostCommentsSerializer
 
+    @permission_classes([IsAuthenticated, ])
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -211,10 +228,7 @@ class AllForumPosts(ListCreateAPIView):
     queryset = ForumPost.objects.all().order_by('-date_posted')
     serializer_class = ForumPostsSerializer
 
-    def get_permissions(self):
-        set_permission_classes(self)
-        return super().get_permissions()
-
+    @permission_classes([IsAuthenticated, ])
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -223,6 +237,7 @@ class ModifyForumPost(RetrieveUpdateDestroyAPIView):
     queryset = ForumPost.objects.all()
     serializer_class = ForumPostsSerializer
 
+    @permission_classes([IsAuthenticated, ])
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -241,6 +256,7 @@ class AllForumComments(ListCreateAPIView):
     queryset = ForumComment.objects.all()
     serializer_class = ForumPostCommentsSerializer
 
+    @permission_classes([IsAuthenticated, ])
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -258,6 +274,7 @@ class ModifyForumComment(RetrieveUpdateDestroyAPIView):
     queryset = ForumComment.objects.all()
     serializer_class = ForumPostCommentsSerializer
 
+    @permission_classes([IsAuthenticated, ])
     def perform_update(self, serializer):
         serializer.save(user=self.request.user)
 
@@ -308,6 +325,7 @@ class GetBlogPostsByMonth(ListAPIView):
 class GetNewUsersThisWeek(ListAPIView):
     pagination_class = CustomPagination
     serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
 
     def get_queryset(self):
         return User.objects.filter(date_joined__gte=datetime.date.today() - datetime.timedelta(days=7))
@@ -316,6 +334,7 @@ class GetNewUsersThisWeek(ListAPIView):
 class GetBlogPostsFromThisWeek(ListAPIView):
     pagination_class = CustomPagination
     serializer_class = BlogPostsSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
 
     def get_queryset(self):
         return BlogPost.objects.filter(date_posted__gte=datetime.date.today() - datetime.timedelta(days=7))
@@ -324,6 +343,7 @@ class GetBlogPostsFromThisWeek(ListAPIView):
 class GetForumPostsFromThisWeek(ListAPIView):
     pagination_class = CustomPagination
     serializer_class = ForumPostsSerializer
+    permission_classes = (IsAdminUser,) 
 
     def get_queryset(self):
         return ForumPost.objects.filter(date_posted__gte=datetime.date.today() - datetime.timedelta(days=7))
@@ -332,6 +352,7 @@ class GetForumPostsFromThisWeek(ListAPIView):
 class GetContactMessages(ListAPIView):
     pagination_class = CustomPagination
     serializer_class = ContactUsSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
 
     def get_queryset(self):
         return ContactUs.objects.all()
@@ -341,6 +362,7 @@ class GetContactMessages(ListAPIView):
 
 class GetUsersByJoinDate(ListAPIView):
     serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
     # pagination_class = ?
 
     def get_queryset(self):
@@ -351,6 +373,7 @@ class GetUsersByJoinDate(ListAPIView):
 
 class GetBlogPostsByVotes(ListAPIView):
     serializer_class = BlogPostsSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
     # pagination_class = ?
 
     def get_queryset(self):
@@ -361,6 +384,7 @@ class GetBlogPostsByVotes(ListAPIView):
 
 class GetForumPostsByVotes(ListAPIView):
     serializer_class = ForumPostsSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
     # pagination_class = ?
 
     def get_queryset(self):
@@ -373,6 +397,7 @@ class GetForumPostsByVotes(ListAPIView):
 
 class CreateNationality(CreateAPIView):
     serializer_class = CreateNationalitySerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
     # pagination_class = ?
     queryset = Nationality.objects.all()
 
@@ -382,6 +407,7 @@ class CreateNationality(CreateAPIView):
 
 class CreateComposer(CreateAPIView):
     serializer_class = CreateComposerSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
     # pagination_class = ?
     queryset = Composer.objects.all()
 
@@ -391,6 +417,7 @@ class CreateComposer(CreateAPIView):
 
 class CreateInstrument(CreateAPIView):
     serializer_class = CreateInstrumentSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
     # pagination_class = ?
     queryset = Instrument.objects.all()
 
@@ -400,6 +427,7 @@ class CreateInstrument(CreateAPIView):
 
 class CreatePublisher(CreateAPIView):
     serializer_class = CreatePublisherSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
     # pagination_class = ?
     queryset = Publisher.objects.all()
 
@@ -409,6 +437,7 @@ class CreatePublisher(CreateAPIView):
 
 class CreateComposition(CreateAPIView):
     serializer_class = CreateCompositionSerializer
+    permission_classes = (IsAuthenticated, IsAdminUser,) 
     # pagination_class = ?
     queryset = Composition.objects.all()
 
@@ -419,3 +448,4 @@ class CreateComposition(CreateAPIView):
 class ContactUsView(ListCreateAPIView):
     queryset = ContactUs.objects.all()
     serializer_class = ContactUsSerializer
+

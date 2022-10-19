@@ -1,11 +1,12 @@
 import React from "react";
+import { toast } from "react-hot-toast";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
 import fetchNextPage from "../../../api/fetch-next-page";
 import { getForumPosts } from "../../../api/forum";
 import stylingConstants from "../../../utils/styling";
 import LoadMoreButton from "../../buttons/LoadMoreButton";
-import NoPostsFound from "./NoPostsFound";
+import NoContentFound from "../NoContentFound";
 import Post from "./Post";
 
 const FlexContainer = styled.div`
@@ -24,6 +25,7 @@ const Posts = ({
     setIsLoading,
     setError,
     deletePostFrontend,
+    editPostFrontend,
 }) => {
     let nextPageApiEndpoint = "";
 
@@ -50,7 +52,14 @@ const Posts = ({
             ));
         }
     } else if (error) {
-        loadMoreButton = <div>{error.message}</div>;
+        if (
+            error.message ===
+            `Unexpected token '<', "<!DOCTYPE "... is not valid JSON`
+        ) {
+            content = <NoContentFound message="No posts found" />;
+        } else {
+            toast.error(error.message);
+        }
     } else if (isDataLoaded) {
         nextPageApiEndpoint = data.next;
         if (!nextPageApiEndpoint) {
@@ -66,10 +75,11 @@ const Posts = ({
                 post={post}
                 postContainerWidth="100%"
                 deletePostFrontend={deletePostFrontend}
+                editPostFrontend={editPostFrontend}
             />
         ));
     } else if ("count" in data && data.count === 0) {
-        content = <NoPostsFound />;
+        content = <NoContentFound message="No posts found" />;
     }
 
     return (

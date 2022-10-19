@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiFillDelete } from "react-icons/ai";
+import { useParams } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
-import { deletePost } from "../../../api/forum";
-import stylingConstants from "../../../utils/styling";
+import stylingConstants from "../../utils/styling";
 
-const DeleteButton = ({ postId, deletePostFrontend }) => {
+const DeleteContentButton = ({
+    contentId,
+    apiDeleteContent,
+    frontendDeleteContent,
+}) => {
     const [isLoading, setIsLoading] = useState(false);
+    const params = useParams();
+    let isViewingComments;
+    if ("postId" in params) {
+        isViewingComments = true;
+    } else {
+        isViewingComments = false;
+    }
 
     const deleteButtonStyle = {
         position: "absolute",
@@ -21,18 +32,18 @@ const DeleteButton = ({ postId, deletePostFrontend }) => {
         right: "1em",
     };
 
-    async function handleDeletePost(postId) {
-        setIsLoading(true);
-        const wantDelete = confirm(
-            "Are you sure you want to delete this post?"
-        );
+    async function handleDeleteContent(contentId) {
+        const wantDelete = confirm("Are you sure you want to delete?");
         if (!wantDelete) {
             return;
         }
+        setIsLoading(true);
         try {
-            await deletePost(postId);
-            deletePostFrontend(postId);
-            toast.success("Succesfully deleted post!");
+            await apiDeleteContent(contentId);
+            if (!isViewingComments) {
+                frontendDeleteContent(contentId);
+            }
+            toast.success("Succesfully deleted!");
         } catch (error) {
             toast.error(`Error ${error.message}`);
         } finally {
@@ -51,7 +62,7 @@ const DeleteButton = ({ postId, deletePostFrontend }) => {
     } else {
         deleteButton = (
             <AiFillDelete
-                onClick={() => handleDeletePost(postId)}
+                onClick={() => handleDeleteContent(contentId)}
                 style={deleteButtonStyle}
             />
         );
@@ -59,5 +70,4 @@ const DeleteButton = ({ postId, deletePostFrontend }) => {
 
     return deleteButton;
 };
-
-export default DeleteButton;
+export default DeleteContentButton;
