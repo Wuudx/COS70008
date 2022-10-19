@@ -52,6 +52,10 @@ class ComposerView(ListAPIView):
     def get_queryset(self):
         return Composer.objects.filter(id=self.kwargs['pk'])
 
+class AllPublishersView(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    serializer_class = AllPublishersSerializer
+    queryset = Publisher.objects.all()
 
 class AllCompositionsView(ListAPIView):
     pagination_class = LimitOffsetPagination

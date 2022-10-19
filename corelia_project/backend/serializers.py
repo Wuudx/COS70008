@@ -65,6 +65,10 @@ class CompositionSerializer(serializers.ModelSerializer):
         model = Composition
         fields = '__all__'
 
+class AllPublishersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Publisher
+        fields = ['id', 'name']
 
 class FeaturedComposerSerializer(serializers.ModelSerializer):
     nationality_detail = serializers.SerializerMethodField()

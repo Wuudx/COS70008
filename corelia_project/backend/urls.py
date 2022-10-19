@@ -7,6 +7,7 @@ urlpatterns = [
     path('composers/<int:pk>/modify', ComposerUpdateView.as_view()),
     path('composers/<int:pk>', ComposerView.as_view()),
     path('featured-composers', GetFeaturedComposers.as_view()),
+    path('publishers', AllPublishersView.as_view()),
     path('compositions', AllCompositionsView.as_view()),
     path('compositions/<int:pk>', CompositionView.as_view()),
     path('compositions/<letter>', GetCompositionByLetter.as_view()),
