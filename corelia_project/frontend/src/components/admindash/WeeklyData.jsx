@@ -15,6 +15,7 @@ const FlexContainer = styled.div`
     justify-content: space-evenly;
     width: 100%;
     gap: 2em;
+    margin-bottom: 1.2em;
 `;
 
 const WeeklyDataContainer = styled.div`

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useAuthState } from "../../context";
 import stylingConstants from "../../utils/styling";
+import ToggleForms from "./ToggleForms";
 import WeeklyData from "./WeeklyData";
 
 const Container = styled.div`
@@ -11,7 +12,7 @@ const Container = styled.div`
     }
 `;
 
-const WeeklyDataHeader = styled.div`
+const Header = styled.div`
     background-color: ${stylingConstants.colours.blue1};
     width: 100%;
     border-radius: ${stylingConstants.sizes.containerBorderRadius};
@@ -28,8 +29,10 @@ const AdminDash = () => {
     return (
         <Container>
             <h1>Welcome Back {user.user.username}</h1>
-            <WeeklyDataHeader>Weekly Data</WeeklyDataHeader>
+            <Header>Weekly Data</Header>
             <WeeklyData />
+            <Header>Add Data</Header>
+            <ToggleForms />
         </Container>
     );
 };
