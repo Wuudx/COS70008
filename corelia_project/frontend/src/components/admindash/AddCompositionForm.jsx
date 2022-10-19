@@ -34,13 +34,12 @@ const Input = styled.input`
     font-family: lato-regular;
 `;
 
-const TextArea = styled.textarea`
+const Select = styled.select`
     width: 100%;
-    height: 9em;
+    height: 3em;
     background: #f5f5f5;
     border: none;
     border-radius: 0.5em;
-    padding: 1em;
     margin-top: 0.7em;
     font-family: lato-regular;
 `;
@@ -71,6 +70,7 @@ const AddCompositionForm = ({ isVisible }) => {
     const publisherRef = useRef();
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isFormValid, setIsFormValid] = useState(true);
 
     const [composers, composersIsLoading, composersError] = useFetchOnPageLoad(
         () => getComposers("http://localhost:8000/api/composers")
@@ -156,18 +156,23 @@ const AddCompositionForm = ({ isVisible }) => {
                         placeholder="Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        required
                     />
                     <Input
-                        type="text"
+                        type="number"
+                        min="1000"
+                        max="2022"
                         placeholder="Year"
                         value={year}
                         onChange={(e) => setYear(e.target.value)}
+                        required
                     />
                     <Input
                         type="text"
                         placeholder="Duration"
                         value={duration}
                         onChange={(e) => setDuration(e.target.value)}
+                        required
                     />
                     <Input
                         type="text"
@@ -183,12 +188,12 @@ const AddCompositionForm = ({ isVisible }) => {
                     />
                     <Input
                         type="text"
-                        placeholder="Instruments"
+                        placeholder="Instruments (example: flute,guitar,...)"
                         value={instruments}
                         onChange={(e) => setInstruments(e.target.value)}
                     />
-                    <select ref={composerRef}>{selectComposer}</select>
-                    <select ref={publisherRef}>{selectPublisher}</select>
+                    <Select ref={composerRef}>{selectComposer}</Select>
+                    <Select ref={publisherRef}>{selectPublisher}</Select>
                     {submitButton}
                 </Form>
             </FlexContainer>
