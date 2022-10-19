@@ -29,28 +29,37 @@ const Ul = styled.ul`
     }
 `;
 
-const SideFilters = ({ filters, selectedFilter, setSelectedFilter }) => {
+const SideFilters = ({
+    filters,
+    isLoading,
+    selectedFilter,
+    setSelectedFilter,
+}) => {
     console.log('filters', filters);
-    const allMusicFilter = JSON.stringify({
-        id: 'All',
-        first_name: 'All',
-        last_name: 'Compositions',
-    });
-    if (filters[0] !== allMusicFilter) {
-        filters.unshift(allMusicFilter);
-    }
+    if (filters.length !== 0) {
+        const allMusicFilter = {
+            id: 'All',
+            firstName: 'All',
+            lastName: 'Compositions',
+        };
+        if (filters[0].id !== allMusicFilter.id) {
+            filters.unshift(allMusicFilter);
+        }
 
-    return (
-        <Ul>
-            {filters.map((filter, index) => (
-                <SideFilter
-                    key={index}
-                    filter={filter}
-                    selectedFilter={selectedFilter}
-                    setSelectedFilter={setSelectedFilter}
-                />
-            ))}
-        </Ul>
-    );
+        return (
+            <Ul>
+                {filters.map((filter, index) => (
+                    <SideFilter
+                        key={index}
+                        filter={filter}
+                        selectedFilter={selectedFilter}
+                        setSelectedFilter={setSelectedFilter}
+                    />
+                ))}
+            </Ul>
+        );
+    } else {
+        return null;
+    }
 };
 export default SideFilters;
