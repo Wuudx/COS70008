@@ -6,6 +6,8 @@ import { getCompositionById } from '../../api/compositions';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import stylingConstants from '../../utils/styling';
 import { useState } from 'react';
+import { getCompositions } from '../../api/compositions';
+import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
 
 const Container = styled.div`
     display: flex;
@@ -21,7 +23,7 @@ const CompositionContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 30px;
+    margin-top: 20px;
     padding: 30px;
 
     min-width: 300px;
@@ -29,7 +31,7 @@ const CompositionContainer = styled.div`
 
     border-radius: 45px;
     background: #ffffff;
-    box-shadow: 30px 30px 60px #cccccc, -30px -30px 60px #ffffff;
+    box-shadow: 20px 20px 40px #cccccc, -20px -20px 40px #ffffff;
 `;
 
 const CompositionName = styled.h1`
@@ -62,7 +64,7 @@ const CompositionInstrument = styled.div`
     margin: 10px;
     padding: 0;
     align-self: flex-start;
-    `;
+`;
 
 const ScoreContainer = styled.div`
     display: flex;
@@ -105,6 +107,46 @@ const BlueButton = styled.a`
     height: fit-content;
 `;
 
+const CuratedContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    min-width: 300px;
+
+    border-radius: 45px;
+    background: #ffffff;
+    box-shadow: 20px 20px 40px #cccccc, -20px -20px 40px #ffffff;
+`;
+
+const CuratedTitle = styled.h1`
+    font-family: 'Lato-bold';
+    font-size: 1.5em;
+    margin: 10px;
+    padding: 0;
+    align-self: flex-start;
+`;
+
+const CuratedName = styled.h1`
+    font-family: 'Lato-bold';
+    font-size: 1.2em;
+    margin: 10px;
+    padding: 0;
+    align-self: flex-start;
+`;
+
+const CuratedArtist = styled.h2`
+    font-family: 'Lato-regular';
+    font-size: 0.8em;
+    margin: 10px;
+    padding: 0;
+    align-self: flex-start;
+`;
+
 const WatchListen = () => {
     const { compositionId } = useParams();
 
@@ -121,6 +163,14 @@ const WatchListen = () => {
     );
     const composition = data[0] || {};
 
+    const [allCompositions, allCompositionsLoading, allCompositionsError] =
+        useFetchOnPageLoad(getCompositions);
+
+    const nextComposition =
+        allCompositions[Math.floor(Math.random() * allCompositions.length)];
+
+    console.log(nextComposition);
+
     let content;
     if (isLoading) {
         content = (
@@ -129,11 +179,42 @@ const WatchListen = () => {
             </CompositionContainer>
         );
     } else {
-        const year = composition.year !== 0 ? <CompositionYear>- {composition.year}</CompositionYear> : '';
-        const instruments = composition.instrument_detail !== '' ? <CompositionInstrument>Consisting of: {composition.instrument_detail}</CompositionInstrument> : '';
-        const recording = composition.recording_link !== '' ? <CompositionDetail>Watch / Listen to the recording: <BlueButton href={composition.recording_link}>HERE</BlueButton></CompositionDetail> : '';
-        const publisher = composition.publisher_name !== '' ? <CompositionDetail><Publisher>Published by: {composition.publisher_name}</Publisher><BlueButton href={composition.score_link}>SCORE</BlueButton></CompositionDetail> : '';
-
+        const year =
+            composition.year !== 0 ? (
+                <CompositionYear>- {composition.year}</CompositionYear>
+            ) : (
+                ''
+            );
+        const instruments =
+            composition.instrument_detail !== '' ? (
+                <CompositionInstrument>
+                    Consisting of: {composition.instrument_detail}
+                </CompositionInstrument>
+            ) : (
+                ''
+            );
+        const recording =
+            composition.recording_link !== '' ? (
+                <CompositionDetail>
+                    Watch / Listen to the recording:{' '}
+                    <BlueButton href={composition.recording_link}>
+                        HERE
+                    </BlueButton>
+                </CompositionDetail>
+            ) : (
+                ''
+            );
+        const publisher =
+            composition.publisher_name !== '' ? (
+                <CompositionDetail>
+                    <Publisher>
+                        Published by: {composition.publisher_name}
+                    </Publisher>
+                    <BlueButton href={composition.score_link}>SCORE</BlueButton>
+                </CompositionDetail>
+            ) : (
+                ''
+            );
 
         content = (
             <CompositionContainer>
@@ -153,6 +234,34 @@ const WatchListen = () => {
             </CompositionContainer>
         );
     }
-    return <Container>{content}</Container>;
+
+    let curated;
+    if (allCompositionsLoading) {
+        curated = (
+            <CuratedContainer>
+                <ScaleLoader color={stylingConstants.colours.blue1} />
+            </CuratedContainer>
+        );
+    } else if (nextComposition) {
+        curated = (
+            <CuratedContainer>
+                <CuratedTitle>If you liked this song, check out: </CuratedTitle>
+                <CuratedName>{nextComposition.name}</CuratedName>
+                <CuratedArtist>
+                    {nextComposition.first_name + nextComposition.last_name}
+                </CuratedArtist>
+                <BlueButton href={`/watch-listen/${nextComposition.id}`}>
+                    CLICK HERE
+                </BlueButton>
+            </CuratedContainer>
+        );
+    }
+
+    return (
+        <Container>
+            {content}
+            {curated}
+        </Container>
+    );
 };
 export default WatchListen;
