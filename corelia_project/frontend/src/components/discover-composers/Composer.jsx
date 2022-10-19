@@ -1,7 +1,7 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import stylingConstants from "../../utils/styling";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import stylingConstants from '../../utils/styling';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -58,7 +58,7 @@ const Composer = ({ composer }) => {
                 <FirstNameSpan>
                     {composer.firstName.toUpperCase()}
                 </FirstNameSpan>
-                <Img src={composer.image} alt="composer picture" />
+                <Img src={composer.image} alt='composer picture' />
             </ImageContainer>
             <Span>
                 {composer.firstName} {composer.lastName}
