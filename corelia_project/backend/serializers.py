@@ -75,6 +75,11 @@ class AllPublishersSerializer(serializers.ModelSerializer):
         model = Publisher
         fields = ['id', 'name']
 
+class AllInstrumentsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Instrument
+        fields = ['id', 'name']
+
 class FeaturedComposerSerializer(serializers.ModelSerializer):
     nationality_detail = serializers.SerializerMethodField()
 

@@ -61,6 +61,11 @@ class AllPublishersView(ListAPIView):
     serializer_class = AllPublishersSerializer
     queryset = Publisher.objects.all()
 
+class AllInstrumentsView(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    serializer_class = AllInstrumentsSerializer
+    queryset = Instrument.objects.all()
+
 class AllCompositionsView(ListAPIView):
     pagination_class = LimitOffsetPagination
     serializer_class = AllCompositionsSerializer
