@@ -66,6 +66,7 @@ const AddCompositionForm = ({ isVisible }) => {
     const [duration, setDuration] = useState("");
     const [recordingLink, setRecordingLink] = useState("");
     const [scoreLink, setScoreLink] = useState("");
+    const [instruments, setInstruments] = useState("");
     const composerRef = useRef();
     const publisherRef = useRef();
 
@@ -87,6 +88,7 @@ const AddCompositionForm = ({ isVisible }) => {
             publisher: publisherId,
             year: year,
             duration: duration,
+            instrument: instruments,
             recording_link: recordingLink,
             score_link: scoreLink,
         };
@@ -114,7 +116,10 @@ const AddCompositionForm = ({ isVisible }) => {
             selectComposer = <div>Could not load composers</div>;
         } else {
             selectComposer = composers.map((composer) => (
-                <option key={composer.id} value={composer.id}>
+                <option
+                    key={composer.id}
+                    value={`${composer.firstName} ${composer.lastName}`}
+                >
                     {composer.firstName} {composer.lastName}
                 </option>
             ));
@@ -128,7 +133,7 @@ const AddCompositionForm = ({ isVisible }) => {
             selectPublisher = <div>Could not load publishers</div>;
         } else {
             selectPublisher = publishers.map((publisher) => (
-                <option key={publisher.id} value={publisher.id}>
+                <option key={publisher.id} value={publisher.name}>
                     {publisher.name}
                 </option>
             ));
@@ -175,6 +180,12 @@ const AddCompositionForm = ({ isVisible }) => {
                         placeholder="Score Link"
                         value={scoreLink}
                         onChange={(e) => setScoreLink(e.target.value)}
+                    />
+                    <Input
+                        type="text"
+                        placeholder="Instruments"
+                        value={instruments}
+                        onChange={(e) => setInstruments(e.target.value)}
                     />
                     <select ref={composerRef}>{selectComposer}</select>
                     <select ref={publisherRef}>{selectPublisher}</select>
