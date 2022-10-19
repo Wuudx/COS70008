@@ -25,7 +25,7 @@ class Composer(models.Model):
     bio_source = models.CharField(max_length=200, blank=True, null=True, default = "")
     featured = models.BooleanField(default=False)
     composer_website = models.CharField(max_length=300, blank=True, null=True, default = "")
-    image = models.CharField(max_length=300, default = "https://i.picsum.photos/id/634/200/200.jpg?hmac=3WUmj9wMd1h3UZICk1C5iydU5fixjx0px9jw-LBezgg")
+    image = models.CharField(max_length=300, default = "/static/composers/images/Default.png")
 
     def __str__(self):
         return self.firstName
