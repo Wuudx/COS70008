@@ -38,7 +38,7 @@ const RepertoireLibrary = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const searchQuery = searchParams.get('letter');
-    const page_size = 96;
+    const page_size = 192;
     const [selectedFilter, setSelectedFilter] = useState('All');
     const [fetchURL, setFetchURL] = useState(
         'http://localhost:8000/api/compositions?limit=' + page_size
@@ -134,7 +134,8 @@ const RepertoireLibrary = () => {
             <FilterBar initialSearchType={'Artist'} />
             <ContentContainer>
                 <SideFilters
-                    filters={filters}
+                    filters={composers}
+                    isLoading={composersLoading}
                     selectedFilter={selectedFilter}
                     setSelectedFilter={setSelectedFilter}
                 />
