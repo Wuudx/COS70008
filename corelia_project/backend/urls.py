@@ -3,6 +3,7 @@ from django.urls import path
 from backend import views
 
 urlpatterns = [
+    path('nationalities', AllNationalitiesView.as_view()),
     path('composers', AllComposersView.as_view()),
     path('composers/<int:pk>/modify', ComposerUpdateView.as_view()),
     path('composers/<int:pk>', ComposerView.as_view()),

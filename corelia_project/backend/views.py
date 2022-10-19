@@ -34,6 +34,10 @@ def set_permission_classes(obj):
     else:
         obj.permission_classes = [permissions.AllowAny]
 
+class AllNationalitiesView(ListAPIView):
+    pagination_class = LimitOffsetPagination
+    queryset = Nationality.objects.all()
+    serializer_class = AllNationalitiesSerializer
 
 class AllComposersView(ListAPIView):
     pagination_class = LimitOffsetPagination

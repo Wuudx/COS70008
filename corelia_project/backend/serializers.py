@@ -6,6 +6,11 @@ from django.contrib.postgres.aggregates import StringAgg
 from django.db.models.functions import Concat
 from django.db.models import CharField, Value
 
+class AllNationalitiesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Nationality
+        fields = ['id', 'name']
+
 class AllComposersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Composer
