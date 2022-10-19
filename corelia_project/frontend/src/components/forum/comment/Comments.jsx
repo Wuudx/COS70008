@@ -39,6 +39,7 @@ const Comments = () => {
     function addComment(newComment) {
         setComments({
             ...comments,
+            count: comments.count + 1,
             results: [...comments.results, newComment],
         });
     }
