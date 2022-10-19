@@ -169,8 +169,6 @@ const WatchListen = () => {
     const nextComposition =
         allCompositions[Math.floor(Math.random() * allCompositions.length)];
 
-    console.log(nextComposition);
-
     let content;
     if (isLoading) {
         content = (
