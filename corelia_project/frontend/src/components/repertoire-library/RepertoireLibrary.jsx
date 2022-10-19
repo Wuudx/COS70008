@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import useRemoveSearchQuery from '../../hooks/useRemoveSearchQuery';
 import { useLocation } from 'react-router-dom';
+import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
+import { getComposers } from '../../api/composers';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -64,6 +66,12 @@ const RepertoireLibrary = () => {
     useEffect(() => {
         setFilters(getUniqueComposers(compositions));
     }, [compositions]);
+
+    const [composers, composersLoading, composersError] = useFetchOnPageLoad(
+        () => getComposers('http://localhost:8000/api/composers')
+    );
+
+    console.log(composers);
 
     async function fetchCompositions(url) {
         try {

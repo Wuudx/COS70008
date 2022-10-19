@@ -29,23 +29,8 @@ const Ul = styled.ul`
     }
 `;
 
-// Remove this for final version - Testing data until integration with API
-const filters = [
-    {
-        name: 'filter one',
-        count: 340,
-    },
-    {
-        name: 'filter two',
-        count: 69,
-    },
-    {
-        name: 'filter three',
-        count: 420,
-    },
-];
-
 const SideFilters = ({ filters, selectedFilter, setSelectedFilter }) => {
+    console.log('filters', filters);
     const allMusicFilter = JSON.stringify({
         id: 'All',
         first_name: 'All',
