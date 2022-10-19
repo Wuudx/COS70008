@@ -43,3 +43,20 @@ export async function getCompositionsWithUrl(url) {
     }
     return response.json();
 }
+
+export async function addComposition(composition) {
+    const response = await fetch(
+        "http://localhost:8000/api/dash/database/add/composition",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `${localStorage.getItem("auth_token")}`,
+            },
+            body: JSON.stringify(composition),
+        }
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+}
