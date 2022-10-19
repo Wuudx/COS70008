@@ -44,6 +44,18 @@ const Comments = () => {
         });
     }
 
+    function editCommentFrontend(commentId, newContent) {
+        const commentsResults = comments.results;
+        const newComments = commentsResults.map((comment) => {
+            if (comment.id === commentId) {
+                const newComment = { ...comment, content: newContent };
+                return newComment;
+            }
+            return comment;
+        });
+        setComments({ ...comments, results: newComments });
+    }
+
     function deleteCommentFrontend(commentId) {
         const newResults = comments.results.filter(
             (comment) => comment.id !== commentId
@@ -107,6 +119,7 @@ const Comments = () => {
                 key={comment.id}
                 comment={comment}
                 deleteCommentFrontend={deleteCommentFrontend}
+                editCommentFrontend={editCommentFrontend}
             />
         ));
     } else if ("count" in comments && comments.count === 0) {
