@@ -1,7 +1,10 @@
 import React, { useRef, useState } from "react";
+import { toast } from "react-hot-toast";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
 import { getComposers } from "../../api/composers";
+import { addComposition } from "../../api/compositions";
+import { getPublishers } from "../../api/publishers";
 import useFetchOnPageLoad from "../../hooks/useFetchOnPageLoad";
 import stylingConstants from "../../utils/styling";
 
@@ -64,24 +67,38 @@ const AddCompositionForm = ({ isVisible }) => {
     const [recordingLink, setRecordingLink] = useState("");
     const [scoreLink, setScoreLink] = useState("");
     const composerRef = useRef();
+    const publisherRef = useRef();
 
     const [isLoading, setIsLoading] = useState(false);
 
     const [composers, composersIsLoading, composersError] = useFetchOnPageLoad(
         () => getComposers("http://localhost:8000/api/composers")
     );
+    const [publishers, publishersIsLoading, publishersError] =
+        useFetchOnPageLoad(getPublishers);
 
     async function handleAddComposition(e) {
         e.preventDefault();
         const composerId = composerRef.current.value;
+        const publisherId = publisherRef.current.value;
         const newComposition = {
             name: name,
             composer: composerId,
+            publisher: publisherId,
             year: year,
             duration: duration,
             recording_link: recordingLink,
             score_link: scoreLink,
         };
+        setIsLoading(true);
+        try {
+            await addComposition(newComposition);
+            toast.success("Successfully added new composition!");
+        } catch (error) {
+            toast.error("Could not add composition!");
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     let content;
@@ -99,6 +116,20 @@ const AddCompositionForm = ({ isVisible }) => {
             selectComposer = composers.map((composer) => (
                 <option key={composer.id} value={composer.id}>
                     {composer.firstName} {composer.lastName}
+                </option>
+            ));
+        }
+        let selectPublisher;
+        if (publishersIsLoading) {
+            selectPublisher = (
+                <ScaleLoader color={stylingConstants.colours.blue1} />
+            );
+        } else if (publishersError) {
+            selectPublisher = <div>Could not load publishers</div>;
+        } else {
+            selectPublisher = publishers.map((publisher) => (
+                <option key={publisher.id} value={publisher.id}>
+                    {publisher.name}
                 </option>
             ));
         }
@@ -146,6 +177,7 @@ const AddCompositionForm = ({ isVisible }) => {
                         onChange={(e) => setScoreLink(e.target.value)}
                     />
                     <select ref={composerRef}>{selectComposer}</select>
+                    <select ref={publisherRef}>{selectPublisher}</select>
                     {submitButton}
                 </Form>
             </FlexContainer>
