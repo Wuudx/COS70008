@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAuthState } from '../../context';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Container = styled.div`
     display: flex;
@@ -12,12 +14,19 @@ const Container = styled.div`
 `;
 
 const Profile = () => {
+    const navigate = useNavigate();
     const user = useAuthState();
+
+    useEffect(() => {
+        console.log('user', user);
+        if (user.user === null) {
+            navigate('/login');
+        }
+    }, []);
 
     return (
         <Container>
             <h1>Welcome {`${user.user.username}`}!</h1>
-            
         </Container>
     );
 };
