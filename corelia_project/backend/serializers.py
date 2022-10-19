@@ -241,14 +241,16 @@ class CreateComposerSerializer(serializers.ModelSerializer):
         fields = ['firstName', 'lastName', 'birth', 'death', 'biography', 'bio_source', 'featured', 'composer_website', 'image']
 
     def create(self, validated_data):
-        nationality_name = self.initial_data['nationality'] # I'm not sure this is the best way to get this, but it's the only way that I could figure out to get what I need
+        nationality_names = self.initial_data['nationality'].split('/') # I'm not sure this is the best way to get this, but it's the only way that I could figure out to get what I need
 
         dummy_nationality = Nationality.objects.get(id = -1) # TODO: REMOVE THIS ONCE WE DUMP THE NATIONALITY COLUMN FROM DATABSE
 
         composer_instance = Composer.objects.create(nationality = dummy_nationality, **validated_data)
-        nationality_instance = Nationality.objects.get_or_create(name = nationality_name)[0]
 
-        ComposerNationality.objects.create(composer = composer_instance, nationality = nationality_instance)
+        for nationality_name in nationality_names:
+            nationality_instance = Nationality.objects.get_or_create(name = nationality_name)[0]
+
+            ComposerNationality.objects.create(composer = composer_instance, nationality = nationality_instance)
 
         return composer_instance
 
@@ -270,15 +272,26 @@ class CreateCompositionSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         composer_name = self.initial_data['composer'].split(' ')
-        instrument_name = self.initial_data['instrument'] # I'm not sure this is the best way to get this, but it's the only way that I could figure out to get what I need
-        #instrument_quantity doesn't exist for some reason...
+        instrument_names = self.initial_data['instrument'].split(', ') # I'm not sure this is the best way to get this, but it's the only way that I could figure out to get what I need
         publisher_name = self.initial_data['publisher']
 
         composer_instance = Composer.objects.get(firstName = composer_name[0], lastName = composer_name[1])
-        instrument_instance = Instrument.objects.get_or_create(name = instrument_name)[0]
         publisher_instance = Publisher.objects.get_or_create(name = publisher_name)[0]
         composition_instance = Composition.objects.create(composer = composer_instance, publisher = publisher_instance, **validated_data)
 
-        CompositionInstrument.objects.create(composition = composition_instance, instrument = instrument_instance)
+        for instrument_name in instrument_names:
+            instrument = instrument_name.split(' ', 1)
+
+            if instrument[0].isdigit():
+                instrument = [int(instrument[0]), instrument[1]]
+
+                if instrument[1].endswith('s') and not instrument[1].endswith('ss'):
+                    instrument[1] = instrument[1][:-1]
+            else:
+                instrument = [1, instrument_name]
+
+            instrument_instance = Instrument.objects.get_or_create(name = instrument[1])[0]
+        
+            CompositionInstrument.objects.create(composition = composition_instance, instrument = instrument_instance, quantity = instrument[0])
 
         return composition_instance
