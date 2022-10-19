@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react';
 import useSearchQuery from '../../hooks/useSearchQuery';
 import useRemoveSearchQuery from '../../hooks/useRemoveSearchQuery';
 import { useLocation } from 'react-router-dom';
+import useFetchOnPageLoad from '../../hooks/useFetchOnPageLoad';
+import { getComposers } from '../../api/composers';
 
 const FlexContainer = styled.div`
     display: flex;
@@ -36,7 +38,7 @@ const RepertoireLibrary = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const searchQuery = searchParams.get('letter');
-    const page_size = 96;
+    const page_size = 192;
     const [selectedFilter, setSelectedFilter] = useState('All');
     const [fetchURL, setFetchURL] = useState(
         'http://localhost:8000/api/compositions?limit=' + page_size
@@ -64,6 +66,12 @@ const RepertoireLibrary = () => {
     useEffect(() => {
         setFilters(getUniqueComposers(compositions));
     }, [compositions]);
+
+    const [composers, composersLoading, composersError] = useFetchOnPageLoad(
+        () => getComposers('http://localhost:8000/api/composers')
+    );
+
+    console.log(composers);
 
     async function fetchCompositions(url) {
         try {
@@ -126,7 +134,8 @@ const RepertoireLibrary = () => {
             <FilterBar initialSearchType={'Artist'} />
             <ContentContainer>
                 <SideFilters
-                    filters={filters}
+                    filters={composers}
+                    isLoading={composersLoading}
                     selectedFilter={selectedFilter}
                     setSelectedFilter={setSelectedFilter}
                 />

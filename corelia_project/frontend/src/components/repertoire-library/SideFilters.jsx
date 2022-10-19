@@ -29,43 +29,37 @@ const Ul = styled.ul`
     }
 `;
 
-// Remove this for final version - Testing data until integration with API
-const filters = [
-    {
-        name: 'filter one',
-        count: 340,
-    },
-    {
-        name: 'filter two',
-        count: 69,
-    },
-    {
-        name: 'filter three',
-        count: 420,
-    },
-];
+const SideFilters = ({
+    filters,
+    isLoading,
+    selectedFilter,
+    setSelectedFilter,
+}) => {
+    console.log('filters', filters);
+    if (filters.length !== 0) {
+        const allMusicFilter = {
+            id: 'All',
+            firstName: 'All',
+            lastName: 'Compositions',
+        };
+        if (filters[0].id !== allMusicFilter.id) {
+            filters.unshift(allMusicFilter);
+        }
 
-const SideFilters = ({ filters, selectedFilter, setSelectedFilter }) => {
-    const allMusicFilter = JSON.stringify({
-        id: 'All',
-        first_name: 'All',
-        last_name: 'Compositions',
-    });
-    if (filters[0] !== allMusicFilter) {
-        filters.unshift(allMusicFilter);
+        return (
+            <Ul>
+                {filters.map((filter, index) => (
+                    <SideFilter
+                        key={index}
+                        filter={filter}
+                        selectedFilter={selectedFilter}
+                        setSelectedFilter={setSelectedFilter}
+                    />
+                ))}
+            </Ul>
+        );
+    } else {
+        return null;
     }
-
-    return (
-        <Ul>
-            {filters.map((filter, index) => (
-                <SideFilter
-                    key={index}
-                    filter={filter}
-                    selectedFilter={selectedFilter}
-                    setSelectedFilter={setSelectedFilter}
-                />
-            ))}
-        </Ul>
-    );
 };
 export default SideFilters;
