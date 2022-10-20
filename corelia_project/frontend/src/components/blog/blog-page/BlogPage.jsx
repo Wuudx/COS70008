@@ -6,9 +6,11 @@ import useFetchOnParamChange from '../../../hooks/useFetchOnParamChange';
 import useFetchOnPageLoad from '../../../hooks/useFetchOnPageLoad';
 import { getBlogPost } from '../../../api/blogs';
 import { getComposerById } from '../../../api/composers';
+import { likePost} from '../../../api/blogs';
 import { ScaleLoader } from 'react-spinners';
 import stylingConstants from '../../../utils/styling';
 import { IoIosArrowBack } from 'react-icons/io';
+import {AiFillLike} from 'react-icons/ai';
 
 const Container = styled.div`
     display: flex;
@@ -154,6 +156,11 @@ const BlogPage = () => {
         navigate(`/composers/${authorId}`);
     };
 
+    const handleLikeClick = (blog_id, likes) => {
+        likePost(blog_id, likes + 1);
+        
+    }
+
     console.log(blog);
 
     let content;
@@ -185,6 +192,7 @@ const BlogPage = () => {
                     </AuthorInformation>
                 </BlogHeading>
                 <BlogContent>{blog.content}</BlogContent>
+                <BackButton onClick={() => handleLikeClick(blog.id, blog.votes)}><AiFillLike size='1.5em' /> {blog.votes}</BackButton>
             </BlogPageContainer>
         );
     } else {

@@ -27,3 +27,21 @@ export async function getBlogPostsByMonth(month) {
     }
     return response.json();
 }
+
+export async function likePost(postId, likeNum) {
+
+    const response = await fetch(
+        `http://localhost:8000/api/blogs/${postId}/modify`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `${localStorage.getItem("auth_token")}`,
+            },
+            body: JSON.stringify({ votes: likeNum }),
+        }
+    );
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+}
