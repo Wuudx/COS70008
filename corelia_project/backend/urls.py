@@ -51,7 +51,7 @@ urlpatterns = [
     path('dash/users/week/count', GetNewUsersThisWeek.as_view()),
     path('dash/blogs/week/count', GetBlogPostsFromThisWeek.as_view()),
     path('dash/forums/week/count', GetForumPostsFromThisWeek.as_view()),
-    path('dash/contact/messages', GetNewUsersThisWeek.as_view()),
+    path('dash/contact/messages', GetContactMessages.as_view()),
     path('dash/database/add/nationality', CreateNationality.as_view()),
     path('dash/database/add/composer', CreateComposer.as_view()),
     path('dash/database/add/instrument', CreateInstrument.as_view()),
