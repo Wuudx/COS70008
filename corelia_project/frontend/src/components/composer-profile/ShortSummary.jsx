@@ -5,7 +5,7 @@ const ShortSummary = ({ name, nationality, yearOfBirth, yearOfDeath }) => {
     if (yearOfDeath) {
         content = `${name} is a ${nationality} composer. They were born on ${yearOfBirth} and passed away on ${yearOfDeath}.`;
     } else {
-        content = `${name} is from ${nationality} composer and was born on ${yearOfBirth}`;
+        content = `${name} is a ${nationality} composer and was born on ${yearOfBirth}`;
     }
 
     return <div>{content}</div>;
