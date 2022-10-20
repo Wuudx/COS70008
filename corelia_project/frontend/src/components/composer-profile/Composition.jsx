@@ -41,7 +41,7 @@ const Composition = ({ composition }) => {
     function navigateToComposition(e) {
         if (e.target.tagName.toLowerCase() !== "a") {
             // This is the case where composition was pressed but not the link.
-            navigate(`/repertoire-library/${composition.id}`);
+            navigate(`/watch-listen/${composition.id}`);
         }
     }
 
