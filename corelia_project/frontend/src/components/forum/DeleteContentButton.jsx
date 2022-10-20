@@ -40,7 +40,8 @@ const DeleteContentButton = ({
         setIsLoading(true);
         try {
             await apiDeleteContent(contentId);
-            if (!isViewingComments) {
+            if (frontendDeleteContent) {
+                // This won't be defined for posts when viewing comments on post.
                 frontendDeleteContent(contentId);
             }
             toast.success("Succesfully deleted!");

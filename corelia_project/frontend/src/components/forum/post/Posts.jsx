@@ -27,6 +27,7 @@ const Posts = ({
     deletePostFrontend,
     editPostFrontend,
 }) => {
+    console.log(data);
     let nextPageApiEndpoint = "";
 
     function handleLoadMore() {

@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 import { createComment } from "../../../api/forum";
 import { useAuthState } from "../../../context";
 import RoundedImage from "../../../shared-styled-components/RoundedImage";
@@ -35,7 +36,8 @@ const TextArea = styled.textarea`
 
 const CommentForm = ({ postId, profilePicture, addComment }) => {
     const user = useAuthState();
-    const profileImage = '../../../../static/users/images/Default_profile_pic.png' 
+    const profileImage =
+        "../../../../static/users/images/Default_profile_pic.png";
     const [isLoading, setIsLoading] = useState(false);
     const [commentContent, setCommentContent] = useState("");
 
@@ -43,6 +45,7 @@ const CommentForm = ({ postId, profilePicture, addComment }) => {
         e.preventDefault();
         setIsLoading(true);
         const newComment = {
+            id: uuidv4(),
             user: user.user.id,
             content: commentContent,
             date_posted: new Date().toString(),
@@ -64,8 +67,8 @@ const CommentForm = ({ postId, profilePicture, addComment }) => {
     if (!user.user) {
         content = (
             <p>
-                Want to contribute? Press <Link to="/login">here</Link>{" "}
-                to comment!
+                Want to contribute? Press <Link to="/login">here</Link> to
+                comment!
             </p>
         );
     } else {

@@ -1,6 +1,8 @@
-from .views import *
 from django.urls import path
+
 from backend import views
+
+from .views import *
 
 urlpatterns = [
     path('nationalities', AllNationalitiesView.as_view()),
@@ -32,12 +34,13 @@ urlpatterns = [
     path('blogs/comments/<int:pk>/modify', ModifyBlogComment.as_view()),
 
     path('forums', AllForumPosts.as_view()),
-    path('forums/<int:post_id>', ForumPostView.as_view()),
+    path('forums/<slug:post_id>', ForumPostView.as_view()),
     path('forums/comments/all', AllForumComments.as_view()),
     path('forums/comments/<post_id>', ForumCommentView.as_view()),
-    path('forums/<int:pk>/modify', ModifyForumPost.as_view()),
-    path('forums/comments/<int:pk>/modify', ModifyForumComment.as_view()),
-    path('forums/<int:year>/<int:month>/posts', ForumPostByMonthAndYear.as_view()),
+    path('forums/<slug:pk>/modify', ModifyForumPost.as_view()),
+    path('forums/comments/<slug:pk>/modify', ModifyForumComment.as_view()),
+    path('forums/<int:year>/<int:month>/posts',
+         ForumPostByMonthAndYear.as_view()),
     path('forums/year/<int:year>/posts', ForumPostByYear.as_view()),
     path('forums/month/<int:month>/posts', ForumPostByMonth.as_view()),
 

@@ -40,16 +40,13 @@ const PostContent = ({
 
     async function handleEdit(e) {
         e.preventDefault();
-        const wantEdit = confirm("Are you sure you want to edit this post?");
-        if (!wantEdit) {
-            return;
-        }
         setIsLoading(true);
         try {
             await editPost(postId, newContent);
             if (isViewingComments) {
                 setContentAfterEditing(newContent);
             } else {
+                setContentAfterEditing(newContent);
                 editPostFrontend(postId, newContent);
             }
             toggleIsEditing();

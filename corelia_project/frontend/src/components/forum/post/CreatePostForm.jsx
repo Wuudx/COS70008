@@ -3,6 +3,7 @@ import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { ScaleLoader } from "react-spinners";
 import styled from "styled-components";
+import { v4 as uuidv4 } from "uuid";
 import { createPost } from "../../../api/forum";
 import { useAuthState } from "../../../context";
 import RoundedImage from "../../../shared-styled-components/RoundedImage";
@@ -100,6 +101,7 @@ const CreatePostForm = ({ addNewPost }) => {
         e.preventDefault();
         setIsLoading(true);
         const newPost = {
+            id: uuidv4(),
             user: user.user.id,
             content: postContent,
             date_posted: new Date().toString(),
