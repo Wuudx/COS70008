@@ -27,3 +27,18 @@ export async function getBlogPostsByMonth(month) {
     }
     return response.json();
 }
+
+export async function addBlog(blog) {
+    const response = await fetch('http://localhost:8000/api/blogs', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `${localStorage.getItem('auth_token')}`,
+        },
+        body: JSON.stringify(blog),
+    });
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+    return response.json();
+}
