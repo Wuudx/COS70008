@@ -324,7 +324,7 @@ class GetBlogPostsByMonth(ListAPIView):
 
     def get_queryset(self):
         month = self.kwargs['month']
-        return BlogPost.objects.filter(date_posted__month=month)
+        return BlogPost.objects.filter(date_posted__month=month).order_by("-date_posted")
 
 
 class GetNewUsersThisWeek(ListAPIView):
