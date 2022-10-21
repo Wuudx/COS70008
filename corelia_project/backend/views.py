@@ -164,7 +164,7 @@ class GetCompositionByLetter(ListAPIView):
 
 class AllBlogPosts(ListCreateAPIView):
     pagination_class = LimitOffsetPagination
-    queryset = BlogPost.objects.all()
+    queryset = BlogPost.objects.all().order_by("-date_posted")
     serializer_class = BlogPostsSerializer
 
     @permission_classes([IsAuthenticated, IsAdminUser])
