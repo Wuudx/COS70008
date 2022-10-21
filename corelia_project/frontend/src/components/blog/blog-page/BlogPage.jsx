@@ -1,16 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import useFetchOnParamChange from '../../../hooks/useFetchOnParamChange';
-import useFetchOnPageLoad from '../../../hooks/useFetchOnPageLoad';
-import { getBlogPost } from '../../../api/blogs';
-import { getComposerById } from '../../../api/composers';
-import { likePost} from '../../../api/blogs';
-import { ScaleLoader } from 'react-spinners';
-import stylingConstants from '../../../utils/styling';
-import { IoIosArrowBack } from 'react-icons/io';
-import {AiFillLike} from 'react-icons/ai';
+import React, { useEffect, useState } from "react";
+import { AiFillLike } from "react-icons/ai";
+import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate, useParams } from "react-router-dom";
+import { ScaleLoader } from "react-spinners";
+import styled from "styled-components";
+import { getBlogPost, likePost } from "../../../api/blogs";
+import useFetchOnParamChange from "../../../hooks/useFetchOnParamChange";
+import stylingConstants from "../../../utils/styling";
 
 const Container = styled.div`
     display: flex;
@@ -72,7 +68,7 @@ const BlogInformation = styled.div`
 `;
 
 const BlogTitle = styled.h1`
-    font-family: 'Lato-bold';
+    font-family: "Lato-bold";
     font-size: 1.5em;
     margin: 10px;
     padding: 0;
@@ -80,7 +76,7 @@ const BlogTitle = styled.h1`
 `;
 
 const BlogDate = styled.h2`
-    font-family: 'Lato-regular';
+    font-family: "Lato-regular";
     font-size: 1.2em;
     margin: 10px;
     padding: 0;
@@ -102,7 +98,7 @@ const AuthorInformation = styled.div`
 `;
 
 const AuthorName = styled.h2`
-    font-family: 'Lato-regular';
+    font-family: "Lato-regular";
     font-size: 1.2em;
     margin: 10px;
     padding: 0;
@@ -118,7 +114,7 @@ const AuthorImage = styled.img`
 
 const BlogContent = styled.p`
     width: 80%;
-    font-family: 'Lato-regular';
+    font-family: "Lato-regular";
     font-size: 1em;
     margin: 10px;
     padding: 0;
@@ -130,13 +126,14 @@ const BlogPage = () => {
     const [blogPost, setBlogPost] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [currentBlogVotes, setCurrentBlogVotes] = useState(0);
 
     const blog = blogPost ? blogPost[0] : null;
 
     const date = blog ? new Date(blog.date_posted) : null;
     const formattedDate = date
-        ? `${date.toLocaleString('default', {
-              month: 'long',
+        ? `${date.toLocaleString("default", {
+              month: "long",
           })} ${date.getDate()}, ${date.getFullYear()}`
         : null;
 
@@ -148,6 +145,12 @@ const BlogPage = () => {
         setError
     );
 
+    useEffect(() => {
+        if (blog) {
+            setCurrentBlogVotes(blog.votes);
+        }
+    }, [blog]);
+
     const handleBackClick = () => {
         navigate(-1);
     };
@@ -158,10 +161,8 @@ const BlogPage = () => {
 
     const handleLikeClick = (blog_id, likes) => {
         likePost(blog_id, likes + 1);
-        
-    }
-
-    console.log(blog);
+        setCurrentBlogVotes(likes + 1);
+    };
 
     let content;
     if (isLoading) {
@@ -170,13 +171,13 @@ const BlogPage = () => {
         content = <p>There was an error loading the blog post.</p>;
     } else if (blog) {
         const profileImage =
-            blog.user_image === 'static/users/images/Default_profile_pic.png'
-                ? '/' + blog.user_image
+            blog.user_image === "static/users/images/Default_profile_pic.png"
+                ? "/" + blog.user_image
                 : blog.user_image;
         content = (
             <BlogPageContainer>
                 <BackButton onClick={handleBackClick}>
-                    <IoIosArrowBack size='2em' />
+                    <IoIosArrowBack size="2em" />
                     Back
                 </BackButton>
                 <BlogHeading>
@@ -192,7 +193,11 @@ const BlogPage = () => {
                     </AuthorInformation>
                 </BlogHeading>
                 <BlogContent>{blog.content}</BlogContent>
-                <BackButton onClick={() => handleLikeClick(blog.id, blog.votes)}><AiFillLike size='1.5em' /> {blog.votes}</BackButton>
+                <BackButton
+                    onClick={() => handleLikeClick(blog.id, blog.votes)}
+                >
+                    <AiFillLike size="1.5em" /> {currentBlogVotes}
+                </BackButton>
             </BlogPageContainer>
         );
     } else {
