@@ -291,7 +291,7 @@ class ForumPostByMonthAndYear(ListAPIView):
     def get_queryset(self):
         month = self.kwargs['month']
         year = self.kwargs['year']
-        return ForumPost.objects.filter(date_posted__month=month, date_posted__year=year)
+        return ForumPost.objects.filter(date_posted__month=month, date_posted__year=year).order_by("-date_posted")
 
 
 class ForumPostByYear(ListAPIView):
@@ -300,7 +300,7 @@ class ForumPostByYear(ListAPIView):
 
     def get_queryset(self):
         year = self.kwargs['year']
-        return ForumPost.objects.filter(date_posted__year=year)
+        return ForumPost.objects.filter(date_posted__year=year).order_by("-date_posted")
 
 
 class ForumPostByMonth(ListAPIView):
@@ -309,7 +309,7 @@ class ForumPostByMonth(ListAPIView):
 
     def get_queryset(self):
         month = self.kwargs['month']
-        return ForumPost.objects.filter(date_posted__month=month)
+        return ForumPost.objects.filter(date_posted__month=month).order_by("-date_posted")
 
 
 class GetPopularBlogPosts(ListAPIView):
