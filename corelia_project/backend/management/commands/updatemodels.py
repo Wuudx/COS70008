@@ -45,27 +45,17 @@ class Command(BaseCommand):
         df['Nameofpiece'] = df['Nameofpiece'].str.capitalize()
 
         # TEMP - remove nationality_id from database/model
-        models = Nationality(id = -1, name = 'YOU SHOULD NOT BE SEEING THIS!')
-        models.save()
-        error_nationality = Nationality.objects.get(id=-1)
-
+        ## add all different nationalities to the database
+    
         for index, row in df.iterrows():
-            if (Composer.objects.filter(firstName=row['FirstName'], lastName=row['LastName']).count() == 0):
-                models = Composer(firstName = row['FirstName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = error_nationality, biography = row['Biography'], bio_source = row['Bio_source'], composer_website = row['Composer_website'])
+            #add all different nationalities to database
+            if (Nationality.objects.filter(name=row['Nationality']).count() == 0):
+                models = Nationality(name = row['Nationality'])
                 models.save()
 
-                nationalities = re.sub(r'[()/]', ' ', row['Nationality']).split()
-
-                for nationality_split in nationalities:
-                    if (Nationality.objects.filter(name = nationality_split).count() == 0):
-                        models = Nationality(name = nationality_split)
-                        models.save()
-
-                    composer_id = Composer.objects.get(firstName=row['FirstName'], lastName=row['LastName']).id
-                    nationality_id = Nationality.objects.get(name = nationality_split).id
-
-                    models = ComposerNationality(composer_id = composer_id, nationality_id=nationality_id)
-                    models.save()
+            if (Composer.objects.filter(firstName=row['FirstName'], lastName=row['LastName']).count() == 0):
+                models = Composer(firstName = row['FirstName'], lastName = row['LastName'], birth = row['DOB'], death = row['DOD'], nationality = Nationality.objects.get(name = row['Nationality']), biography = row['Biography'], bio_source = row['Bio_source'], composer_website = row['Composer_website'])
+                models.save()
 
             if (Publisher.objects.filter(name = row['Publisher']).count() == 0):
                 models = Publisher(name = row['Publisher'])

@@ -220,7 +220,7 @@ const WatchListen = () => {
                 <CompositionArtist>
                     {composition.composer_name} {year}
                 </CompositionArtist>
-                {instruments}
+                {/*{instruments}*/}
                 {recording}
                 {publisher}
                 {/* <ScoreContainer>

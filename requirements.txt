@@ -21,8 +21,6 @@ Jinja2==3.1.2
 jmespath==1.0.1
 loguru==0.6.0
 MarkupSafe==2.1.1
-mod-wsgi==4.9.4
-numpy==1.20.2
 packaging==21.3
 pluggy==1.0.0
 psycopg2==2.9.3

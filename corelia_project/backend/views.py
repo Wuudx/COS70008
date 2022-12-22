@@ -95,7 +95,8 @@ class CompositionView(ListAPIView):
 class GetFeaturedComposers(ListAPIView):
     pagination_class = LimitOffsetPagination
     queryset = Composer.objects.all().filter(featured=True)
-    serializer_class = FeaturedComposerSerializer
+    serializer_class = ComposerSerializer
+    
 
 
 class GetComposersByLetter(ListAPIView):
