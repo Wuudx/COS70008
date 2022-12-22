@@ -18,13 +18,13 @@ class AllComposersSerializer(serializers.ModelSerializer):
 
 
 class ComposerSerializer(serializers.ModelSerializer):
-    #nationality_name = serializers.SerializerMethodField()
-    nationality_names = serializers.SerializerMethodField()
+    nationality_name = serializers.SerializerMethodField()
+    #nationality_names = serializers.SerializerMethodField()
 
-    #def get_nationality_name (self, obj):
-        #return obj.nationality.name
-    def get_nationality_names (self, obj):
-        return ComposerNationality.objects.filter(composer=obj).aggregate(names=StringAgg('nationality__name', delimiter='/', ordering='id'))['names']
+    def get_nationality_name (self, obj):
+        return obj.nationality.name
+    #def get_nationality_names (self, obj):
+        #return ComposerNationality.objects.filter(composer=obj).aggregate(names=StringAgg('nationality__name', delimiter='/', ordering='id'))['names']
         
     class Meta:
         model = Composer
@@ -53,7 +53,6 @@ class AllCompositionsSerializer(serializers.ModelSerializer):
 class CompositionSerializer(serializers.ModelSerializer):
     composer_name = serializers.SerializerMethodField()
     publisher_name = serializers.SerializerMethodField()
-    instrument_detail = serializers.SerializerMethodField()
 
     def get_composer_name(self, obj):
         firstName = obj.composer.firstName
@@ -62,9 +61,6 @@ class CompositionSerializer(serializers.ModelSerializer):
 
     def get_publisher_name(self, obj):
         return obj.publisher.name
-
-    def get_instrument_detail(self, obj):
-        return CompositionInstrument.objects.filter(composition=obj).aggregate(instruments=StringAgg(Concat('quantity', Value(' '), 'instrument__name', output_field=CharField()), delimiter=', ', ordering='id'))['instruments']
 
     class Meta:
         model = Composition
@@ -83,14 +79,13 @@ class AllInstrumentsSerializer(serializers.ModelSerializer):
 class FeaturedComposerSerializer(serializers.ModelSerializer):
     nationality_detail = serializers.SerializerMethodField()
 
-    def get_nationality_detail(self, obj):
-    #    return obj.nationality.name
-        return ComposerNationality.objects.filter(composer=obj).aggregate(names=StringAgg('nationality__name', delimiter='/', ordering='id'))['names']
+    def get_nationality_name (self, obj):
+        return obj.nationality.name
 
     class Meta:
         model = Composer
         fields = ['id','firstName', 'lastName', 'birth',
-                  'death', 'nationality_detail', 'image']
+                  'death', 'nationality_name', 'image']
 
 
 class ComposersByLetterSerializer(serializers.ModelSerializer):

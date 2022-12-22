@@ -35,7 +35,7 @@ const ComposerProfile = () => {
 
     const aboutInformation = {
         name: composerName,
-        nationality: composer.nationality_names,
+        nationality: composer.nationality_name,
         yearOfBirth: composer.birth,
         yearOfDeath: composer.death,
         website: composer.composer_website,

@@ -47,7 +47,7 @@ const FeaturedComposer = ({ featuredComposer }) => {
                 <H4>Year of Birth:</H4> {featuredComposer.birth}
                 {yearOfDeathElement}
                 <H4>Nationality: </H4>
-                {featuredComposer.nationality_detail}
+                {featuredComposer.nationality_name}
             </FlexContainer>
         </Container>
     );
